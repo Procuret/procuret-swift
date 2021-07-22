@@ -24,5 +24,4 @@ public struct EntityIdentifier: Codable {
         ) {
         fatalError("Not implemented")
     }
-        
 }
