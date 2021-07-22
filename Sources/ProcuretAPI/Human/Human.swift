@@ -8,12 +8,13 @@
 import Foundation
 
 public struct Human: Codable {
-  let humanId: String
-  let emailAddress: String
-  let phoneNumber: String
-  let firstName: String
-  let lastName: String
-  let resetKey: String?
+    
+    let humanId: String
+    let emailAddress: String
+    let phoneNumber: String
+    let firstName: String
+    let lastName: String
+    let resetKey: String?
     
     private enum CodingKeys: String, CodingKey {
         case humanId
@@ -26,9 +27,23 @@ public struct Human: Codable {
     
     var fullName: String {
         return self.firstName + " " + self.lastName
-        
     }
-
     
-            
+    public static func create (
+        firstName: String,
+        lastName: String,
+        emailAddress: String,
+        phone: String,
+        secret: String?,
+        existingPhone: PhoneNumber?,
+        verifyPhone: Bool?,
+        creationNote: String?,
+        session: Session?,
+        supplier: Bool?,
+        hasAgentSecret: Bool?,
+        callback: @escaping (Error?, Human?) -> Void
+        ) {
+            fatalError("Not implemented")
+        }
 }
+
