@@ -16,4 +16,11 @@ public struct EntityCount: Codable {
         case count
         case fragment
     }
+    
+    public static func retrieve (
+        nameFragment: String?,
+        callback: @escaping (Error?, EntityCount?) -> Void
+        ) {
+        fatalError("Not implemented")
+        }
 }
