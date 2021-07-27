@@ -45,5 +45,12 @@ public struct Human: Codable {
         ) {
             fatalError("Not implemented")
         }
+    public static func retrieve (
+        humanId: String,
+        session: Session?,
+        callback: @escaping (Error?, Human?) -> Void
+        ) {
+        fatalError("Not implemented")
+        }
 }
 
