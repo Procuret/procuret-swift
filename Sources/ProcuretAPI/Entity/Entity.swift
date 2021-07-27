@@ -31,4 +31,15 @@ public struct Entity: Codable {
         case created
         case disposition
     }
+    
+    public static func setPermissions (
+        entityId: Int,
+        granteeAgentId: Int,
+        read: Bool,
+        write: Bool,
+        manage: Bool,
+        callback: @escaping (Error?, Entity?) -> Void
+        ) {
+        fatalError("Not implemented")
+        }
 }
