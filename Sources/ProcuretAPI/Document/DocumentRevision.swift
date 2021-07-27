@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Document: Codable {
+public struct DocumentRevision: Codable {
     
     let name: String
     let created: String
@@ -23,7 +23,7 @@ public struct Document: Codable {
         markdownBody: String,
         path: String,
         name: String,
-        callback: @escaping (Error?, Document?) -> Void
+        callback: @escaping (Error?, DocumentRevision?) -> Void
         ) {
         fatalError("Not implemented")
     }
