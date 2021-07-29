@@ -42,15 +42,16 @@ public struct Human: Codable {
         supplier: Bool?,
         hasAgentSecret: Bool?,
         callback: @escaping (Error?, Human?) -> Void
-        ) {
+    ) {
             fatalError("Not implemented")
-        }
+    }
+    
     public static func retrieve (
         humanId: String,
         session: Session?,
         callback: @escaping (Error?, Human?) -> Void
-        ) {
+    ) {
         fatalError("Not implemented")
-        }
+    }
 }
 

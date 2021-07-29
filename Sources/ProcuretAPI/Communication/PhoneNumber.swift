@@ -9,11 +9,13 @@ import Foundation
 
 public struct PhoneNumber: Codable {
     
+    internal static let path = "/phone-number"
+    
     let phoneId: Int
     let digits: String
     
     private enum CodingKeys: String, CodingKey {
-        case phoneId = "index_id"
+        case phoneId = "indexid"
         case digits
     }
     
@@ -21,7 +23,23 @@ public struct PhoneNumber: Codable {
         digits: String,
         session: Session?,
         callback: @escaping (Error?, PhoneNumber?) -> Void
-        ) {
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(digits: digits),
+            session: session,
+            query: nil,
+            method: .POST
+        ) { error, data in
             fatalError("Not implemented")
         }
+    }
+    
+    private struct CreatePayload: Codable {
+        let digits: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case digits = "phone"
+        }
+    }
 }
