@@ -41,9 +41,10 @@ public struct Deal: Codable {
         commitmentId: String,
         session: Session?,
         callback: @escaping (Error?, Deal?) -> Void
-        ) {
+    ) {
         fatalError("Not implemented")
-        }
+    }
+    
     public static func retrieveMany (
         limit: Int,
         offset: Int,
@@ -52,7 +53,7 @@ public struct Deal: Codable {
         anyNameFragment: String?,
         session: Session?,
         callback: @escaping (Error?, Array<Deal>?) -> Void
-        ) {
+    ) {
         fatalError("Not implemented")
-        }
+    }
 }
