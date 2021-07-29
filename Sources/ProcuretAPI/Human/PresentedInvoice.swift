@@ -16,13 +16,13 @@ public struct PresentedInvoice: Codable {
     }
     
     public static func create (
-        amount: Float,
+        amount: Decimal,
         supplierId: Int,
         invoiceIdentifier: String,
         preferredPeriods: Int,
         session: Session?,
         callback: @escaping (Error?, Human?) -> Void
-        ) {
+    ) {
         fatalError("Not implemented")
-        }
+    }
 }
