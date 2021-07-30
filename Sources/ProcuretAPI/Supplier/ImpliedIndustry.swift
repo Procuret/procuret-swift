@@ -25,5 +25,6 @@ public struct ImpliedCustomerIndustry: Codable {
         callback: @escaping (Error?, ImpliedCustomerIndustry?) -> Void
     ) {
             fatalError("Not implemented")
-        }
     }
+}
+
