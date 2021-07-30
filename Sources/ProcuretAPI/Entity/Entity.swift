@@ -39,7 +39,7 @@ public struct Entity: Codable {
         write: Bool,
         manage: Bool,
         callback: @escaping (Error?, Entity?) -> Void
-        ) {
+    ) {
         fatalError("Not implemented")
-        }
+    }
 }
