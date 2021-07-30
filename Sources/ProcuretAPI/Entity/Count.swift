@@ -9,6 +9,8 @@ import Foundation
 
 public struct EntityCount: Codable {
     
+    internal static let path = "entity/count"
+    
     let count: Int
     let fragment: String
     
