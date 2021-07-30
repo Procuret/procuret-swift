@@ -9,6 +9,8 @@ import Foundation
 
 public struct SigninToken: Codable {
     
+    internal static let path = "/signin-token"
+    
     let emailAddress: String
     let afterSigninPath: String?
     let perspective: Perspective
