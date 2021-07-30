@@ -9,6 +9,8 @@ import Foundation
 
 public struct ContactRequest: Codable {
     
+    internal static let path = "/contact-request"
+    
     let emailAddress: String
     let phoneNumber: String
     let firstName: String
