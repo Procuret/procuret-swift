@@ -34,7 +34,7 @@ public struct Supplier: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(legalName: legalName, tradingName: tradingName!, phoneNumber: phoneNumber, address: address),
+            payload: CreatePayload(legalName: legalName, tradingName: tradingName, phoneNumber: phoneNumber, address: address),
             session: nil,
             query: nil,
             method: .POST
@@ -45,7 +45,7 @@ public struct Supplier: Codable {
     
     private struct CreatePayload: Codable {
         let legalName: String
-        let tradingName: String
+        let tradingName: String?
         let phoneNumber: String
         let address: Address
         
