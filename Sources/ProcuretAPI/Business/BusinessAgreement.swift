@@ -18,4 +18,30 @@ public struct BusinessAgreement: Codable {
         case businessId = "business_id"
         case signaturePNG = "signature_base64PNG"
     }
+    
+    public static func create(
+        businessId: String,
+        signaturePNG: String,
+        callback: @escaping (Error?, String?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(businessId:businessId, signaturePNG: signaturePNG),
+            session: nil,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
+    private struct CreatePayload: Codable {
+        let businessId: String
+        let signaturePNG: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case businessId = "business_id"
+            case signaturePNG = "signature_base64PNG"
+        }
+    }
 }
