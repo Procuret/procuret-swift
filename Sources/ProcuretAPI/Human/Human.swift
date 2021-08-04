@@ -9,6 +9,8 @@ import Foundation
 
 public struct Human: Codable {
     
+    internal static let path = "/human"
+    
     let humanId: String
     let emailAddress: String
     let phoneNumber: String
