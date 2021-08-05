@@ -26,7 +26,26 @@ public struct DealConfirmation: Codable {
         commitmentId: String?,
         session: Session?,
         callback: @escaping (Error?, DealConfirmation?) -> Void
-        ) {
-        fatalError("Not implemented")
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(seriesId: seriesId, commitmentId: commitmentId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+                fatalError("Not implemented")
         }
+    }
+        
+    private struct CreatePayload: Codable {
+        let seriesId: String?
+        let commitmentId: String?
+            
+        private enum CodingKeys: String, CodingKey {
+            case seriesId = "series_id"
+            case commitmentId = "commitment_id"
+        }
+    }
 }
+
