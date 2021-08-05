@@ -9,6 +9,8 @@ import Foundation
 
 public struct DealConfirmation: Codable {
     
+    internal static let path = "/deal-confirmation"
+    
     let seriesId: String
     let created: ProcuretTime
     let sentTo: String
