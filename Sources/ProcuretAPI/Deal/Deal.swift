@@ -9,6 +9,8 @@ import Foundation
 
 public struct Deal: Codable {
     
+    internal static let path = "/deal"
+    
     let setupId: String
     let commitmentId: String
     let transactingHumanId: Int
