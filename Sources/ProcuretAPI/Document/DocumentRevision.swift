@@ -24,7 +24,28 @@ public struct DocumentRevision: Codable {
         path: String,
         name: String,
         callback: @escaping (Error?, DocumentRevision?) -> Void
-        ) {
-        fatalError("Not implemented")
+    ) {
+        Request.make(
+            path: path,
+            payload: CreatePayload(markdownBody: markdownBody, path: path,
+                name: name),
+            session: nil,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
+    private struct CreatePayload: Codable {
+        let markdownBody: String
+        let path: String
+        let name: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case markdownBody = "markdown_body"
+            case path
+            case name
+        }
     }
 }
