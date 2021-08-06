@@ -8,6 +8,9 @@
 import Foundation
 
 public struct Entity: Codable {
+    
+    internal static let path = "/entity/permissions"
+    
     let publicId: Int
     let publicIdShort: Int
     let entityIdentifiers: Array<EntityIdentifier>
