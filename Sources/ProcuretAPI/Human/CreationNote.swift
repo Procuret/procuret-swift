@@ -18,4 +18,29 @@ public struct CreationNote: Codable {
         case humanId = "human_id"
         case note
     }
+    
+    public static func retrieve(
+        humanId: String,
+        session: Session?,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(humanId: humanId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
+    private struct CreatePayload: Codable {
+        let humanId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case humanId = "human_id"
+        }
+    }
 }
+
