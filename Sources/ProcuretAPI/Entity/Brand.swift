@@ -9,6 +9,8 @@ import Foundation
 
 public struct Brand: Codable {
     
+    internal static let path = "/entity/brand"
+    
     let entityId: String
     let name: String
     let saleMessage: String
