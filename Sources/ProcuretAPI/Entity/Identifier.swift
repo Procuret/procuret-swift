@@ -8,6 +8,9 @@
 import Foundation
 
 public struct EntityIdentifier: Codable {
+    
+    public static let path = "/"
+    
     let idType: String
     let idString: String
     
