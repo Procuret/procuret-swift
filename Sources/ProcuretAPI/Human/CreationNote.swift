@@ -9,6 +9,8 @@ import Foundation
 
 public struct CreationNote: Codable {
     
+    internal static let path = "/creation-note"
+    
     let humanId: String
     let note: Note
     
