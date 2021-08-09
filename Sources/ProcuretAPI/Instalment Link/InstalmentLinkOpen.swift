@@ -9,6 +9,8 @@ import Foundation
 
 public struct InstalmentLinkOpen: Codable {
     
+    internal static let path = InstalmentLink.path + "/open"
+    
     let sequence: Int
     let created: String
     

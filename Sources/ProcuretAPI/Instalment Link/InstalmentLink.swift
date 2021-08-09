@@ -9,6 +9,8 @@ import Foundation
 
 public struct InstalmentLink: Codable {
     
+    internal static let path = "/instalment-link"
+    
     let publicId: String
     let supplier: EntityHeadline
     let created: String
