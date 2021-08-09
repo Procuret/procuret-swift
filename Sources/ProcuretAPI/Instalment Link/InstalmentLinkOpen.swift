@@ -19,11 +19,26 @@ public struct InstalmentLinkOpen: Codable {
         case created
     }
     
-    public static func create (
+    public static func create(
         instalmentLinkId: String,
         session: Session?,
         callback: @escaping (Error?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(instalmentLinkId: instalmentLinkId),
+            session: session,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    private struct CreatePayload: Codable {
+        let instalmentLinkId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case instalmentLinkId = "link_id"
+        }
     }
 }
