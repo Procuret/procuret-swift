@@ -31,7 +31,7 @@ public struct Human: Codable {
         return self.firstName + " " + self.lastName
     }
     
-    public static func create (
+    public static func create(
         firstName: String,
         lastName: String,
         emailAddress: String,
@@ -45,10 +45,48 @@ public struct Human: Codable {
         hasAgentSecret: Bool?,
         callback: @escaping (Error?, Human?) -> Void
     ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(firstName: firstName,
+                    lastName: lastName, emailAddress: emailAddress,
+                    phone: phone, secret: secret, existingPhone: existingPhone,
+                    verifyPhone: verifyPhone, creationNote: creationNote,
+                    supplier: supplier, hasAgentSecret: hasAgentSecret),
+            session: session,
+            query: nil,
+            method: .POST
+        ) { error, data in
             fatalError("Not implemented")
+        }
     }
     
-    public static func retrieve (
+    private struct CreatePayload: Codable {
+        let firstName: String
+        let lastName: String
+        let emailAddress: String
+        let phone: String
+        let secret: String?
+        let existingPhone: PhoneNumber?
+        let verifyPhone: Bool?
+        let creationNote: String?
+        let supplier: Bool?
+        let hasAgentSecret: Bool?
+        
+        private enum CodingKeys: String, CodingKey{
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case emailAddress = "email_address"
+            case phone
+            case secret
+            case existingPhone = "phone_id"
+            case verifyPhone = "verify_phone"
+            case creationNote = "creation_note"
+            case supplier
+            case hasAgentSecret = "has_agent_secret"
+        }
+    }
+    
+    public static func retrieve(
         humanId: String,
         session: Session?,
         callback: @escaping (Error?, Human?) -> Void
@@ -56,4 +94,6 @@ public struct Human: Codable {
         fatalError("Not implemented")
     }
 }
+
+
 
