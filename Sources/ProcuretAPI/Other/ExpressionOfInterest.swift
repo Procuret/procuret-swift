@@ -8,5 +8,7 @@
 import Foundation
 
 public struct ExpressionOfInterest: Codable {
+    
+    internal static let path = "/expression-of-interest"
 
 }
