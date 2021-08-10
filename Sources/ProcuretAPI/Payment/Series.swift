@@ -9,6 +9,8 @@ import Foundation
 
 public struct PaymentSeries: Codable {
     
+    internal static let path = "/payment/series"
+    
     let publicId: String
     let created: ProcuretTime
     let creatingAgent: String
