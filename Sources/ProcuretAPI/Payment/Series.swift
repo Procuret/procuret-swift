@@ -37,17 +37,26 @@ public struct PaymentSeries: Codable {
         case disposition
     }
     
-    public static func create (
+    public static func create(
         paymentMethod: PaymentMethod,
         setupId: String,
         months: Int,
         session: Session?,
         callback: @escaping (Error?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(paymentMethod: paymentMethod,
+                setupId: setupId, months: months),
+            session: session,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
     }
     
-    public static func createWithCommitment (
+    public static func createWithCommitment(
         commitmentId: String,
         session: Session?,
         callback: @escaping (Error?, Self?) -> Void
@@ -55,7 +64,7 @@ public struct PaymentSeries: Codable {
         fatalError("Not implemented")
     }
     
-    public static func retrieve (
+    public static func retrieve(
         publicId: String,
         session: Session?,
         callback: @escaping (Error?, Self?) -> Void
@@ -63,11 +72,23 @@ public struct PaymentSeries: Codable {
         fatalError("Not implemented")
     }
     
-    public static func retrieveByCommitment (
+    public static func retrieveByCommitment(
         publicId: String,
         session: Session?,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         fatalError("Not implemented")
+    }
+    
+    private struct CreatePayload: Codable {
+        let paymentMethod: PaymentMethod
+        let setupId: String
+        let months: Int
+        
+        private enum CodingKeys: String, CodingKey {
+            case paymentMethod = "payment_method_id"
+            case setupId = "setup_id"
+            case months = "periods"
+        }
     }
 }
