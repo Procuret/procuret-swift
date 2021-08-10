@@ -21,7 +21,7 @@ public struct SigninToken: Codable {
         case perspective
     }
     
-    public static func create (
+    public static func create(
         emailAddress: String,
         afterSigninPath: String?,
         perspective: Perspective,
