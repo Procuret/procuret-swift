@@ -9,7 +9,7 @@ import Foundation
 
 public struct SeriesCondition: Codable {
     
-    internal static let path = "/series/condition/list"
+    internal static let listPath = "/series/condition/list"
     
     let indexid: Int
     let name: String
