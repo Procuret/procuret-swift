@@ -57,6 +57,6 @@ public struct ShopifyInstallLink: Codable {
                 case url
                 case shopName = "shop_name"
                 case supplierId = "supplier_id"
-            }
         }
     }
+}
