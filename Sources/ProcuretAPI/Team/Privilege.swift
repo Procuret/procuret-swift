@@ -9,4 +9,11 @@ import Foundation
 
 public struct Privilege: Codable {
     
+    let indexid: Int
+    let name: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case indexid
+        case name
+    }
 }
