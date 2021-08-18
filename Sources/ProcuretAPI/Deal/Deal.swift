@@ -45,18 +45,23 @@ public struct Deal: Codable {
         session: Session?,
         callback: @escaping (Error?, Deal?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: CreateParameters(commitmentId: commitmentId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
     }
     
-    public static func retrieveMany(
-        limit: Int,
-        offset: Int,
-        order: Order,
-        orderBy: DealOrderBy,
-        anyNameFragment: String?,
-        session: Session?,
-        callback: @escaping (Error?, Array<Deal>?) -> Void
-    ) {
-        fatalError("Not implemented")
+    private struct CreateParameters: Codable {
+        let commitmentId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case commitmentId = "commitment_id"
+        }
     }
 }
+
