@@ -10,6 +10,7 @@ import Foundation
 public struct CreditAssessment: Codable {
     
     internal static let path = "/assessment/credit"
+    internal static let listPath = CreditAssessment.path + "/list"
     
     let setupId: String
     let transactingHumanId: Int
@@ -47,6 +48,22 @@ public struct CreditAssessment: Codable {
         }
     }
     
+    public static func retrieve(
+        assessmentId: Int,
+        session: Session?,
+        callback: @escaping (Error?, CreditAssessment?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreateParameters(assessmentId: assessmentId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
     private struct CreatePayload: Codable {
         let setupCode: String
         let transactingHumanId: String
@@ -61,5 +78,9 @@ public struct CreditAssessment: Codable {
             case forceFresh = "force_fresh"
             case forcePositive = "force_positive"
         }
+    }
+    
+    private struct CreateParameters: Codable {
+        let assessmentId: Int
     }
 }
