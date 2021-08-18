@@ -26,6 +26,22 @@ public struct DealLedger: Codable {
         session: Session?,
         callback: @escaping (Error?, Self?) -> Void
         ) {
-        fatalError("Not implemented")
+            Request.make(
+                path: self.path,
+                payload: CreateParameters(commitmentId: commitmentId),
+                session: nil,
+                query: nil,
+                method: .GET
+            ) { error, data in
+            fatalError("Not implemented")
         }
+    }
+    
+    private struct CreateParameters: Codable {
+        let commitmentId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case commitmentId = "commitment_id"
+        }
+    }
 }
