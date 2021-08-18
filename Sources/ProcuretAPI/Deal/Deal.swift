@@ -10,6 +10,7 @@ import Foundation
 public struct Deal: Codable {
     
     internal static let path = "/deal"
+    internal static let listPath = Deal.path + "/list"
     
     let setupId: String
     let commitmentId: String
@@ -39,7 +40,7 @@ public struct Deal: Codable {
         case disposition
     }
     
-    public static func retrieve (
+    public static func retrieve(
         commitmentId: String,
         session: Session?,
         callback: @escaping (Error?, Deal?) -> Void
@@ -47,7 +48,7 @@ public struct Deal: Codable {
         fatalError("Not implemented")
     }
     
-    public static func retrieveMany (
+    public static func retrieveMany(
         limit: Int,
         offset: Int,
         order: Order,
