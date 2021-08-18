@@ -30,7 +30,8 @@ public struct DealConfirmation: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreateParameters(seriesId: seriesId, commitmentId: commitmentId),
+            payload: RetrieveManyParameters(seriesId: seriesId,
+                commitmentId: commitmentId),
             session: session,
             query: nil,
             method: .GET
@@ -39,7 +40,7 @@ public struct DealConfirmation: Codable {
         }
     }
         
-    private struct CreateParameters: Codable {
+    private struct RetrieveManyParameters: Codable {
         let seriesId: String?
         let commitmentId: String?
             
