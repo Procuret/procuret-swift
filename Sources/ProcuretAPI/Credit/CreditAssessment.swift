@@ -82,5 +82,9 @@ public struct CreditAssessment: Codable {
     
     private struct CreateParameters: Codable {
         let assessmentId: Int
+        
+        private enum CodingKeys: String, CodingKey {
+            case assessmentId = "assessment_id"
+        }
     }
 }
