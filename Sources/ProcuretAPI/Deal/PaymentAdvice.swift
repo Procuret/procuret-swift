@@ -9,7 +9,8 @@ import Foundation
 
 public struct PaymentAdvice: Codable {
     
-    internal static let path = "Supplier.path + /payment-advice"
+    internal static let path = Supplier.path + "/payment-advice"
+    internal static let listPath = PaymentAdvice.path + "/list"
     
     let seriesId: String
     let created: ProcuretTime
