@@ -9,6 +9,8 @@ import Foundation
 
 public struct DealLedger: Codable {
     
+    internal static let path = Deal.path + "/ledger"
+    
     let commitmentId: String
     let lines: Array<DealLedgerLine>
     let rate: String
