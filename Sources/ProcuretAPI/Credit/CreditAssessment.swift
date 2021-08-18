@@ -55,7 +55,7 @@ public struct CreditAssessment: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreateParameters(assessmentId: assessmentId),
+            payload: RetrieveParameters(assessmentId: assessmentId),
             session: session,
             query: nil,
             method: .GET
@@ -80,7 +80,7 @@ public struct CreditAssessment: Codable {
         }
     }
     
-    private struct CreateParameters: Codable {
+    private struct RetrieveParameters: Codable {
         let assessmentId: Int
         
         private enum CodingKeys: String, CodingKey {
