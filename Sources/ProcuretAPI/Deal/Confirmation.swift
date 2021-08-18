@@ -10,6 +10,7 @@ import Foundation
 public struct DealConfirmation: Codable {
     
     internal static let path = "/deal-confirmation"
+    internal static let listPath = DealConfirmation.path + "/list"
     
     let seriesId: String
     let created: ProcuretTime
@@ -29,7 +30,7 @@ public struct DealConfirmation: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(seriesId: seriesId, commitmentId: commitmentId),
+            payload: CreateParameters(seriesId: seriesId, commitmentId: commitmentId),
             session: session,
             query: nil,
             method: .GET
@@ -38,7 +39,7 @@ public struct DealConfirmation: Codable {
         }
     }
         
-    private struct CreatePayload: Codable {
+    private struct CreateParameters: Codable {
         let seriesId: String?
         let commitmentId: String?
             
