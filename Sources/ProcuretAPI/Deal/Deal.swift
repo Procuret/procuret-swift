@@ -47,7 +47,7 @@ public struct Deal: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreateParameters(commitmentId: commitmentId),
+            payload: RetrieveParameters(commitmentId: commitmentId),
             session: session,
             query: nil,
             method: .GET
@@ -56,7 +56,7 @@ public struct Deal: Codable {
         }
     }
     
-    private struct CreateParameters: Codable {
+    private struct RetrieveParameters: Codable {
         let commitmentId: String
         
         private enum CodingKeys: String, CodingKey {
