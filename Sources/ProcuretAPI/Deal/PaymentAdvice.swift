@@ -47,7 +47,7 @@ public struct PaymentAdvice: Codable {
             payload: RetrieveManyParameters(seriesId: seriesId),
             session: session,
             query: nil,
-            method: .POST
+            method: .GET
         ) { error, data in
             fatalError("Not implemented")
         }
