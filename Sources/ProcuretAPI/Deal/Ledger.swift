@@ -21,18 +21,18 @@ public struct DealLedger: Codable {
         case rate
     }
     
-    public static func retrieve (
+    public static func retrieve(
         commitmentId: String,
         session: Session?,
         callback: @escaping (Error?, Self?) -> Void
-        ) {
-            Request.make(
-                path: self.path,
-                payload: RetrieveParameters(commitmentId: commitmentId),
-                session: nil,
-                query: nil,
-                method: .GET
-            ) { error, data in
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(commitmentId: commitmentId),
+            session: nil,
+            query: nil,
+            method: .GET
+        ) { error, data in
             fatalError("Not implemented")
         }
     }
