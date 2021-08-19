@@ -60,6 +60,22 @@ public struct Human: Codable {
         }
     }
     
+    public static func retrieve(
+        humanId: String,
+        session: Session?,
+        callback: @escaping (Error?, Human?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(humanId: humanId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
     private struct CreatePayload: Codable {
         let firstName: String
         let lastName: String
@@ -86,12 +102,12 @@ public struct Human: Codable {
         }
     }
     
-    public static func retrieve(
-        humanId: String,
-        session: Session?,
-        callback: @escaping (Error?, Human?) -> Void
-    ) {
-        fatalError("Not implemented")
+    private struct RetrieveParameters: Codable {
+        let humanId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case humanId = "human_id"
+        }
     }
 }
 
