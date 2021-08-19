@@ -24,13 +24,13 @@ public struct Brand: Codable {
         case created
     }
     
-    public static func create (
+    public static func create(
         name: String,
         saleMessage: String,
         entityId: String,
         session: Session?,
         callback: @escaping (Error?, Brand?) -> Void
-        ) {
-            fatalError("Not implemented")
-        }
+    ) {
+        fatalError("Not implemented")
+    }
 }
