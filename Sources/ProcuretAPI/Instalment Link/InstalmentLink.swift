@@ -32,7 +32,7 @@ public struct InstalmentLink: Codable {
         case disposition
     }
     
-    public static func create (
+    public static func create(
         supplierId: Int,
         amount: String,
         identifier: String,
@@ -54,7 +54,7 @@ public struct InstalmentLink: Codable {
         }
     }
     
-    public static func retrieve (
+    public static func retrieve(
         publicId: String,
         session: Session?,
         callback: @escaping (Error?, InstalmentLink?) -> Void

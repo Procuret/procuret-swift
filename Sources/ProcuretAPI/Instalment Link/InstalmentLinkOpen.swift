@@ -34,6 +34,7 @@ public struct InstalmentLinkOpen: Codable {
             fatalError("Not implemented")
         }
     }
+    
     private struct CreatePayload: Codable {
         let instalmentLinkId: String
         
