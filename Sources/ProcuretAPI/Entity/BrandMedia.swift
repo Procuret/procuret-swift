@@ -9,5 +9,7 @@ import Foundation
 
 public struct BrandMedia: Codable {
     
-    
+    let scheme: ColourScheme
+    let primaryColour: Colour
+    let logoUrl: String
 }
