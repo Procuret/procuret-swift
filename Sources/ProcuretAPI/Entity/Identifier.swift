@@ -19,12 +19,12 @@ public struct EntityIdentifier: Codable {
         case idString = "id"
     }
     
-    public static func create (
+    public static func create(
         EntityId: Int,
         idType: Int,
         identifier: String,
         callback: @escaping (Error?, Data?) -> Void
-        ) {
+    ) {
         fatalError("Not implemented")
     }
 }

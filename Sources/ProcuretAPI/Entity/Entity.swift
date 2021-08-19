@@ -36,7 +36,7 @@ public struct Entity: Codable {
         case disposition
     }
     
-    public static func setPermissions (
+    public static func setPermissions(
         entityId: Int,
         granteeAgentId: Int,
         read: Bool,
