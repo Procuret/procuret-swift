@@ -8,12 +8,11 @@
 import Foundation
 
 public struct HumanIdentity: Codable {
-  let dateOfBirth: String?
-  let address: Address?
+    let dateOfBirth: String?
+    let address: Address?
     
-  private enum CodingKeys: String, CodingKey {
-    case dateOfBirth = "date_of_birth"
-    case address
-  }
-    
+    private enum CodingKeys: String, CodingKey {
+        case dateOfBirth = "date_of_birth"
+        case address
+    }
 }
