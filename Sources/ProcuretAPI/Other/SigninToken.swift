@@ -13,7 +13,7 @@ public struct SigninToken: Codable {
     
     let emailAddress: String
     let afterSigninPath: String?
-    let perspective: Perspective
+    let perspective: Perspective //needs enumeration
     
     public enum CodingKeys: String, CodingKey {
         case emailAddress = "email_address"
@@ -27,6 +27,32 @@ public struct SigninToken: Codable {
         perspective: Perspective,
         callback: @escaping (Error?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(emailAddress: emailAddress,
+                afterSigninPath: afterSigninPath,
+                perspective: perspective),
+            session: nil,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+
+    private struct CreatePayload: Codable {
+        let emailAddress: String
+        let afterSigninPath: String?
+        let perspective: Perspective
+            
+        private enum CodingKeys: String, CodingKey {
+            case emailAddress = "account_email"
+            case afterSigninPath = "after_signin_path"
+            case perspective
+        }
     }
 }
+
+
+
+
