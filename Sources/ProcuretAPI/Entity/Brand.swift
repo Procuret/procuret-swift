@@ -26,11 +26,37 @@ public struct Brand: Codable {
     
     public static func create(
         name: String,
+        media: Array<BrandMedia>,
         saleMessage: String,
         entityId: String,
         session: Session?,
         callback: @escaping (Error?, Brand?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(name: name, media: media,
+                saleMessage: saleMessage, entityId: entityId),
+            session: session,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+        
+    private struct CreatePayload: Codable {
+        let name: String
+        let media: Array<BrandMedia>
+        let saleMessage: String
+        let entityId: String
+        
+            
+        private enum CodingKeys: String, CodingKey {
+            case name = "brand_name"
+            case media
+            case saleMessage = "sale_message"
+            case entityId = "entity_id"
+        }
     }
 }
+
