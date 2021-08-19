@@ -10,6 +10,7 @@ import Foundation
 public struct Entity: Codable {
     
     internal static let path = "/entity/permissions"
+    internal static let listPath = "/entity/list"
     
     let publicId: Int
     let publicIdShort: Int
@@ -43,6 +44,32 @@ public struct Entity: Codable {
         manage: Bool,
         callback: @escaping (Error?, Entity?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: SetPermissions(entityId: entityId,
+                granteeAgentId: granteeAgentId, read: read,
+                write: write, manage: manage),
+            session: nil,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+        
+    private struct SetPermissions: Codable {
+        let entityId: Int
+        let granteeAgentId: Int
+        let read: Bool
+        let write: Bool
+        let manage: Bool
+        
+        private enum CodingKeys: String, CodingKey {
+            case entityId = "entity_id"
+            case granteeAgentId = "agent_id"
+            case read
+            case write
+            case manage
+        }
     }
 }
