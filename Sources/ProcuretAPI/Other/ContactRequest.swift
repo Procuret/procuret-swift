@@ -33,6 +33,32 @@ public struct ContactRequest: Codable {
         message: String,
         callback: @escaping (Error?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(emailAddress: emailAddress,
+                phoneNumber: phoneNumber, firstName: firstName,
+                lastName: lastName, message: message),
+            session: nil,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
+    private struct CreatePayload: Codable {
+        let emailAddress: String
+        let phoneNumber: String
+        let firstName: String
+        let lastName: String
+        let message: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case emailAddress = "email"
+            case phoneNumber = "phone"
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case message
+        }
     }
 }
