@@ -11,4 +11,9 @@ public struct HumanHeadline: Codable {
     
     let agentId: Int
     let fullName: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case agentId = "agent_id"
+        case fullName = "full_name"
+    }
 }
