@@ -10,5 +10,6 @@ import Foundation
 public struct IdentityAssessment: Codable {
     
     internal static let path = "/assessment/identity"
+    internal static let listPath = IdentityAssessment.path + "/list"
     
 }
