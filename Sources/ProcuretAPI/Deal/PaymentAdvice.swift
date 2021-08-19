@@ -37,6 +37,22 @@ public struct PaymentAdvice: Codable {
         }
     }
     
+    public static func retrieveMany(
+        seriesId: String,
+        session: Session?,
+        callback: @escaping (Error?, Array<Self>?) -> Void
+    ) {
+        Request.make(
+            path: self.listPath,
+            payload: RetrieveManyParameters(seriesId: seriesId),
+            session: session,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
     private struct CreatePayload: Codable {
         let seriesId: String
         let recipientEmail: String
@@ -44,6 +60,14 @@ public struct PaymentAdvice: Codable {
         private enum CodingKeys: String, CodingKey {
             case seriesId = "series_id"
             case recipientEmail = "recipient_email"
+        }
+    }
+    
+    private struct RetrieveManyParameters: Codable {
+        let seriesId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case seriesId = "series_id"
         }
     }
 }
