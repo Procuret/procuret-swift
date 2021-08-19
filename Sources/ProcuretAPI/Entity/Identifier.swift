@@ -20,11 +20,32 @@ public struct EntityIdentifier: Codable {
     }
     
     public static func create(
-        EntityId: Int,
+        entityId: Int,
         idType: Int,
         identifier: String,
         callback: @escaping (Error?, Data?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(entityId: entityId,
+                idType: idType, identifier: identifier),
+            session: nil,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
+    private struct CreatePayload: Codable {
+        let entityId: Int
+        let idType: Int
+        let identifier: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case entityId = "entity_id"
+            case idType = "id_type"
+            case identifier
+        }
     }
 }
