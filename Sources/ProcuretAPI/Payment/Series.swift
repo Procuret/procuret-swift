@@ -91,7 +91,7 @@ public struct PaymentSeries: Codable {
             payload: RetrieveCommitment(commitmentId: commitmentId),
             session: session,
             query: nil,
-            method: .POST
+            method: .GET
         ) { error, data in
             fatalError("Not implemented")
         }
