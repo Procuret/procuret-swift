@@ -10,4 +10,5 @@ import Foundation
 public struct Payment: Codable {
     
     internal static let path = "/payment"
+    
 }
