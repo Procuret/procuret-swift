@@ -10,6 +10,9 @@ import Foundation
 public struct ShopifyInstallLink: Codable {
     
     internal static let path = "/shopify/install-link"
+    internal static let listPath = ShopifyInstallLink.path + "/list"
+    internal static let exhaustPath = ShopifyInstallLink.path + "/exhaustion"
+    internal static let messagePath = ShopifyInstallLink.path + "/message"
     
     let publicId: String
     let created: ProcuretTime
@@ -43,20 +46,20 @@ public struct ShopifyInstallLink: Codable {
             session: session,
             query: nil,
             method: .POST
-            ) { error, data in
-                fatalError("Not implemented")
-            }
+        ) { error, data in
+            fatalError("Not implemented")
         }
+    }
         
-        private struct CreatePayload: Codable {
-            let url: String
-            let shopName: String
-            let supplierId: String
+    private struct CreatePayload: Codable {
+        let url: String
+        let shopName: String
+        let supplierId: String
             
-            private enum CodingKeys: String, CodingKey {
-                case url
-                case shopName = "shop_name"
-                case supplierId = "supplier_id"
+        private enum CodingKeys: String, CodingKey {
+            case url
+            case shopName = "shop_name"
+            case supplierId = "supplier_id"
         }
     }
 }
