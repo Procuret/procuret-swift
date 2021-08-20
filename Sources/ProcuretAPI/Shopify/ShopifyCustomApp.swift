@@ -10,6 +10,7 @@ import Foundation
 public struct ShopifyCustomApp: Codable {
     
     internal static let path = "/shopify/custom-app"
+    internal static let listPath = ShopifyCustomApp.path + "/list"
     
     let supplierId: String
     let apiKey: String
