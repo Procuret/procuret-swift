@@ -18,4 +18,29 @@ public struct SeriesCondition: Codable {
         case indexid
         case name
     }
+    
+    public static func retrieveFulfilled(
+        commitmentId: String,
+        session: Session?,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.listPath,
+            payload: RetrieveParameters(commitmentId: commitmentId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    private struct RetrieveParameters: Codable {
+        let commitmentId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case commitmentId = "commitment_id"
+        }
+    }
 }
+
+
