@@ -35,6 +35,6 @@ public struct Setup: Codable {
         case description 
         case value
         case created
-        }
+    }
 }
     
