@@ -40,6 +40,22 @@ public struct HouseAccount: Codable {
         }
     }
     
+    public static func retrieve(
+        currency: Currency,
+        session: Session?,
+        callback: @escaping (Error?, HouseAccount?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(currency: currency),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
     private struct CreatePayload: Codable {
         let currency: Currency
         let bsbCode: String
@@ -51,6 +67,14 @@ public struct HouseAccount: Codable {
             case bsbCode = "bsb"
             case accountNumber = "account_number"
             case accountName = "account_name"
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let currency: Currency
+        
+        private enum CodingKeys: String, CodingKey {
+            case currency
         }
     }
 }
