@@ -10,6 +10,7 @@ import Foundation
 public struct ShopifyAccessToken: Codable {
     
     internal static let path = "/shopify/access-token"
+    internal static let listPath = ShopifyAccessToken.path + "/list"
     
     let publicId: String
     let created: ProcuretTime
@@ -42,6 +43,23 @@ public struct ShopifyAccessToken: Codable {
         }
     }
     
+    public static func retrieveList(
+        supplierId: String,
+        active: Bool?,
+        session: Session?,
+        callback: @escaping (Error?, Array<Self>?) -> Void
+    ) {
+        Request.make(
+            path: self.listPath,
+            payload: RetrieveParameters(supplierId: supplierId, active: active),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
     private struct CreatePayload: Codable {
         let url: String
         let requestId: String
@@ -49,6 +67,16 @@ public struct ShopifyAccessToken: Codable {
         private enum CodingKeys: String, CodingKey {
             case url
             case requestId = "request_id"
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let supplierId: String
+        let active: Bool?
+        
+        private enum CodingKeys: String, CodingKey {
+            case supplierId = "supplier_id"
+            case active
         }
     }
 }
