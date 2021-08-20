@@ -48,6 +48,24 @@ public struct ShopifyCustomApp: Codable {
         }
     }
     
+    public static func retrieve(
+        supplierId: String,
+        shopName: String,
+        session: Session?,
+        callback: @escaping (Error?, Array<Self>?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(supplierId: supplierId,
+                shopName: shopName),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
     private struct CreatePayload: Codable {
         let shopName: String
         let supplierId: String
@@ -59,6 +77,16 @@ public struct ShopifyCustomApp: Codable {
             case supplierId = "supplier_id"
             case apiKey = "api_key"
             case apiSecretKey = "api_secret_key"
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let supplierId: String
+        let shopName: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case supplierId = "supplier_id"
+            case shopName = "shop_name"
         }
     }
 }
