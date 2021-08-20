@@ -62,7 +62,15 @@ public struct PaymentSeries: Codable {
         session: Session?,
         callback: @escaping (Error?, Self?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: CreateCommitmentPayload(commitmentId: commitmentId),
+            session: session,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
     }
     
     public static func retrieve(
@@ -106,6 +114,14 @@ public struct PaymentSeries: Codable {
             case paymentMethod = "payment_method_id"
             case setupId = "setup_id"
             case months = "periods"
+        }
+    }
+    
+    private struct CreateCommitmentPayload: Codable {
+        let commitmentId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case commitmentId = "commitment_id"
         }
     }
     
