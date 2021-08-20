@@ -9,4 +9,7 @@ import Foundation
 
 public struct AffiliatedProduct: Codable {
     
+    internal static let listPath = "/product/affiliated/list"
+    internal static let sellPath = "/product/affiliated/sell"
+    
 }
