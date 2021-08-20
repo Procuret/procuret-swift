@@ -38,6 +38,22 @@ public struct ShopifyAuthorisationRequest: Codable {
         }
     }
     
+    public static func retrieveByNonce(
+        nonce: String,
+        session: Session?,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveNonceParameters(nonce: nonce),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
     private struct CreatePayload: Codable {
         let supplierId: String
         let shopName: String
@@ -47,6 +63,14 @@ public struct ShopifyAuthorisationRequest: Codable {
             case supplierId = "supplier_id"
             case shopName = "shop_name"
             case beneficiaryAgentId = "beneficiary_agent_id"
+        }
+    }
+    
+    private struct RetrieveNonceParameters: Codable {
+        let nonce: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case nonce
         }
     }
 }
