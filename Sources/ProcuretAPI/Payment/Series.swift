@@ -10,6 +10,7 @@ import Foundation
 public struct PaymentSeries: Codable {
     
     internal static let path = "/payment/series"
+    internal static let listPath = PaymentSeries.path + "/list"
     
     let publicId: String
     let created: ProcuretTime
@@ -69,7 +70,15 @@ public struct PaymentSeries: Codable {
         session: Session?,
         callback: @escaping (Error?, Self?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(publicId: publicId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
     }
     
     public static func retrieveByCommitment(
@@ -89,6 +98,14 @@ public struct PaymentSeries: Codable {
             case paymentMethod = "payment_method_id"
             case setupId = "setup_id"
             case months = "periods"
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let publicId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case publicId = "public_id"
         }
     }
 }
