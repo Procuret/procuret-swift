@@ -10,6 +10,7 @@ import Foundation
 public struct TreasuryPayment: Codable {
     
     internal static let path = "/treasury/payment"
+    internal static let listPath = Payment.path + "/list"
     
     let publicId: String
     let executor: HumanHeadline
@@ -60,6 +61,22 @@ public struct TreasuryPayment: Codable {
                 fatalError("Not implemented")
         }
     }
+    
+    public static func retrieve(
+        publicId: String,
+        session: Session?,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(publicId: publicId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
                 
     private struct CreatePayload: Codable {
         let amount: String
@@ -80,6 +97,14 @@ public struct TreasuryPayment: Codable {
             case commitmentId = "commitment_id"
             case manuallyReconciled = "manually_reconciled"
             case active
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let publicId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case publicId = "public_id"
         }
     }
 }
