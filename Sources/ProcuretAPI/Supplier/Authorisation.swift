@@ -11,14 +11,6 @@ public struct SupplierAuthorisation: Codable {
     
     internal static let path = "/supplier/authorisation"
     
-    let supplierId: String
-    let authorise: Bool
-    
-    private enum CodingKeys: String, CodingKey {
-        case supplierId = "supplier_id"
-        case authorise
-    }
-    
     public static func create(
         supplierId: String,
         authorise: Bool,
