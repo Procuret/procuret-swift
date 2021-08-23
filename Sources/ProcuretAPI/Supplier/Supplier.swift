@@ -10,6 +10,7 @@ import Foundation
 public struct Supplier: Codable {
     
     internal static let path = "/supplier"
+    internal static let listPath = Supplier.path + "/list"
     
     let entity: Entity
     let authorised: Bool
@@ -45,6 +46,22 @@ public struct Supplier: Codable {
         }
     }
     
+    public static func retrieve(
+        supplierId: Int,
+        session: Session?,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(supplierId: supplierId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
+    
     private struct CreatePayload: Codable {
         let legalName: String
         let tradingName: String?
@@ -56,6 +73,14 @@ public struct Supplier: Codable {
             case tradingName = "trading_name"
             case phoneNumber = "phone_number"
             case address
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let supplierId: Int
+        
+        private enum CodingKeys: String, CodingKey {
+            case supplierId = "supplier_id"
         }
     }
 }
