@@ -10,4 +10,6 @@ import Foundation
 public struct Product: Codable {
     
     internal static let path = "/supplier/product"
+    internal static let sellPath = "/supplier/product/sale"
+    internal static let listPath = "/supplier/procuct/list"
 }
