@@ -10,6 +10,7 @@ import Foundation
 public struct XeroTenant: Codable {
     
     internal static let path = "/xero/tenant"
+    internal static let listPath = XeroTenant.path + "/list"
     
     let publicId: String
     let tenantId: String
