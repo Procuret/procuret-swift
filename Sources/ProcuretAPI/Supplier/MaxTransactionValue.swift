@@ -48,6 +48,24 @@ public struct MaxTransactionValue: Codable {
                 fatalError("Not implemented")
         }
     }
+    
+    public static func retrieve(
+        denomination: Currency,
+        supplierId: String,
+        session: Session?,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.listPath,
+            payload: RetrieveParameters(denomination: denomination,
+                supplierId: supplierId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+                fatalError("Not implemented")
+        }
+    }
             
     private struct CreatePayload: Codable {
         let denomination: Currency
@@ -60,6 +78,16 @@ public struct MaxTransactionValue: Codable {
             case supplierId = "supplier_id"
             case magnitude
             case active
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let denomination: Currency
+        let supplierId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case denomination = "currency_id"
+            case supplierId = "supplier_id"
         }
     }
 }
