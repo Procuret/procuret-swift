@@ -40,6 +40,22 @@ public struct SettlementAccount: Codable {
                 fatalError("Not implemented")
         }
     }
+    
+    public static func retrieve(
+        supplierId: String,
+        session: Session?,
+        callback: @escaping (Self?, Error?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(supplierId: supplierId),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
             
     private struct CreatePayload: Codable {
         let supplierId: String
@@ -48,6 +64,14 @@ public struct SettlementAccount: Codable {
         private enum CodingKeys: String, CodingKey {
             case supplierId = "supplier_id"
             case accountId = "account_id"
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let supplierId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case supplierId = "supplier_id"
         }
     }
 }
