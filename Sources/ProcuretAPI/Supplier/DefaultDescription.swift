@@ -11,11 +11,30 @@ public struct DefaultDescription: Codable {
     
     internal static let path = "/supplier/default-description"
     
-    let supplierId: Int
-    let description: String
+    public static func create(
+        supplierId: Int,
+        description: String,
+        callback: @escaping (Error?, Data?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(supplierId: supplierId,
+                description: description),
+            session: nil,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
     
-    public enum CodingKeys: String, CodingKey {
-        case supplierId = "supplier_id"
-        case description
+    private struct CreatePayload: Codable {
+        let supplierId: Int
+        let description: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case supplierId = "supplierId"
+            case description
+        }
     }
 }
