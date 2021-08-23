@@ -10,6 +10,7 @@ import Foundation
 public struct TermRate: Codable {
     
     internal static let path = "/term-rate"
+    internal static let listPath = "/term-rate/list"
     
     let indexid: Int
     let created: ProcuretTime
