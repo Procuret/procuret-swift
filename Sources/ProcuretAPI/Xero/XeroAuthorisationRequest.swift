@@ -10,4 +10,5 @@ import Foundation
 public struct XeroAuthorisationRequest: Codable {
     
     internal static let path = "/xero/authorisation-request"
+    
 }
