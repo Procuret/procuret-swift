@@ -10,4 +10,5 @@ import Foundation
 public struct Member: Codable {
     
     internal static let path = "/entity/team/member"
+    internal static let listPath = "/entity/team"
 }
