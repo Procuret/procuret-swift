@@ -34,6 +34,14 @@ public struct XeroAccessToken: Codable {
                 fatalError("Not implemented")
         }
     }
+    
+    public static func retrieve(
+        session: Session?,
+        callback: @escaping (Error?, XeroAccessToken?) -> Void
+    ) {
+        fatalError("Not implemented")
+        }
+    }
                 
     private struct CreatePayload: Codable {
         let authorisationRequestId: String
@@ -42,6 +50,6 @@ public struct XeroAccessToken: Codable {
         private enum CodingKeys: String, CodingKey {
             case authorisationRequestId = "authorisation_request_id"
             case code
-        }
     }
 }
+
