@@ -10,6 +10,7 @@ import Foundation
 public struct MaxTransactionValue: Codable {
     
     internal static let path = "/supplier/max-transaction-size"
+    internal static let listPath = MaxTransactionValue.path + "/list"
     
     let supplierId: String
     let magnitude: String
