@@ -10,6 +10,7 @@ import Foundation
 public struct ShopifyShop: Codable {
     
     internal static let path = "/shopify/shop"
+    internal static let listPath = ShopifyShop.path + "/list"
     
     let shopName: String
     let created: ProcuretTime
@@ -39,20 +40,47 @@ public struct ShopifyShop: Codable {
             session: session,
             query: nil,
             method: .POST
-            ) { error, data in
-                fatalError("Not implemented")
-            }
+        ) { error, data in
+            fatalError("Not implemented")
         }
+    }
+    
+    public static func retrieve(
+        supplierId: String,
+        name: String,
+        session: Session?,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: RetrieveParameters(supplierId: supplierId, name: name),
+            session: session,
+            query: nil,
+            method: .GET
+        ) { error, data in
+            fatalError("Not implemented")
+        }
+    }
         
-        private struct CreatePayload: Codable {
-            let supplierId: String
-            let name: String
-            let active: Bool
+    private struct CreatePayload: Codable {
+        let supplierId: String
+        let name: String
+        let active: Bool
             
-            private enum CodingKeys: String, CodingKey {
-                case supplierId = "supplier_id"
-                case name
-                case active
+        private enum CodingKeys: String, CodingKey {
+            case supplierId = "supplier_id"
+            case name
+            case active
+        }
+    }
+    
+    private struct RetrieveParameters: Codable {
+        let supplierId: String
+        let name: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case supplierId = "supplier_id"
+            case name = "shop_name"
         }
     }
 }
