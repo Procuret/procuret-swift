@@ -17,6 +17,7 @@ public struct DealLedgerLine: Codable {
     let principalPaid: String
     let closingBalance: String
     let commitmentPublicId: String
+    let payment: Payment?
     
     public enum CodingKeys: String, CodingKey {
         case sequence
@@ -27,6 +28,7 @@ public struct DealLedgerLine: Codable {
         case principalPaid = "principal_paid"
         case closingBalance = "closing_balance"
         case commitmentPublicId = "commitment_public_id"
+        case payment
     }
     
     
