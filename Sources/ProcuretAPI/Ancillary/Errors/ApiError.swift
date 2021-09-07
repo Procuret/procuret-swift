@@ -63,19 +63,19 @@ public struct ProcuretAPIError: ProcuretError {
         case subscriptionProblem = """
         Your Procuret subscription does not allow you to perfom this action. \
         Your payment method may have expired, or your plan may be disabled. \
-        Please visit https://Procuret.io/billing or contact support@Procuret.io
+        Please visit https://procuret.com/billing or contact support@procuret.com
         """
         case serviceDisruption = """
         Procuret is experiencing a service disruption. This should be \
         temporary. Check the @Procuretapi Twitter feed and \
-        https://Procuret.io/blog/ for service updates.
+        https://procuret.com/blog/ for service updates.
         """
         case rateLimit = """
         You have hit the Procuret API rate limiter. You might try batching your \
         requests (e.g. creating 10 Transactions at once). If your \
         implementation requires a higher rate limit, or your believe you are \
         being erroneously limited (e.g. behind a corporate or university NAT), \
-        please contact support@Procuret.io
+        please contact support@procuret.com
         """
         case notImplemented = """
         The requested functionality is not yet implemented by Procuret API Swift

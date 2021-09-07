@@ -22,4 +22,46 @@ public struct Session: Codable {
         case apiKey = "api_key"
     }
     
+    public static func fromEnvironmentVariables(
+        keyVariableName: String = "PROCURET_SESSION_KEY",
+        apiKeyVariableName: String = "PROCURET_API_KEY",
+        idVariableName: String = "PROCURET_SESSION_ID"
+    ) throws -> Session {
+        
+        guard let eApiKey = getenv(apiKeyVariableName) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        
+        guard let apiKey = String(utf8String: eApiKey) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        
+        guard let eSessionId = getenv(idVariableName) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        
+        guard let stringSessionId = String(utf8String: eSessionId) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        
+        guard let sessionId = Int(stringSessionId) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        
+        guard let eKey = getenv(keyVariableName) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        
+        guard let key = String(utf8String: eKey) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+
+        return Self(
+            sessionId: sessionId,
+            sessionKey: key,
+            apiKey: apiKey
+        )
+
+    }
+    
 }
