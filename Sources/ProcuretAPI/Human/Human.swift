@@ -72,7 +72,8 @@ public struct Human: Codable {
             query: nil,
             method: .GET
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self, callback)
+            return
         }
     }
     
