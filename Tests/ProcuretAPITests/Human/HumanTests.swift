@@ -13,21 +13,24 @@ final class HumanTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: "retrieve Human")
         
-        // Test Human.retrieve() here. Call .fulfill() on `expectation` when
-        // testing is complete.
+        func recieveHuman(error: Error?, human: Human?) {
+            
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(human, "Human is nil.")
+            
+            expectation.fulfill()
+        }
         
-        // XCTestCase passes unless explicitly failed.
-        
-        // Use XCTAssertNil to fail the test if an expected nil variable (such
-        // as an error) is not nil.
-        
-        // Use XCTAsserNotNil to fail the test if an expected non-nil variable
-        // (such as the human) is nil.
+        Human.retrieve(
+            humanId: "60089808232490860", // some valid humanId
+            session: nil,
+            callback: recieveHuman
+        )
         
         wait(for: [expectation], timeout: 5.0)
         
         return
         
     }
-
 }
+
