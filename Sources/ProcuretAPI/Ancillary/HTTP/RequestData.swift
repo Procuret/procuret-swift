@@ -27,7 +27,10 @@ internal struct RequestData {
         encodedData = try Self.encoder.encode(data)
         let dataString = String(data: encodedData, encoding: .utf8)
         guard dataString != nil else {
-            throw ProcuretAPIError(.inconsistentState)
+            throw ProcuretAPIError(
+                .inconsistentState,
+                message: "Unable to cast encoded data to String"
+            )
         }
         encodedDataString = String(data: encodedData, encoding: .utf8)!
     }
@@ -36,7 +39,12 @@ internal struct RequestData {
         let b64data = encodedData.base64EncodedString()
         guard let queryString = b64data.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
-        ) else { throw ProcuretAPIError(.inconsistentState) }
+        ) else {
+            throw ProcuretAPIError(
+                .inconsistentState,
+                message: "Unable to add percent encoding to queryString"
+            )
+        }
         return queryString
     }
     

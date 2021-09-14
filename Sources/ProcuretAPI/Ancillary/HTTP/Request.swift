@@ -10,8 +10,9 @@ import Foundation
 
 internal class Request {
     
+    private static let endpointEnvironmentKey = "PROCURET_ENDPOINT"
     private static let agent = "Procuret API Swift 0.0.1"
-    private static let apiEndpoint = "https://Procuret.com/api"
+    private static let liveApiEndpoint = "https://procuret.com/api"
     private static let apiSession = URLSession(
         configuration: URLSessionConfiguration.ephemeral
     )
@@ -22,6 +23,18 @@ internal class Request {
         decoder.dateDecodingStrategy = .formatted(DateFormatter.nozomiTime)
         return decoder
     }()
+
+    private static var apiEndpoint: String {
+        get {
+            if let eEnvEndpoint = getenv(Self.endpointEnvironmentKey) {
+                guard let envEndpoint = String(utf8String: eEnvEndpoint) else {
+                    fatalError("Unable to parse environment endpoint")
+                }
+                return envEndpoint
+            }
+            return Self.liveApiEndpoint
+        }
+    }
     
     public static func make<T: Encodable>(
         path: String,
@@ -59,7 +72,10 @@ internal class Request {
     ) {
         
         if method == .GET && data != nil {
-            callback(ProcuretAPIError(.inconsistentState), nil)
+            callback(ProcuretAPIError(
+                .inconsistentState,
+                message: "data parameter must be nil when making a GET request"
+            ), nil)
         }
 
         let request: URLRequest
@@ -100,7 +116,10 @@ internal class Request {
             return
         }
         guard let httpResponse = response as? HTTPURLResponse else {
-            callback(ProcuretAPIError(.inconsistentState), nil)
+            callback(ProcuretAPIError(
+                .inconsistentState,
+                message: "Could not cast HTTPURLResponse"
+            ), nil)
             return
         }
         guard (200...299).contains(httpResponse.statusCode) else {
@@ -115,7 +134,8 @@ internal class Request {
             case 500: error = ProcuretAPIError(.genericServerError)
             case 502, 503, 504: error = ProcuretAPIError(.serviceDisruption)
             default: error = ProcuretAPIError(
-                .inconsistentState
+                    .inconsistentState,
+                    message: "Error code outside known bounds"
                 )
             }
             callback(error, nil)
@@ -151,7 +171,10 @@ internal class Request {
         }
         
         guard let targetURL = URL(string: fullURL) else {
-            throw ProcuretAPIError(.inconsistentState, message: "nil targetURL")
+            throw ProcuretAPIError(
+                .inconsistentState,
+                message: "nil targetURL"
+            )
         }
 
         var request = URLRequest(url: targetURL)
@@ -200,7 +223,10 @@ internal class Request {
                     return
                 }
             }
-            callback(error ?? ProcuretAPIError(.inconsistentState), nil)
+            callback(error ?? ProcuretAPIError(
+                .inconsistentState,
+                message: "No data and no error available for decode"
+            ), nil)
             return
         }
         

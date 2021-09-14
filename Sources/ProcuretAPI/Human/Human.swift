@@ -67,12 +67,14 @@ public struct Human: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: RetrieveParameters(humanId: humanId),
+            data: nil,
             session: session,
-            query: nil,
+            query: QueryString(
+                targetsOnly: [UrlParameter(humanId, key: "human_id")]
+            ),
             method: .GET
         ) { error, data in
-            Request.decodeResponse(error, data, Self, callback)
+            Request.decodeResponse(error, data, Self.self, callback)
             return
         }
     }
@@ -102,14 +104,7 @@ public struct Human: Codable {
             case hasAgentSecret = "has_agent_secret"
         }
     }
-    
-    private struct RetrieveParameters: Codable {
-        let humanId: String
-        
-        private enum CodingKeys: String, CodingKey {
-            case humanId = "human_id"
-        }
-    }
+
 }
 
 
