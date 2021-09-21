@@ -67,7 +67,7 @@ public struct Human: Codable {
     ) {
         Request.make(
             path: self.path,
-            data: nil,
+            payload: RetrieveParameters(humanId: humanId),
             session: session,
             query: QueryString(
                 targetsOnly: [UrlParameter(humanId, key: "human_id")]
@@ -104,7 +104,14 @@ public struct Human: Codable {
             case hasAgentSecret = "has_agent_secret"
         }
     }
-
+    
+    private struct RetrieveParameters: Codable {
+        let humanId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case humanId = "human_id"
+        }
+    }
 }
 
 
