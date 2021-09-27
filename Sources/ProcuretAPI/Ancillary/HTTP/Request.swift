@@ -11,6 +11,7 @@ import Foundation
 internal class Request {
     
     private static let endpointEnvironmentKey = "PROCURET_ENDPOINT"
+    private static let debugDataPrintEnvironmentKey = "PROCURET_DEBUG_DATA"
     private static let agent = "Procuret API Swift 0.0.1"
     private static let liveApiEndpoint = "https://procuret.com/api"
     private static let apiSession = URLSession(
@@ -91,6 +92,10 @@ internal class Request {
         } catch {
             callback(error, nil)
             return
+        }
+        
+        if Self.shouldDebugPrint() {
+            Self.debugPrintRequest(path: path, method: method)
         }
 
         let _ = Self.apiSession.dataTask(
@@ -216,6 +221,10 @@ internal class Request {
         _ coerce404toNil: Bool = true
     ) -> Void {
         
+        if Self.shouldDebugPrint() {
+            Self.debugPrintData(data: data)
+        }
+        
         guard let data = data else {
             if let apiError = error as? ProcuretAPIError {
                 if apiError.kind == .notFound && coerce404toNil {
@@ -253,6 +262,48 @@ internal class Request {
             return endpoint
         }
         return Self.apiEndpoint
+    }
+    
+    private static func shouldDebugPrint() -> Bool {
+        if let dValue = getenv(Self.debugDataPrintEnvironmentKey) {
+            guard let value = String(utf8String: dValue) else {
+                fatalError("Bad data debug print environment variable")
+            }
+            if value == "true" {
+                return true
+            }
+        }
+        return false
+    }
+    
+    private static func debugPrintData(data: Data?) -> Void {
+        
+        guard let data = data else {
+            print("Procuret API returned no data")
+            return
+        }
+        
+        guard let rawString = String(data: data, encoding: .utf8) else {
+            print("Unable to decode returned data as a UTF-8 string")
+            return
+        }
+        
+        print("--- Begin raw data returned by Procuret API ---")
+        print(rawString)
+        print("--- End raw data returned by Procuret API ---")
+        
+        return
+
+    }
+    
+    private static func debugPrintRequest(
+        path: String,
+        method: HTTPMethod
+    ) -> Void {
+        
+        print("Making request to Procuret API: \(path)|\(method.rawValue)")
+        print("Raw response data (if any) will be printed below.")
+        
     }
     
 }
