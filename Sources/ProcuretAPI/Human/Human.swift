@@ -104,7 +104,6 @@ public struct Human: Codable {
             case hasAgentSecret = "has_agent_secret"
         }
     }
-
 }
 
 
