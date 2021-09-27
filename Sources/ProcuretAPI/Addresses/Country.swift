@@ -15,9 +15,9 @@ public struct Country: Codable {
     let abbreviation: String
     
     private enum CodingKeys: String, CodingKey {
-        case id = "country_id"
-        case name = "name"
-        case abbreviation = "abbreviation"
+        case id = "indexid"
+        case name = "country_name"
+        case abbreviation = "iso_3166_a3"
     }
 
 }

@@ -11,20 +11,24 @@ public struct Human: Codable {
     
     internal static let path = "/human"
     
-    let humanId: String
-    let emailAddress: String
-    let phoneNumber: String
+    let humanId: Int
     let firstName: String
     let lastName: String
     let resetKey: String?
+    let identity: HumanIdentity?
+    let created: String
+    let disposition: Disposition
+    let documents: Array<HumanIdentityDocument>?
     
     private enum CodingKeys: String, CodingKey {
-        case humanId
-        case emailAddress = "email_address"
-        case phoneNumber = "phone_number"
+        case humanId = "public_id"
         case firstName = "first_name"
         case lastName = "last_name"
         case resetKey = "reset_key"
+        case identity
+        case created
+        case disposition
+        case documents
     }
     
     var fullName: String {
@@ -34,7 +38,6 @@ public struct Human: Codable {
     public static func create(
         firstName: String,
         lastName: String,
-        emailAddress: String,
         phone: String,
         secret: String?,
         existingPhone: PhoneNumber?,
@@ -48,10 +51,10 @@ public struct Human: Codable {
         Request.make(
             path: self.path,
             payload: CreatePayload(firstName: firstName,
-                    lastName: lastName, emailAddress: emailAddress,
-                    phone: phone, secret: secret, existingPhone: existingPhone,
-                    verifyPhone: verifyPhone, creationNote: creationNote,
-                    supplier: supplier, hasAgentSecret: hasAgentSecret),
+                    lastName: lastName,phone: phone, secret: secret,
+                    existingPhone: existingPhone, verifyPhone: verifyPhone,
+                    creationNote: creationNote,supplier: supplier,
+                    hasAgentSecret: hasAgentSecret),
             session: session,
             query: nil,
             method: .POST
@@ -61,7 +64,7 @@ public struct Human: Codable {
     }
     
     public static func retrieve(
-        humanId: String,
+        humanId: Int,
         session: Session?,
         callback: @escaping (Error?, Human?) -> Void
     ) {
@@ -82,7 +85,6 @@ public struct Human: Codable {
     private struct CreatePayload: Codable {
         let firstName: String
         let lastName: String
-        let emailAddress: String
         let phone: String
         let secret: String?
         let existingPhone: PhoneNumber?
@@ -94,7 +96,6 @@ public struct Human: Codable {
         private enum CodingKeys: String, CodingKey{
             case firstName = "first_name"
             case lastName = "last_name"
-            case emailAddress = "email_address"
             case phone
             case secret
             case existingPhone = "phone_id"
