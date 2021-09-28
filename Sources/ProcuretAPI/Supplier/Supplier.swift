@@ -53,12 +53,15 @@ public struct Supplier: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: RetrieveParameters(supplierId: supplierId),
+            data: nil,
             session: session,
-            query: nil,
+            query: QueryString(
+                targetsOnly: [UrlParameter(supplierId, key: "supplier_id")]
+                ),
             method: .GET
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
         }
     }
     
@@ -73,14 +76,6 @@ public struct Supplier: Codable {
             case tradingName = "trading_name"
             case phoneNumber = "phone_number"
             case address
-        }
-    }
-    
-    private struct RetrieveParameters: Codable {
-        let supplierId: Int
-        
-        private enum CodingKeys: String, CodingKey {
-            case supplierId = "supplier_id"
         }
     }
 }

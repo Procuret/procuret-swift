@@ -11,7 +11,7 @@ public struct Brand: Codable {
     
     internal static let path = "/entity/brand"
     
-    let entityId: String
+    let entityId: Int
     let name: String
     let saleMessage: String
     let created: String
@@ -19,7 +19,7 @@ public struct Brand: Codable {
     
     public enum CodingKeys: String, CodingKey {
         case entityId = "entity_id"
-        case name = "brand_name"
+        case name
         case saleMessage = "sale_message"
         case created
     }

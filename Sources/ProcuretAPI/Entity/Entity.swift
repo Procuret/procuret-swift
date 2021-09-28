@@ -13,12 +13,11 @@ public struct Entity: Codable {
     internal static let listPath = "/entity/list"
     
     let publicId: Int
-    let publicIdShort: Int
+    let publicIdShort: String
     let entityIdentifiers: Array<EntityIdentifier>
     let legalEntityName: String
     let tradingName: String?
     let phoneNumber: String?
-    let businessAddress: String
     let entityType: String?
     let created: String?
     let disposition: Disposition
@@ -30,7 +29,6 @@ public struct Entity: Codable {
         case legalEntityName = "legal_entity_name"
         case tradingName = "trading_name"
         case phoneNumber = "phone_number"
-        case businessAddress = "business_address"
         case entityType = "entity_type"
         case created
         case disposition

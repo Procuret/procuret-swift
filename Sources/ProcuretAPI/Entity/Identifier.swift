@@ -10,13 +10,11 @@ import Foundation
 public struct EntityIdentifier: Codable {
     
     public static let path = "/"
-    
-    let idType: String
+
     let idString: String
     
     public enum CodingKeys: String, CodingKey {
-        case idType = "id_type"
-        case idString = "id"
+        case idString = "identifier"
     }
     
     public static func create(
