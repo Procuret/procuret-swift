@@ -20,7 +20,8 @@ public struct Deal: Codable {
     let supplier: EntityHeadline
     let business: EntityHeadline
     let timeCommitted: String
-    let magnitudeValue: String
+    let invoiceValue: String
+    let totalPayable: String
     let sumPayments: String
     let denomination: Currency
     let disposition: Disposition
@@ -34,7 +35,8 @@ public struct Deal: Codable {
         case supplier
         case business
         case timeCommitted = "time_committed"
-        case magnitudeValue = "magnitude_value"
+        case invoiceValue = "invoice_value"
+        case totalPayable = "total_payable"
         case sumPayments = "sum_payments"
         case denomination
         case disposition
@@ -47,21 +49,15 @@ public struct Deal: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: RetrieveParameters(commitmentId: commitmentId),
+            data: nil,
             session: session,
-            query: nil,
+            query: QueryString(
+                targetsOnly: [UrlParameter(commitmentId, key: "commitment_id")]
+                ),
             method: .GET
         ) { error, data in
-            fatalError("Not implemented")
-        }
-    }
-    
-    private struct RetrieveParameters: Codable {
-        let commitmentId: String
-        
-        private enum CodingKeys: String, CodingKey {
-            case commitmentId = "commitment_id"
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
         }
     }
 }
-
