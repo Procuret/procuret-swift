@@ -10,7 +10,6 @@ import Foundation
 public struct Deal: Codable {
     
     internal static let path = "/deal"
-    internal static let listPath = Deal.path + "/list"
     
     let setupId: String
     let commitmentId: String
