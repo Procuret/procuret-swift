@@ -38,6 +38,7 @@ public struct Human: Codable {
     public static func create(
         firstName: String,
         lastName: String,
+        emailAddress: String,
         phone: String,
         secret: String?,
         existingPhone: PhoneNumber?,
@@ -50,15 +51,17 @@ public struct Human: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(firstName: firstName,
-                    lastName: lastName,
-                    phone: phone,
-                    secret: secret,
-                    existingPhone: existingPhone,
-                    verifyPhone: verifyPhone,
-                    creationNote: creationNote,
-                    supplier: supplier,
-                    hasAgentSecret: hasAgentSecret),
+            payload: CreatePayload(
+                firstName: firstName,
+                lastName: lastName,
+                emailAddress: emailAddress,
+                phone: phone,
+                secret: secret,
+                existingPhone: existingPhone,
+                verifyPhone: verifyPhone,
+                creationNote: creationNote,
+                supplier: supplier,
+                hasAgentSecret: hasAgentSecret),
             session: session,
             query: nil,
             method: .POST
@@ -89,6 +92,7 @@ public struct Human: Codable {
     private struct CreatePayload: Codable {
         let firstName: String
         let lastName: String
+        let emailAddress: String
         let phone: String
         let secret: String?
         let existingPhone: PhoneNumber?
@@ -100,6 +104,7 @@ public struct Human: Codable {
         private enum CodingKeys: String, CodingKey{
             case firstName = "first_name"
             case lastName = "last_name"
+            case emailAddress = "email_address"
             case phone
             case secret
             case existingPhone = "phone_id"
@@ -110,6 +115,3 @@ public struct Human: Codable {
         }
     }
 }
-
-
-
