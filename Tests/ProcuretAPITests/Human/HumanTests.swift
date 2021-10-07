@@ -42,4 +42,39 @@ final class HumanTests: XCTestCase {
         
         return
     }
+    
+    func testCreateHuman() {
+        
+        let expectation = XCTestExpectation(description: "create Human")
+        
+        func generateHuman(error: Error?, human: Human?) {
+            
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(human, "Human is nil.")
+            
+            expectation.fulfill()
+            
+            return
+        }
+        
+        Human.create(
+            firstName: "TestKayla",
+            lastName: "Test",
+            emailAddress: "kayla.h+548@procuret.com",
+            phone: "+17654615534",
+            secret: "sooper secret code",
+            existingPhone: nil,
+            verifyPhone: false,
+            creationNote: nil,
+            session: provideTestSession(),
+            supplier: true,
+            hasAgentSecret: false,
+            signupPerspective: 1,
+            callback: generateHuman
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+    }
 }

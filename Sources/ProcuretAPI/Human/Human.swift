@@ -47,6 +47,7 @@ public struct Human: Codable {
         session: Session?,
         supplier: Bool?,
         hasAgentSecret: Bool?,
+        signupPerspective: Int,
         callback: @escaping (Error?, Human?) -> Void
     ) {
         Request.make(
@@ -61,12 +62,14 @@ public struct Human: Codable {
                 verifyPhone: verifyPhone,
                 creationNote: creationNote,
                 supplier: supplier,
-                hasAgentSecret: hasAgentSecret),
+                hasAgentSecret: hasAgentSecret,
+                signupPerspective: signupPerspective),
             session: session,
             query: nil,
             method: .POST
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
         }
     }
     
@@ -100,18 +103,20 @@ public struct Human: Codable {
         let creationNote: String?
         let supplier: Bool?
         let hasAgentSecret: Bool?
+        let signupPerspective: Int
         
         private enum CodingKeys: String, CodingKey{
             case firstName = "first_name"
             case lastName = "last_name"
             case emailAddress = "email_address"
-            case phone
+            case phone = "phone_number"
             case secret
             case existingPhone = "phone_id"
             case verifyPhone = "verify_phone"
             case creationNote = "creation_note"
             case supplier
             case hasAgentSecret = "has_agent_secret"
+            case signupPerspective = "signup_perspective"
         }
     }
 }
