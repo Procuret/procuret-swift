@@ -44,9 +44,13 @@ public struct Entity: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: SetPermissions(entityId: entityId,
-                granteeAgentId: granteeAgentId, read: read,
-                write: write, manage: manage),
+            payload: SetPermissions(
+                entityId: entityId,
+                granteeAgentId: granteeAgentId,
+                read: read,
+                write: write,
+                manage: manage
+            ),
             session: nil,
             query: nil,
             method: .POST
