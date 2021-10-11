@@ -41,8 +41,11 @@ public struct ShopifyInstallLink: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(url: url, shopName: shopName,
-                supplierId: supplierId),
+            payload: CreatePayload(
+                url: url,
+                shopName: shopName,
+                supplierId: supplierId
+            ),
             session: session,
             query: nil,
             method: .POST

@@ -38,8 +38,12 @@ public struct ShopifyCustomApp: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(shopName: shopName, supplierId:
-                supplierId, apiKey: apiKey, apiSecretKey: apiSecretKey),
+            payload: CreatePayload(
+                shopName: shopName,
+                supplierId: supplierId,
+                apiKey: apiKey,
+                apiSecretKey: apiSecretKey
+            ),
             session: session,
             query: nil,
             method: .POST
@@ -56,8 +60,10 @@ public struct ShopifyCustomApp: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: RetrieveParameters(supplierId: supplierId,
-                shopName: shopName),
+            payload: RetrieveParameters(
+                supplierId: supplierId,
+                shopName: shopName
+            ),
             session: session,
             query: nil,
             method: .GET

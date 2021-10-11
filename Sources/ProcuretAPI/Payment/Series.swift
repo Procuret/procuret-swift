@@ -47,8 +47,11 @@ public struct PaymentSeries: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(paymentMethod: paymentMethod,
-                setupId: setupId, months: months),
+            payload: CreatePayload(
+                paymentMethod: paymentMethod,
+                setupId: setupId,
+                months: months
+            ),
             session: session,
             query: nil,
             method: .POST

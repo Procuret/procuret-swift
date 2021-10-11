@@ -27,9 +27,12 @@ public struct PresentedInvoice: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(amount: amount,
-                supplierId: supplierId, invoiceIdentifier:
-                invoiceIdentifier, preferredPeriods: preferredPeriods),
+            payload: CreatePayload(
+                amount: amount,
+                supplierId: supplierId,
+                invoiceIdentifier: invoiceIdentifier,
+                preferredPeriods: preferredPeriods
+            ),
             session: session,
             query: nil,
             method: .POST

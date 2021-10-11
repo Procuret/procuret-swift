@@ -43,9 +43,13 @@ public struct InstalmentLink: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId,
-                amount: amount, identifier: identifier,
-                inviteeEmail: inviteeEmail, communicate: communicate),
+            payload: CreatePayload(
+                supplierId: supplierId,
+                amount: amount,
+                identifier: identifier,
+                inviteeEmail: inviteeEmail,
+                communicate: communicate
+            ),
             session: session,
             query: nil,
             method: .POST

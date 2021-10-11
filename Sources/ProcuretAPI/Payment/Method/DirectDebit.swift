@@ -29,10 +29,13 @@ public struct DirectDebit: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(bsbCode: bsbCode,
-                accountNumber: accountNumber, accountName:
-                accountName, entityId: entityId, authorityId:
-                authorityId),
+            payload: CreatePayload(
+                bsbCode: bsbCode,
+                accountNumber: accountNumber,
+                accountName: accountName,
+                entityId: entityId,
+                authorityId: authorityId
+            ),
             session: nil,
             query: nil,
             method: .POST

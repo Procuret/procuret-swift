@@ -25,8 +25,11 @@ public struct EntityIdentifier: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(entityId: entityId,
-                idType: idType, identifier: identifier),
+            payload: CreatePayload(
+                entityId: entityId,
+                idType: idType,
+                identifier: identifier
+            ),
             session: nil,
             query: nil,
             method: .POST

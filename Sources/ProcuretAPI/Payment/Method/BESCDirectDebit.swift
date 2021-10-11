@@ -32,12 +32,14 @@ public struct BECSDirectDebit: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(bsbCode: bsbCode,
+            payload: CreatePayload(
+                bsbCode: bsbCode,
                 accountNumber: accountNumber,
                 accountName: accountName,
                 authorityAgentId: authorityAgentId,
                 timeMandateAccepted: timeMandateAccepted,
-                entityId: entityId),
+                entityId: entityId
+            ),
             session: nil,
             query: nil,
             method: .POST

@@ -34,7 +34,10 @@ public struct ShopifyAccessToken: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(url: url, requestId: requestId),
+            payload: CreatePayload(
+                url: url,
+                requestId: requestId
+            ),
             session: session,
             query: nil,
             method: .POST
@@ -51,7 +54,10 @@ public struct ShopifyAccessToken: Codable {
     ) {
         Request.make(
             path: self.listPath,
-            payload: RetrieveParameters(supplierId: supplierId, active: active),
+            payload: RetrieveParameters(
+                supplierId: supplierId,
+                active: active
+            ),
             session: session,
             query: nil,
             method: .GET

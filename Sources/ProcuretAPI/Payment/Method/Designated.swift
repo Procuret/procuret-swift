@@ -27,7 +27,10 @@ public struct DesignatedPaymentMethod: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(seriesId: seriesId, methodId: methodId),
+            payload: CreatePayload(
+                seriesId: seriesId,
+                methodId: methodId
+            ),
             session: session,
             query: nil,
             method: .POST

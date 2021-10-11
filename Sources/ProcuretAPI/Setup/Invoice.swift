@@ -24,14 +24,16 @@ public struct Invoice: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId,
+            payload: CreatePayload(
+                supplierId: supplierId,
                 invoiceFilename: invoiceFilename,
                 invoiceIdentifier: invoiceIdentifier,
                 contentDescription: contentDescription,
                 invoiceeBusinessId: invoiceeBusinessId,
                 deliveredDate: deliveredDate,
                 invoiceBase64: invoiceBase64,
-                magnitudeValue: magnitudeValue),
+                magnitudeValue: magnitudeValue
+            ),
             session: nil,
             query: nil,
             method: .GET

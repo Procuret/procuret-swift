@@ -29,9 +29,12 @@ public struct HouseAccount: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(currency: currency,
-                bsbCode: bsbCode, accountNumber: accountNumber,
-                accountName: accountName),
+            payload: CreatePayload(
+                currency: currency,
+                bsbCode: bsbCode,
+                accountNumber: accountNumber,
+                accountName: accountName
+            ),
             session: session,
             query: nil,
             method: .POST

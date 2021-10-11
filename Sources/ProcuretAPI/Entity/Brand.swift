@@ -34,8 +34,12 @@ public struct Brand: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(name: name, media: media,
-                saleMessage: saleMessage, entityId: entityId),
+            payload: CreatePayload(
+                name: name,
+                media: media,
+                saleMessage: saleMessage,
+                entityId: entityId
+            ),
             session: session,
             query: nil,
             method: .POST

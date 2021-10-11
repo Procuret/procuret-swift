@@ -35,8 +35,11 @@ public struct EntityPermission: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(humanId: humanId, entityId: entityId,
-                privileges: privileges),
+            payload: CreatePayload(
+                humanId: humanId,
+                entityId: entityId,
+                privileges: privileges
+            ),
             session: session,
             query: nil,
             method: .POST
@@ -53,8 +56,10 @@ public struct EntityPermission: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: RetrieveParameters(entityId: entityId,
-                humanId: humanId),
+            payload: RetrieveParameters(
+                entityId: entityId,
+                humanId: humanId
+            ),
             session: session,
             query: nil,
             method: .GET
