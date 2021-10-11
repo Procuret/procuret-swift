@@ -63,7 +63,8 @@ public struct Human: Codable {
                 creationNote: creationNote,
                 supplier: supplier,
                 hasAgentSecret: hasAgentSecret,
-                signupPerspective: signupPerspective),
+                signupPerspective: signupPerspective
+            ),
             session: session,
             query: nil,
             method: .POST
