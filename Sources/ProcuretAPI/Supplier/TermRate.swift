@@ -35,9 +35,12 @@ public struct TermRate: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId,
-                annualRate: annualRate, periods: periods,
-                periodsPerYear: periodsPerYear),
+            payload: CreatePayload(
+                supplierId: supplierId,
+                annualRate: annualRate,
+                periods: periods,
+                periodsPerYear: periodsPerYear
+            ),
             session: nil,
             query: nil,
             method: .POST

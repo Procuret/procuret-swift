@@ -18,7 +18,10 @@ public struct UniversalRate: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId, rate: rate),
+            payload: CreatePayload(
+                supplierId: supplierId,
+                rate: rate
+            ),
             session: nil,
             query: nil,
             method: .POST

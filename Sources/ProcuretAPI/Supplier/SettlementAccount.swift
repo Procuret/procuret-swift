@@ -31,8 +31,10 @@ public struct SettlementAccount: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId,
-                accountId: accountId),
+            payload: CreatePayload(
+                supplierId: supplierId,
+                accountId: accountId
+            ),
             session: session,
             query: nil,
             method: .POST

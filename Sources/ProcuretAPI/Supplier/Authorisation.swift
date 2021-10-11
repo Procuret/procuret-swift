@@ -19,7 +19,10 @@ public struct SupplierAuthorisation: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId, authorise: authorise),
+            payload: CreatePayload(
+                supplierId: supplierId,
+                authorise: authorise
+            ),
             session: session,
             query: nil,
             method: .POST

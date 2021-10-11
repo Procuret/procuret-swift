@@ -18,8 +18,10 @@ public struct SupplierTOS: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId,
-                markdown: markdown),
+            payload: CreatePayload(
+                supplierId: supplierId,
+                markdown: markdown
+            ),
             session: nil,
             query: nil,
             method: .POST

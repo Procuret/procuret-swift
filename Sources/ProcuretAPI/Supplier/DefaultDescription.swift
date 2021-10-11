@@ -18,8 +18,10 @@ public struct DefaultDescription: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId,
-                description: description),
+            payload: CreatePayload(
+                supplierId: supplierId,
+                description: description
+            ),
             session: nil,
             query: nil,
             method: .POST

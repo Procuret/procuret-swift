@@ -38,9 +38,12 @@ public struct MaxTransactionValue: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(denomination: denomination,
-                supplierId: supplierId, magnitude: magnitude,
-                active: active),
+            payload: CreatePayload(
+                denomination: denomination,
+                supplierId: supplierId,
+                magnitude: magnitude,
+                active: active
+            ),
             session: session,
             query: nil,
             method: .POST
@@ -57,8 +60,10 @@ public struct MaxTransactionValue: Codable {
     ) {
         Request.make(
             path: self.listPath,
-            payload: RetrieveParameters(denomination: denomination,
-                supplierId: supplierId),
+            payload: RetrieveParameters(
+                denomination: denomination,
+                supplierId: supplierId
+            ),
             session: session,
             query: nil,
             method: .GET

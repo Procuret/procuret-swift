@@ -28,8 +28,10 @@ public struct SupplierFee: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(feePercentage: feePercentage,
-                supplierId: supplierId),
+            payload: CreatePayload(
+                feePercentage: feePercentage,
+                supplierId: supplierId
+            ),
             session: session,
             query: nil,
             method: .POST
@@ -46,8 +48,10 @@ public struct SupplierFee: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: RetrieveParameters(supplierId: supplierId,
-                termRateId: termRateId),
+            payload: RetrieveParameters(
+                supplierId: supplierId,
+                termRateId: termRateId
+            ),
             session: session,
             query: nil,
             method: .GET

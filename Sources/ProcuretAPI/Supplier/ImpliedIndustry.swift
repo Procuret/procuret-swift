@@ -26,7 +26,10 @@ public struct ImpliedCustomerIndustry: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(supplierId: supplierId, industryId: industryId),
+            payload: CreatePayload(
+                supplierId: supplierId,
+                industryId: industryId
+            ),
             session: nil,
             query: nil,
             method: .POST
