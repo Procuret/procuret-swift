@@ -28,7 +28,10 @@ public struct PaymentAdvice: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(seriesId: seriesId, recipientEmail: recipientEmail),
+            payload: CreatePayload(
+                seriesId: seriesId,
+                recipientEmail: recipientEmail
+            ),
             session: session,
             query: nil,
             method: .POST

@@ -30,8 +30,10 @@ public struct DealConfirmation: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: RetrieveManyParameters(seriesId: seriesId,
-                commitmentId: commitmentId),
+            payload: RetrieveManyParameters(
+                seriesId: seriesId,
+                commitmentId: commitmentId
+            ),
             session: session,
             query: nil,
             method: .GET
@@ -50,4 +52,3 @@ public struct DealConfirmation: Codable {
         }
     }
 }
-

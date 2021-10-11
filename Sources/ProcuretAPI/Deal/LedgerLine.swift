@@ -30,6 +30,4 @@ public struct DealLedgerLine: Codable {
         case commitmentPublicId = "commitment_public_id"
         case payment
     }
-    
-    
 }

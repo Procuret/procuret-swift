@@ -36,10 +36,13 @@ public struct CreditAssessment: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(setupCode: setupCode,
+            payload: CreatePayload(
+                setupCode: setupCode,
                 transactingHumanId: transactingHumanId,
-                creditModel: creditModel, forceFresh: forceFresh,
-                forcePositive: forcePositive),
+                creditModel: creditModel,
+                forceFresh: forceFresh,
+                forcePositive: forcePositive
+            ),
             session: nil,
             query: nil,
             method: .POST

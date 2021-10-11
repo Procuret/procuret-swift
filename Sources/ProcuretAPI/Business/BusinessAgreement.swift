@@ -26,7 +26,10 @@ public struct BusinessAgreement: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(businessId:businessId, signaturePNG: signaturePNG),
+            payload: CreatePayload(
+                businessId: businessId,
+                signaturePNG: signaturePNG
+            ),
             session: nil,
             query: nil,
             method: .POST
