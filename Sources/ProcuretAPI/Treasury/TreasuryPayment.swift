@@ -50,10 +50,16 @@ public struct TreasuryPayment: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(amount: amount, denomination: denomination,
-                executorId: executorId, executionTime: executionTime,
-                paymentMethodId: paymentMethodId, commitmentId: commitmentId,
-                manuallyReconciled: manuallyReconciled, active: active),
+            payload: CreatePayload(
+                amount: amount,
+                denomination: denomination,
+                executorId: executorId,
+                executionTime: executionTime,
+                paymentMethodId: paymentMethodId,
+                commitmentId: commitmentId,
+                manuallyReconciled: manuallyReconciled,
+                active: active
+            ),
             session: session,
             query: nil,
             method: .POST
@@ -108,4 +114,3 @@ public struct TreasuryPayment: Codable {
         }
     }
 }
-

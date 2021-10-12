@@ -25,8 +25,10 @@ public struct XeroAccessToken: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(authorisationRequestId: authorisationRequestId,
-                code: code),
+            payload: CreatePayload(
+                authorisationRequestId: authorisationRequestId,
+                code: code
+            ),
             session: session,
             query: nil,
             method: .POST

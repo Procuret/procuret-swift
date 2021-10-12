@@ -19,7 +19,10 @@ public struct XeroEntityMap: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(entityId: entityId, tenantId: tenantId),
+            payload: CreatePayload(
+                entityId: entityId,
+                tenantId: tenantId
+            ),
             session: session,
             query: nil,
             method: .POST
