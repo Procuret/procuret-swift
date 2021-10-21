@@ -29,8 +29,8 @@ public struct SecondFactorCode: Codable {
             session: nil,
             query: nil,
             method: .POST
-        ) { error, data in
-            fatalError("Not implemented")
+        ) { error, _ in
+            callback(error)
         }
     }
     
@@ -46,5 +46,20 @@ public struct SecondFactorCode: Codable {
             case secret = "plaintext_secret"
             case perspective
         }
+    }
+    
+    public static func fromEnvironmentVariables(
+        secretVariableName: String = "PLAINTEXT_SECRET"
+    ) throws -> String {
+        
+        guard let eSecret = getenv(secretVariableName) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        
+        guard let secret = String(utf8String: eSecret) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        
+        return secret
     }
 }
