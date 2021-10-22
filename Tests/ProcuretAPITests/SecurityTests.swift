@@ -23,7 +23,7 @@ final class SecurityTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: "create Second Factor Code")
         
-        func generateSecondFactor(error: Error?) {
+        func checkForError(error: Error?) {
             
             XCTAssertNil(error, "An error occurred.")
             
@@ -37,7 +37,7 @@ final class SecurityTests: XCTestCase {
             agentId: nil,
             secret: provideSecret(),
             perspective: nil,
-            callback: generateSecondFactor
+            callback: checkForError
         )
         
         wait(for: [expectation], timeout: 5.0)
