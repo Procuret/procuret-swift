@@ -18,6 +18,13 @@ final class HumanTests: XCTestCase {
         }
     }
     
+    func provideTestEmail() ->  String {
+        
+        do {
+            return TestEmail.generateEmail()
+        }
+    }
+    
     func testRetrieveHuman() {
         
         let expectation = XCTestExpectation(description: "retrieve Human")
@@ -60,7 +67,7 @@ final class HumanTests: XCTestCase {
         Human.create(
             firstName: "TestKayla",
             lastName: "Test",
-            emailAddress: "kayla.h+548@procuret.com",
+            emailAddress: provideTestEmail(),
             phone: "+17654615534",
             secret: "sooper secret code",
             existingPhone: nil,
