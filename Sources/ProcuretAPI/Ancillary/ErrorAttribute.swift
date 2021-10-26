@@ -9,4 +9,12 @@ import Foundation
 
 public struct ErrorAttribute: Codable {
     
+    let name: String
+    let body: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case name = "attribute_name"
+        case body
+    }
+    
 }

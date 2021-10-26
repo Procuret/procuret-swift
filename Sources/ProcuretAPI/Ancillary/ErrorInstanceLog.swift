@@ -9,4 +9,5 @@ import Foundation
 
 public struct ErrorInstanceLog: Codable {
     
+    internal static let LIMIT = 4
 }
