@@ -9,4 +9,6 @@ import Foundation
 
 public struct Enumeration: Codable {
     
+    let indexid: Int
+    let name: String
 }

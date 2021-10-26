@@ -9,4 +9,7 @@ import Foundation
 
 public struct Currency: Codable {
     
+    let indexid: Int
+    let iso_4217: String 
+    
 }
