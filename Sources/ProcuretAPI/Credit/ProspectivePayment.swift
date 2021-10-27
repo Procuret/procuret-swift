@@ -24,7 +24,8 @@ public struct ProspectivePayment: Codable {
                 principle: principle,
                 cycle: cycle,
                 supplierId: supplierId,
-                periods: periods),
+                periods: periods
+            ),
             session: nil,
             query: nil,
             method: .GET
