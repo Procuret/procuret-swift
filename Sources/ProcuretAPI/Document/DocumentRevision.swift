@@ -19,7 +19,7 @@ public struct DocumentRevision: Codable {
         case markdownBody = "markdown_body"
     }
     
-    public static func create (
+    public static func create(
         markdownBody: String,
         path: String,
         name: String,
@@ -27,8 +27,11 @@ public struct DocumentRevision: Codable {
     ) {
         Request.make(
             path: path,
-            payload: CreatePayload(markdownBody: markdownBody, path: path,
-                name: name),
+            payload: CreatePayload(
+                markdownBody: markdownBody,
+                path: path,
+                name: name
+            ),
             session: nil,
             query: nil,
             method: .POST
