@@ -33,7 +33,7 @@ public struct Business: Codable {
             query: nil,
             method: .POST
         ) { error, data in
-            Request.decodeResponse(error, data, self, callback)
+            Request.decodeResponse(error, data, Self.self, callback)
             return
         }
     }

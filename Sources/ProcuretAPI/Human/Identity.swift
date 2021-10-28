@@ -36,7 +36,8 @@ public struct HumanIdentity: Codable {
             query: nil,
             method: .POST
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
         }
     }
     
