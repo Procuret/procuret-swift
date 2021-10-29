@@ -29,7 +29,7 @@ public struct Entity: Codable {
         case legalEntityName = "legal_entity_name"
         case tradingName = "trading_name"
         case phoneNumber = "phone_number"
-        case entityType = "entity_type"
+        case entityType = "entity_type_name"
         case created
         case disposition
     }
