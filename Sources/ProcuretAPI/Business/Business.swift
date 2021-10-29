@@ -47,5 +47,4 @@ public struct Business: Codable {
             case address
         }
     }
-
 }
