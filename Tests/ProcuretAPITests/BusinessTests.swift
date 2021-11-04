@@ -37,9 +37,9 @@ class BusinessTests: XCTestCase {
             abn: "77630036789",
             address: AddressCreationStruct(
                 line1: "47 Brighton Rd",
-                line2: "Highgate Hill",
-                line3: "TEST",
-                line4: "test",
+                line2: nil,
+                line3: nil,
+                line4: nil,
                 postalCode: "4101",
                 locality: "QLD",
                 regionId: 1,
