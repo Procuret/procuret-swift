@@ -21,8 +21,8 @@ public struct HumanIdentity: Codable {
     
     public static func create(
         humanId: String,
-        dateOfBirth: Date,
-        address: Address,
+        dateOfBirth: String,
+        address: AddressCreationStruct,
         session: Session,
         callback: @escaping (Error?, Self?) -> Void
     ) {
@@ -43,8 +43,8 @@ public struct HumanIdentity: Codable {
     
     private struct CreatePayload: Codable {
         let humanId: String
-        let dateOfBirth: Date
-        let address: Address
+        let dateOfBirth: String
+        let address: AddressCreationStruct
         
         private enum CodingKeys: String, CodingKey {
             case humanId = "human_id"

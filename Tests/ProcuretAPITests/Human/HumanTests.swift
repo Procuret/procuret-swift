@@ -84,4 +84,39 @@ final class HumanTests: XCTestCase {
         
         return
     }
+    
+    func testCreateHumanIdentity() {
+        
+        let expectation = XCTestExpectation(description: "create Human Identity")
+        
+        func generateHumanIdentity(error: Error?, self: HumanIdentity?) {
+            
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(self, "Human Identity is nil.")
+            
+            expectation.fulfill()
+            
+            return
+        }
+        
+        HumanIdentity.create(
+            humanId: "27144684924846194",
+            dateOfBirth: "1987-10-13",
+            address: AddressCreationStruct(
+                line1: "44 Bridge Street",
+                line2: nil,
+                line3: nil,
+                line4: nil,
+                postalCode: "2000",
+                locality: "NSW",
+                regionId: 1,
+                countryId: 1),
+            session: provideTestSession(),
+            callback: generateHumanIdentity
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+    }
 }

@@ -8,6 +8,12 @@
 
 import Foundation
 
+public struct ProcuretDate: Codable {
+    let year: Int
+    let month: Int
+    let day: Int
+}
+
 
 extension DateFormatter {
     
