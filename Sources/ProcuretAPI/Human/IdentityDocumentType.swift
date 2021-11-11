@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct IdentityDocumentType: Codable {
-
+public enum IdentityDocumentType: Int {
+    case ausDriversLicense = 1
 }

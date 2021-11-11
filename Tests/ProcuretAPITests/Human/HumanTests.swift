@@ -119,4 +119,33 @@ final class HumanTests: XCTestCase {
         
         return
     }
+    
+    func testCreateHumanIdentityDocument() {
+        
+        let expectation = XCTestExpectation(description:
+            "create Human Identity Document")
+        
+        func generateHumanIdentityDocument(error: Error?,
+            self: HumanIdentityDocument?) {
+            
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(self, "Human Identity Document is nil.")
+            
+            expectation.fulfill()
+            
+            return
+        }
+        
+        HumanIdentityDocument.create(
+            humanId: "39885555918766603",
+            idDocumentType: 1,
+            idDocumentIdentifier: "123456",
+            session: provideTestSession(),
+            callback: generateHumanIdentityDocument
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+    }
 }

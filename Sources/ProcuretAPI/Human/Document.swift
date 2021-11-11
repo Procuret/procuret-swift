@@ -27,7 +27,7 @@ public struct HumanIdentityDocument: Codable {
     
     public static func create(
         humanId: String,
-        idDocumentType: IdentityDocumentType,
+        idDocumentType: IdentityDocumentType.RawValue,
         idDocumentIdentifier: String,
         session: Session?,
         callback: @escaping (Error?, Self?) -> Void
@@ -50,7 +50,7 @@ public struct HumanIdentityDocument: Codable {
     
     private struct CreatePayload: Codable {
         let humanId: String
-        let idDocumentType: IdentityDocumentType
+        let idDocumentType: IdentityDocumentType.RawValue
         let idDocumentIdentifier: String
         
         private enum CodingKeys: String, CodingKey {
