@@ -47,6 +47,7 @@ public struct Address: Codable {
             if let line2 = self.line2 {line += ", " + line2}
             if let line3 = self.line3 {line += ", " + line3}
             if let line4 = self.line4 {line += ", " + line4}
+            line += self.locality
             line += region.abbreviation
             line += self.postalCode
             return line
