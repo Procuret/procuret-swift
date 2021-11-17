@@ -12,8 +12,11 @@ public struct SellStage: Codable {
     let human: Human?
     let entity: Entity?
     let supplier: Supplier
-    let rateGroup: Dictionary<String, Int>?  //rateGroup type needs investigation. Likely to change. Suspect Dict or Enum
+    let rateGroup: TermRateGroup?
     let rates: Array<TermRate>
+    let termsOfService: TOS
+    let privacyPolicy: PrivacyPolicy
+    let stripeDDR: StripeDDRAgreement
     let instalmentLink: InstalmentLink?
     let methods: Array<PaymentMethod>
     
@@ -23,6 +26,9 @@ public struct SellStage: Codable {
         case supplier
         case rateGroup = "rate_group"
         case rates
+        case termsOfService = "terms_of_service"
+        case privacyPolicy = "privacy_policy"
+        case stripeDDR = "stripe_ddr"
         case instalmentLink = "instalment_link"
         case methods
     }
