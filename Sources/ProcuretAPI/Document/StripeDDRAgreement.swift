@@ -8,5 +8,6 @@
 import Foundation
 
 public struct StripeDDRAgreement: Codable {
+    internal static let path = "/document/stripe-ddr"
     
 }
