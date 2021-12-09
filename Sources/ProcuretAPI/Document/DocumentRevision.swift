@@ -1,5 +1,5 @@
 //
-//  Document.swift
+//  DocumentRevision.swift
 //  
 //
 //  Created by Kayla Hoyet on 7/27/21.
