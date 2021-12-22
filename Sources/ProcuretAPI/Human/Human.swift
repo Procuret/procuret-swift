@@ -40,14 +40,13 @@ public struct Human: Codable {
         lastName: String,
         emailAddress: String,
         phone: String,
-        secret: String?,
-        existingPhone: PhoneNumber?,
-        verifyPhone: Bool?,
-        creationNote: String?,
-        session: Session?,
-        supplier: Bool?,
-        hasAgentSecret: Bool?,
-        signupPerspective: Int,
+        secret: String? = nil,
+        existingPhone: PhoneNumber? = nil,
+        verifyPhone: Bool? = nil,
+        creationNote: String? = nil,
+        session: Session? = nil,
+        hasAgentSecret: Bool? = nil,
+        signupPerspective: Perspective = .business,
         callback: @escaping (Error?, Human?) -> Void
     ) {
         Request.make(
@@ -61,7 +60,6 @@ public struct Human: Codable {
                 existingPhone: existingPhone,
                 verifyPhone: verifyPhone,
                 creationNote: creationNote,
-                supplier: supplier,
                 hasAgentSecret: hasAgentSecret,
                 signupPerspective: signupPerspective
             ),
@@ -102,9 +100,8 @@ public struct Human: Codable {
         let existingPhone: PhoneNumber?
         let verifyPhone: Bool?
         let creationNote: String?
-        let supplier: Bool?
         let hasAgentSecret: Bool?
-        let signupPerspective: Int
+        let signupPerspective: Perspective
         
         private enum CodingKeys: String, CodingKey{
             case firstName = "first_name"
@@ -115,7 +112,6 @@ public struct Human: Codable {
             case existingPhone = "phone_id"
             case verifyPhone = "verify_phone"
             case creationNote = "creation_note"
-            case supplier
             case hasAgentSecret = "has_agent_secret"
             case signupPerspective = "signup_perspective"
         }

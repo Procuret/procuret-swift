@@ -7,6 +7,11 @@
 
 import Foundation
 
-public struct AssessmentState: Codable {
+
+
+public enum Example: Int, Codable {
+    
+    case first = 1
+    case second = 2
     
 }
