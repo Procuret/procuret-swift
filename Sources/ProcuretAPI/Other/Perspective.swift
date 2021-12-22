@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct Perspective: Codable {
+public enum Perspective: Int, Codable {
     
-    let indexid: Int
-    let name: String
+    case supplier = 1
+    case business = 2
+    case administrator = 3
+    case sales = 4
+    case treasury = 5
+    case investor = 6
     
-    public enum CodingKeys: String, CodingKey {
-        case indexid
-        case name
-    }
 }

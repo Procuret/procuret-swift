@@ -74,9 +74,8 @@ final class HumanTests: XCTestCase {
             verifyPhone: false,
             creationNote: nil,
             session: provideTestSession(),
-            supplier: true,
             hasAgentSecret: false,
-            signupPerspective: 1,
+            signupPerspective: .business,
             callback: generateHuman
         )
         
