@@ -22,6 +22,28 @@ public struct Session: Codable {
         case apiKey = "api_key"
     }
     
+    public static func create(
+        secret: String,
+        email: String,
+        code: String?,
+        callback: @escaping (Error?, Session?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(
+                secret: secret,
+                email: email,
+                code: code
+            ),
+            session: nil,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+    }
+    
     public static func fromEnvironmentVariables(
         keyVariableName: String = "PROCURET_SESSION_KEY",
         apiKeyVariableName: String = "PROCURET_API_KEY",
@@ -64,4 +86,15 @@ public struct Session: Codable {
 
     }
     
+    private struct CreatePayload: Codable {
+        let secret: String
+        let email: String
+        let code: String?
+        
+        private enum CodingKeys: String, CodingKey {
+            case secret
+            case email
+            case code
+        }
+    }
 }
