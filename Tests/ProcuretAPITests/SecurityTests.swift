@@ -34,7 +34,6 @@ final class SecurityTests: XCTestCase {
         
         SecondFactorCode.create(
             email: "kayla.h@procuret.com", 
-            agentId: nil,
             secret: provideSecret(),
             perspective: nil,
             callback: checkForError

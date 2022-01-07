@@ -11,7 +11,7 @@ public struct SecondFactorCode: Codable {
     
     private static let path = "/second-factor-code"
     
-    public static func create(
+    private static func create(
         email: String?,
         agentId: String?,
         secret: String,
@@ -32,6 +32,36 @@ public struct SecondFactorCode: Codable {
         ) { error, _ in
             callback(error)
         }
+    }
+    
+    public static func create(
+        email: String,
+        secret: String,
+        perspective: Perspective?,
+        callback: @escaping (Error?) -> Void
+    ) {
+        return Self.create(
+            email: email,
+            agentId: nil,
+            secret: secret,
+            perspective: perspective,
+            callback: callback
+        )
+    }
+    
+    public static func create(
+        agentId: String,
+        secret: String,
+        perspective: Perspective?,
+        callback: @escaping (Error?) -> Void
+    ) {
+        return Self.create(
+            email: nil,
+            agentId: agentId,
+            secret: secret,
+            perspective: perspective,
+            callback: callback
+        )
     }
     
     private struct CreatePayload: Codable {
