@@ -25,7 +25,7 @@ public struct Session: Codable {
     public static func create(
         secret: String,
         email: String,
-        code: String?,
+        code: String,
         callback: @escaping (Error?, Session?) -> Void
     ) {
         Request.make(
@@ -89,7 +89,7 @@ public struct Session: Codable {
     private struct CreatePayload: Codable {
         let secret: String
         let email: String
-        let code: String?
+        let code: String
         
         private enum CodingKeys: String, CodingKey {
             case secret
