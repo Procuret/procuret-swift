@@ -24,13 +24,13 @@ class DealTests: XCTestCase {
         let expectation = XCTestExpectation(description: "retrieve Deal")
         
         func recieveDeal(error: Error?, deal: Deal?) {
-            
             XCTAssertNil(error, "An error occurred.")
             XCTAssertNotNil(deal, "Deal is nil.")
             
             expectation.fulfill()
             
             return
+            
         }
         
         Deal.retrieve(
@@ -42,5 +42,32 @@ class DealTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         
         return
+        
+    }
+    
+    func testRetreieveManyDeal() {
+        
+        let expectation = XCTestExpectation(description: "retrieveMany Deal")
+        
+        func recieveManyDeal(error: Error?, deal: Array<Deal>?) {
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(deal, "Deal is nil.")
+            
+            expectation.fulfill()
+            
+            return
+        }
+        
+        Deal.retrieveMany(
+            limit: 5,
+            offset: 1,
+            order: Order.descending,
+            orderBy: Deal.OrderBy.created,
+            anyNameFragment: nil,
+            session: provideTestSession(),
+            callback: recieveManyDeal
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
     }
 }

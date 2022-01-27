@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import XCTest
 
 public struct Deal: Codable {
     
     internal static let path = "/deal"
+    internal static let listPath = Deal.path + "/list"
     
     let setupId: String
     let commitmentId: String
@@ -41,6 +43,14 @@ public struct Deal: Codable {
         case disposition
     }
     
+    public enum OrderBy: String {
+        case supplierName = "supplier_name"
+        case created = "created"
+        case businessName = "business_name"
+        case value = "value"
+        case outstanding = "outstanding"
+    }
+    
     public static func retrieve(
         commitmentId: String,
         session: Session?,
@@ -51,11 +61,39 @@ public struct Deal: Codable {
             data: nil,
             session: session,
             query: QueryString(
-                targetsOnly: [UrlParameter(commitmentId, key: "commitment_id")]
-                ),
+            targetsOnly: [UrlParameter(commitmentId, key: "commitment_id")]
+            ),
             method: .GET
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+    }
+    
+    public static func retrieveMany(
+        limit: Int,
+        offset: Int,
+        order: Order,
+        orderBy: Deal.OrderBy,
+        anyNameFragment: String?,
+        session: Session?,
+        callback: @escaping (Error?, Array<Deal>?) -> Void
+    ) {
+        Request.make(
+            path: Deal.listPath,
+            data: nil,
+            session: session,
+            query: QueryString(
+                targetsOnly: [
+                    UrlParameter(limit, key: "limit"),
+                    UrlParameter(offset, key: "offset"),
+                    UrlParameter(order.rawValue, key: "descending"),
+                    UrlParameter(orderBy.rawValue, key: "created")
+                ]
+            ),
+            method: .GET
+        ) { error, data in
+            Request.decodeResponse(error, data, Array<Self>.self, callback)
             return
         }
     }

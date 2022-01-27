@@ -6,7 +6,10 @@
 //
 
 import Foundation
-
-public struct Order: Codable {
     
+public enum Order: String {
+    case ascending = "ascending"
+    case descending = "descending"
 }
+
+
