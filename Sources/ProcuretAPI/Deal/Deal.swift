@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 
-public struct Deal: Codable {
+public struct Deal: Codable, Identifiable {
     
     internal static let path = "/deal"
     internal static let listPath = Deal.path + "/list"
@@ -26,6 +26,7 @@ public struct Deal: Codable {
     let sumPayments: String
     let denomination: Currency
     let disposition: Disposition
+    public let id = UUID()
     
     public enum CodingKeys: String, CodingKey {
         case setupId = "setup_id"
