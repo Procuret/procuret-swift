@@ -15,17 +15,20 @@ public struct Session: Codable {
     public let sessionId: Int
     public let sessionKey: String
     public let apiKey: String
+    public let perspective: Perspective
 
     private enum CodingKeys: String, CodingKey {
         case sessionId = "session_id"
         case sessionKey = "session_key"
         case apiKey = "api_key"
+        case perspective
     }
     
     public static func create(
         secret: String,
         email: String,
         code: String,
+        perspective: Perspective,
         callback: @escaping (Error?, Session?) -> Void
     ) {
         Request.make(
@@ -33,7 +36,8 @@ public struct Session: Codable {
             payload: CreatePayload(
                 secret: secret,
                 email: email,
-                code: code
+                code: code,
+                perspective: perspective
             ),
             session: nil,
             query: nil,
@@ -47,33 +51,41 @@ public struct Session: Codable {
     public static func fromEnvironmentVariables(
         keyVariableName: String = "PROCURET_SESSION_KEY",
         apiKeyVariableName: String = "PROCURET_API_KEY",
-        idVariableName: String = "PROCURET_SESSION_ID"
+        idVariableName: String = "PROCURET_SESSION_ID",
+        perspectiveVariableName: String = "PROCURET_PERSPECTIVE"
+        
     ) throws -> Session {
         
+        guard let ePerspective = getenv(perspectiveVariableName) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        guard let stringPerspective = String(utf8String: ePerspective) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        guard let intPerspective = Int(stringPerspective) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
+        guard let perspective = Perspective(rawValue: intPerspective) else {
+            throw ProcuretAPIError(.badConfiguration)
+        }
         guard let eApiKey = getenv(apiKeyVariableName) else {
             throw ProcuretAPIError(.badConfiguration)
         }
-        
         guard let apiKey = String(utf8String: eApiKey) else {
             throw ProcuretAPIError(.badConfiguration)
         }
-        
         guard let eSessionId = getenv(idVariableName) else {
             throw ProcuretAPIError(.badConfiguration)
         }
-        
         guard let stringSessionId = String(utf8String: eSessionId) else {
             throw ProcuretAPIError(.badConfiguration)
         }
-        
         guard let sessionId = Int(stringSessionId) else {
             throw ProcuretAPIError(.badConfiguration)
         }
-        
         guard let eKey = getenv(keyVariableName) else {
             throw ProcuretAPIError(.badConfiguration)
         }
-        
         guard let key = String(utf8String: eKey) else {
             throw ProcuretAPIError(.badConfiguration)
         }
@@ -81,20 +93,22 @@ public struct Session: Codable {
         return Self(
             sessionId: sessionId,
             sessionKey: key,
-            apiKey: apiKey
+            apiKey: apiKey,
+            perspective: perspective
         )
-
     }
     
     private struct CreatePayload: Codable {
         let secret: String
         let email: String
         let code: String
+        let perspective: Perspective
         
         private enum CodingKeys: String, CodingKey {
             case secret
             case email
             case code
+            case perspective
         }
     }
 }
