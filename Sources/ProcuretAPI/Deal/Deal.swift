@@ -13,19 +13,19 @@ public struct Deal: Codable, Identifiable {
     internal static let path = "/deal"
     internal static let listPath = Deal.path + "/list"
     
-    let setupId: String
-    let commitmentId: String
-    let transactingHumanId: Int
-    let transactingHumanName: String
-    let creditAssessmentState: AssessmentState
-    let supplier: EntityHeadline
-    let business: EntityHeadline
-    let timeCommitted: String
-    let invoiceValue: String
-    let totalPayable: String
-    let sumPayments: String
-    let denomination: Currency
-    let disposition: Disposition
+    public let setupId: String
+    public let commitmentId: String
+    public let transactingHumanId: Int
+    public let transactingHumanName: String
+    public let creditAssessmentState: AssessmentState
+    public let supplier: EntityHeadline
+    public let business: EntityHeadline
+    public let timeCommitted: String
+    public let invoiceValue: String
+    public let totalPayable: String
+    public let sumPayments: String
+    public let denomination: Currency
+    public let disposition: Disposition
     public let id = UUID()
     
     public enum CodingKeys: String, CodingKey {
