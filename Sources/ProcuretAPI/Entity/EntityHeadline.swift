@@ -9,8 +9,8 @@ import Foundation
 
 public struct EntityHeadline: Codable {
     
-    let entityId: Int
-    let legalEntityName: String
+    public let entityId: Int
+    public let legalEntityName: String
     
     public enum CodingKeys: String, CodingKey {
         case entityId = "entity_id"
