@@ -7,13 +7,19 @@
 
 import Foundation
 
-public struct PaymentMethod: Codable {
+public struct PaymentMethod: Codable, Identifiable {
     
     internal static let path = "/payment/method"
     internal static let listPath = PaymentMethod.path + "/list"
     
     public enum OrderBy: String {
         case created = "created"
+    }
+    
+    public let id = UUID()
+    
+    private enum CodingKeys: CodingKey {
+        
     }
     
     public static func retrieveMany(
