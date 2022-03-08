@@ -50,7 +50,6 @@ internal struct RequestData {
     
     internal static func encode(_ date: Date) -> String {
         return DateFormatter.nozomiTime.string(from: date)
-
     }
 
 }

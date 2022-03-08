@@ -12,6 +12,11 @@ public struct Session: Codable {
     
     private static let path = "/session"
     
+    public static let defaultKeyEnvName = "PROCURET_SESSION_KEY"
+    public static let defaultApiKeyEnvName = "PROCURET_API_KEY"
+    public static let defaultIdEnvName = "PROCURET_SESSION_ID"
+    public static let defaultPerspectiveEnvName = "PROCURET_PERSPECTIVE"
+    
     public let sessionId: Int
     public let sessionKey: String
     public let apiKey: String
@@ -48,12 +53,32 @@ public struct Session: Codable {
         }
     }
     
-    public static func fromEnvironmentVariables(
-        keyVariableName: String = "PROCURET_SESSION_KEY",
-        apiKeyVariableName: String = "PROCURET_API_KEY",
-        idVariableName: String = "PROCURET_SESSION_ID",
-        perspectiveVariableName: String = "PROCURET_PERSPECTIVE"
+    public static func optionallyFromEnvironmentVariables(
+        keyVariableName: String = Self.defaultKeyEnvName,
+        apiKeyVariableName: String = Self.defaultApiKeyEnvName,
+        idVariableName: String = Self.defaultIdEnvName,
+        perspectiveVariableName: String = Self.defaultPerspectiveEnvName
+    ) throws -> Session? {
         
+        guard let _ = getenv(keyVariableName)         else { return nil }
+        guard let _ = getenv(apiKeyVariableName)      else { return nil }
+        guard let _ = getenv(idVariableName)          else { return nil }
+        guard let _ = getenv(perspectiveVariableName) else { return nil }
+        
+        return try Self.fromEnvironmentVariables(
+            keyVariableName: keyVariableName,
+            apiKeyVariableName: apiKeyVariableName,
+            idVariableName: idVariableName,
+            perspectiveVariableName: perspectiveVariableName
+        )
+        
+    }
+    
+    public static func fromEnvironmentVariables(
+        keyVariableName: String = Self.defaultKeyEnvName,
+        apiKeyVariableName: String = Self.defaultApiKeyEnvName,
+        idVariableName: String = Self.defaultIdEnvName,
+        perspectiveVariableName: String = Self.defaultPerspectiveEnvName
     ) throws -> Session {
         
         guard let ePerspective = getenv(perspectiveVariableName) else {

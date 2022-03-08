@@ -21,5 +21,24 @@ final class BasicTests: XCTestCase {
         return
         
     }
+    
+    func testOptionallyLoadSessionFromEnvironment() {
+        
+        do {
+            //let _ = try Session.fromEnvironmentVariables()
+            let nilSession = try Session.optionallyFromEnvironmentVariables(
+                keyVariableName: "GARBAGE_NAME"
+            )
+            guard nilSession == nil else {
+                XCTFail("Session unexpectedly not nil")
+                return
+            }
+        } catch {
+            XCTFail("Experienced error: \(error)")
+        }
+        
+        return
+        
+    }
 
 }
