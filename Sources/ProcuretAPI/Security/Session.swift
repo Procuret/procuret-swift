@@ -53,6 +53,26 @@ public struct Session: Codable {
         }
     }
     
+    public static func forceFromEnvironmentVariables(
+        keyVariableName: String = Self.defaultKeyEnvName,
+        apiKeyVariableName: String = Self.defaultApiKeyEnvName,
+        idVariableName: String = Self.defaultIdEnvName,
+        perspectiveVariableName: String = Self.defaultPerspectiveEnvName
+    ) -> Session {
+        
+        do {
+            return try Self.fromEnvironmentVariables(
+                keyVariableName: keyVariableName,
+                apiKeyVariableName: apiKeyVariableName,
+                idVariableName: idVariableName,
+                perspectiveVariableName: perspectiveVariableName
+            )
+        } catch {
+            fatalError("unable to force Session from environment")
+        }
+
+    }
+    
     public static func optionallyFromEnvironmentVariables(
         keyVariableName: String = Self.defaultKeyEnvName,
         apiKeyVariableName: String = Self.defaultApiKeyEnvName,
