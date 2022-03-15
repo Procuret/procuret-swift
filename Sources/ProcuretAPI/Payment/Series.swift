@@ -12,6 +12,7 @@ public struct PaymentSeries: Codable, Identifiable {
     internal static let path = "/payment/series"
     internal static let listPath = PaymentSeries.path + "/list"
     
+    public let created: ProcuretTime
     public let publicId: String
     public let creatingAgent: Int
     public let paymentMethod: PaymentMethodHeadline
@@ -23,6 +24,7 @@ public struct PaymentSeries: Codable, Identifiable {
     public let id = UUID()
     
     public enum CodingKeys: String, CodingKey {
+        case created = "created"
         case publicId = "public_id"
         case creatingAgent = "creating_agent"
         case paymentMethod = "payment_method"
