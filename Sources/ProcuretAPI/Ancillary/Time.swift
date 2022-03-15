@@ -8,5 +8,5 @@
 import Foundation
 
 public struct ProcuretTime: Codable {
-    let dateTime: String
+    public let dateTime: String
 }
