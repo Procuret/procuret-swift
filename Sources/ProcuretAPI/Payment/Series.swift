@@ -12,7 +12,7 @@ public struct PaymentSeries: Codable, Identifiable {
     internal static let path = "/payment/series"
     internal static let listPath = PaymentSeries.path + "/list"
     
-    public let created: ProcuretTime
+    public let created: String
     public let publicId: String
     public let creatingAgent: Int
     public let paymentMethod: PaymentMethodHeadline
@@ -35,15 +35,11 @@ public struct PaymentSeries: Codable, Identifiable {
         case disposition
     }
     
-    public enum OrderBy: String {
-        case created = "created"
-    }
-    
     public static func retrieveMany(
         limit: Int,
         offset: Int,
         order: Order,
-        orderBy: PaymentSeries.OrderBy,
+        orderBy: PaymentSeriesOrderBy,
         textFragment: String?,
         businessId: String?,
         methodId: String?,

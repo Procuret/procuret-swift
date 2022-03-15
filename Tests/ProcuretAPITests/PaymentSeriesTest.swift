@@ -37,7 +37,7 @@ class PaymentSeriesTest: XCTestCase {
             limit: 5,
             offset: 1,
             order: Order.descending,
-            orderBy: PaymentSeries.OrderBy.created,
+            orderBy: PaymentSeriesOrderBy.created,
             textFragment: nil,
             businessId: nil,
             methodId: nil,
