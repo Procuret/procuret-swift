@@ -9,8 +9,8 @@ import Foundation
 
 public struct Amount: Codable {
     
-    let magnitude: String
-    let denomination: Currency
+    public let magnitude: String
+    public let denomination: Currency
     
     public enum CodingKeys: String, CodingKey {
         case magnitude
