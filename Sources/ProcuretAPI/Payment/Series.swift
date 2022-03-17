@@ -20,6 +20,9 @@ public struct PaymentSeries: Codable, Identifiable {
     public let supplier: EntityHeadline
     public let exchangeId: String
     public let identifier: String
+    public let amount: Amount
+    public let totalPayable: Amount
+    public let sumPayments: String
     public let disposition: Disposition
     public let id = UUID()
     
@@ -32,6 +35,9 @@ public struct PaymentSeries: Codable, Identifiable {
         case supplier
         case exchangeId = "exchange_id"
         case identifier
+        case amount
+        case totalPayable = "total_payable"
+        case sumPayments = "sum_payments"
         case disposition
     }
     
