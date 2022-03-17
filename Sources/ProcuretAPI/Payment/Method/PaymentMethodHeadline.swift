@@ -9,8 +9,8 @@ import Foundation
 
 public struct PaymentMethodHeadline: Codable {
     
-    let publicId: String
-    let description: String
+    public let publicId: String
+    public let description: String
     
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
