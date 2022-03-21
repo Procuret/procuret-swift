@@ -14,14 +14,13 @@ public struct ProcuretTime: Codable {
 
 extension DateFormatter {
     
-    static let tableShortTime: DateFormatter = {
+    static let nozomiTime: DateFormatter = {
         let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
         formatter.calendar = Calendar(identifier: .iso8601)
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
         return formatter
-        
     }()
+
 }

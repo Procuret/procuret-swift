@@ -12,7 +12,7 @@ public struct PaymentSeries: Codable, Identifiable {
     internal static let path = "/payment/series"
     internal static let listPath = PaymentSeries.path + "/list"
     
-    public let created: String
+    public let created: Date
     public let publicId: String
     public let creatingAgent: Int
     public let paymentMethod: PaymentMethodHeadline
