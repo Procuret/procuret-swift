@@ -22,7 +22,7 @@ public struct PaymentSeries: Codable, Identifiable {
     public let identifier: String
     public let amount: Amount
     public let totalPayable: Amount
-    public let sumPayments: String
+    public let sumPayments: Amount
     public let disposition: Disposition
     public let id = UUID()
     
