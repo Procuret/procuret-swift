@@ -12,15 +12,15 @@ public struct Entity: Codable {
     internal static let path = "/entity/permissions"
     internal static let listPath = "/entity/list"
     
-    let publicId: Int
-    let publicIdShort: String
-    let entityIdentifiers: Array<EntityIdentifier>
-    let legalEntityName: String
-    let tradingName: String?
-    let phoneNumber: String?
-    let entityType: String?
-    let created: String?
-    let disposition: Disposition
+    public let publicId: Int
+    public let publicIdShort: String
+    public let entityIdentifiers: Array<EntityIdentifier>
+    public let legalEntityName: String
+    public let tradingName: String?
+    public let phoneNumber: String?
+    public let entityType: String?
+    public let created: String?
+    public let disposition: Disposition
     
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
