@@ -18,8 +18,8 @@ public struct Entity: Codable, Identifiable, Hashable {
     public let legalEntityName: String
     public let tradingName: String?
     public let phoneNumber: String?
-    public let entityType: String?
-    public let created: String?
+    public let entityType: EntityType?
+    public let created: Date?
     public let disposition: Disposition
     
     public var id: Int { get { return self.publicId } }
@@ -34,6 +34,12 @@ public struct Entity: Codable, Identifiable, Hashable {
         case entityType = "entity_type_name"
         case created
         case disposition
+    }
+    
+    public enum OrderBy: String {
+        case name = "name"
+        case created = "created"
+        case modified = "modified"
     }
     
     public static func setPermissions(
@@ -84,6 +90,32 @@ public struct Entity: Codable, Identifiable, Hashable {
     
     public static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.publicId == rhs.publicId
+    }
+    
+    public static func retrieveMany(
+        session: Session,
+        accessibleTo: Agent? = nil,
+        nameFragment: String? = nil,
+        limit: Int = 20,
+        offset: Int = 0,
+        order: Order = Order.descending,
+        orderBy: Self.OrderBy = Self.OrderBy.created,
+        callback: @escaping (Error?, Array<Self>?) -> Void
+    ) -> Void {
+        
+        Request.make(
+            path: Self.listPath,
+            data: nil,
+            session: session,
+            query: QueryString(targetsOnly: [].compactMap{ $0 }),
+            method: .GET
+        ) { error, data in
+            Request.decodeResponse(error, data, Array<Self>.self, callback)
+            return
+        }
+        
+        return
+
     }
 
 }

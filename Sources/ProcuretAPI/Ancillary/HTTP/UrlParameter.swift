@@ -24,6 +24,12 @@ internal struct UrlParameter {
         self.value = String(value)
         return
     }
+    
+    init(_ value: Int64, key: String) {
+        self.key = key
+        self.value = String(value)
+        return
+    }
 
     init(_ value: Bool, key: String) {
         
@@ -42,6 +48,39 @@ internal struct UrlParameter {
         self.value = RequestData.encode(value)
         return
     }
+    
+    internal static func optionally(
+        _ value: String?,
+        key: String
+    ) -> Self? {
+        guard let value = value else { return nil }
+        return Self(value, key: key)
+    }
+    
+    internal static func optionally(
+        _ value: Int?,
+        key: String
+    ) -> Self? {
+        guard let value = value else { return nil }
+        return Self(value, key: key)
+    }
+    
+    internal static func optionally(
+        _ value: Int64?,
+        key: String
+    ) -> Self? {
+        guard let value = value else { return nil }
+        return Self(value, key: key)
+    }
+    
+    internal static func optionally(
+        _ value: Bool?,
+        key: String
+    ) -> Self? {
+        guard let value = value else { return nil }
+        return Self(value, key: key)
+    }
+    
     
     internal static func createSequence(
         key: String,

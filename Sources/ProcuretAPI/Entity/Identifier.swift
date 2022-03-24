@@ -11,13 +11,12 @@ public struct EntityIdentifier: Codable {
     
     public static let path = "/"
     
-    let idType: String
+    let idType: EntityIdType
     let idString: String
     
     public enum CodingKeys: String, CodingKey {
         case idType = "id_type"
         case idString = "id"
-        
     }
     
     public static func create(

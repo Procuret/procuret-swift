@@ -7,6 +7,12 @@
 
 import Foundation
 
-public struct EntityIdType: Codable {
+
+public enum EntityIdType: Int, Codable, CaseIterable {
+
+    case abn = 1
+    case acn = 2
+    case nzbn = 3
+    case nzcn = 4
     
 }
