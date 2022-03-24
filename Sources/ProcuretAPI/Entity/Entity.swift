@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Entity: Codable {
+public struct Entity: Codable, Identifiable, Hashable {
     
     internal static let path = "/entity/permissions"
     internal static let listPath = "/entity/list"
@@ -21,6 +21,8 @@ public struct Entity: Codable {
     public let entityType: String?
     public let created: String?
     public let disposition: Disposition
+    
+    public var id: Int { get { return self.publicId } }
     
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
@@ -74,4 +76,14 @@ public struct Entity: Codable {
             case manage
         }
     }
+    
+    public func hash(into hasher: inout Hasher) -> Void {
+        hasher.combine(self.publicId)
+        return
+    }
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.publicId == rhs.publicId
+    }
+
 }
