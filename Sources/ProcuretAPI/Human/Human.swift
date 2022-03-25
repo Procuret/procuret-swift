@@ -3,28 +3,29 @@
 //  
 //
 //  Created by Kayla Hoyet on 7/14/21.
+//  Modified by Hugh Jeremy on 25 Mar 2022
 //
 
 import Foundation
 
-public struct Human: Codable {
+public struct Human: Codable, Agent {
     
     internal static let path = "/human"
     
-    let humanId: Int
-    let firstName: String
-    let lastName: String
-    let resetKey: String?
+    public let humanId: Int
+    public let firstName: String
+    public let lastName: String
     let identity: HumanIdentity?
     let created: String
     let disposition: Disposition
     let documents: Array<HumanIdentityDocument>?
     
+    public var agentId: Int { get { return self.humanId } }
+
     private enum CodingKeys: String, CodingKey {
         case humanId = "public_id"
         case firstName = "first_name"
         case lastName = "last_name"
-        case resetKey = "reset_key"
         case identity
         case created
         case disposition

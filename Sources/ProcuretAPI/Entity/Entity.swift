@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 7/21/21.
+//  Modified by Hugh Jeremy on 25 Mar 2022
 //
 
 import Foundation
@@ -103,11 +104,20 @@ public struct Entity: Codable, Identifiable, Hashable {
         callback: @escaping (Error?, Array<Self>?) -> Void
     ) -> Void {
         
+        typealias UP = UrlParameter
+        
         Request.make(
             path: Self.listPath,
             data: nil,
             session: session,
-            query: QueryString(targetsOnly: [].compactMap{ $0 }),
+            query: QueryString(targetsOnly: [
+                UP(orderBy.rawValue, key: "order_by"),
+                UP(order.rawValue, key: "order"),
+                UP(limit, key: "limit"),
+                UP(offset, key: "offset"),
+                UP.optionally(accessibleTo?.agentId, key: "accessible_to"),
+                UP.optionally(nameFragment, key: "name_fragment")
+            ].compactMap{ $0 }),
             method: .GET
         ) { error, data in
             Request.decodeResponse(error, data, Array<Self>.self, callback)
