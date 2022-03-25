@@ -27,7 +27,7 @@ public struct Entity: Codable, Identifiable, Hashable {
     
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
-        case publicIdShort = "public_id_short"
+        case publicIdShort = "public_id_short" 
         case entityIdentifiers = "entity_identifiers"
         case legalEntityName = "legal_entity_name"
         case tradingName = "trading_name"
