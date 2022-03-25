@@ -14,7 +14,7 @@ public struct ProcuretTime: Codable {
 
 extension DateFormatter {
     
-    static let nozomiTime: DateFormatter = {
+    public static let nozomiTime: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSS"
         formatter.calendar = Calendar(identifier: .iso8601)

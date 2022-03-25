@@ -33,7 +33,7 @@ public struct Session: Codable, Agent {
         case perspective
         case agent
     }
-    
+
     public static func create(
         secret: String,
         email: String,
