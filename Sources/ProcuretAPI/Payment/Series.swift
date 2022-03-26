@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PaymentSeries: Codable, Identifiable {
+public struct PaymentSeries: Codable, Identifiable, Hashable {
     
     internal static let path = "/payment/series"
     internal static let listPath = PaymentSeries.path + "/list"
@@ -24,7 +24,12 @@ public struct PaymentSeries: Codable, Identifiable {
     public let totalPayable: Amount
     public let sumPayments: Amount
     public let disposition: Disposition
-    public let id = UUID()
+    
+    public var outstanding: Amount { get {
+        return self.totalPayable - self.sumPayments
+    } }
+
+    public var id: String { get { return self.publicId } }
     
     public enum CodingKeys: String, CodingKey {
         case created = "created"
@@ -70,4 +75,14 @@ public struct PaymentSeries: Codable, Identifiable {
             return
         }
     }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.publicId)
+        return
+    }
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.publicId == rhs.publicId
+    }
+
 }
