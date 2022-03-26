@@ -25,6 +25,8 @@ public enum EntityType: Int, Codable, CaseIterable {
             return "Company"
         case .soleTrader:
             return "Sole Trader"
+        case .strata:
+            return "Strata"
         case .trust:
             return "Trust"
         case .partnership:
@@ -36,7 +38,5 @@ public enum EntityType: Int, Codable, CaseIterable {
         }
 
     } }
-    
-    public static func name
 
 }
