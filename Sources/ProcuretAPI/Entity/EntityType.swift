@@ -17,5 +17,26 @@ public enum EntityType: Int, Codable, CaseIterable {
     case partnership = 5
     case otherIncorporatedEntity = 6
     case ungroupedEntity = 7
+    
+    var name: String { get {
+        
+        switch self {
+        case .company:
+            return "Company"
+        case .soleTrader:
+            return "Sole Trader"
+        case .trust:
+            return "Trust"
+        case .partnership:
+            return "Partnership"
+        case .otherIncorporatedEntity:
+            return "Other Incorporated Entity"
+        case .ungroupedEntity:
+            return "Ungrouped"
+        }
+
+    } }
+    
+    public static func name
 
 }
