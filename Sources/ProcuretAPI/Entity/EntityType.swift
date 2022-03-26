@@ -18,7 +18,7 @@ public enum EntityType: Int, Codable, CaseIterable {
     case otherIncorporatedEntity = 6
     case ungroupedEntity = 7
     
-    var name: String { get {
+    public var name: String { get {
         
         switch self {
         case .company:
