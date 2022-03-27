@@ -16,5 +16,16 @@ public enum Processor: Int, Codable, CaseIterable, Identifiable {
     case zai = 4
     
     public var id: Int { get { return self.rawValue } }
+    
+    public var name: String { get {
+        switch self {
+        case .stripe:
+            return "Stripe"
+        case .offPlatform:
+            return "OffPlatform"
+        case .zai:
+            return "Zai"
+        }
+    } }
 
 }
