@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 8/11/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
@@ -13,7 +14,7 @@ public struct ShopifyAccessToken: Codable {
     internal static let listPath = ShopifyAccessToken.path + "/list"
     
     let publicId: String
-    let created: ProcuretTime
+    let created: Date
     let creatingAgentId: String
     let accessToken: String
     let shopName: String

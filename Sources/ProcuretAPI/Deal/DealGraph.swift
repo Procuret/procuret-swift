@@ -11,8 +11,8 @@ public struct DealGraph: Codable {
     
     internal static let path = "/deal/graph"
     
-    let start: ProcuretTime
-    let end: ProcuretTime
+    let start: Date
+    let end: Date
     let attribute: DealGraphAttribute
     let groupBy: DealGraphGroupBy
     let yValues: Array<Float>

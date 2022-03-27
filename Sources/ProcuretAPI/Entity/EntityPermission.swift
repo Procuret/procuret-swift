@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 8/6/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
@@ -16,7 +17,7 @@ public struct EntityPermission: Codable {
     let human: HumanHeadline
     let privileges: Array<Privilege>
     let disposition: Disposition
-    let created: ProcuretTime
+    let created: Date
     
     private enum CodingKeys: String, CodingKey {
         case entity

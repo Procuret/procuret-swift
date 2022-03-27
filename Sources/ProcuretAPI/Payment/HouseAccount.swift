@@ -3,16 +3,18 @@
 //  
 //
 //  Created by Kayla Hoyet on 8/11/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
 
-public struct HouseAccount: Codable {
+
+public struct HouseAccount: Decodable {
     
     internal static let path = "/house-account"
     
-    let created: ProcuretTime
-    let account: DirectDebit
+    let created: Date
+    let account: BankAccount
     
     private enum CodingKeys: String, CodingKey {
         case created

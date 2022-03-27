@@ -15,7 +15,7 @@ public struct ShopifyInstallLink: Codable {
     internal static let messagePath = ShopifyInstallLink.path + "/message"
     
     let publicId: String
-    let created: ProcuretTime
+    let created: Date
     let url: String
     let shopName: String
     let exhausted: Bool

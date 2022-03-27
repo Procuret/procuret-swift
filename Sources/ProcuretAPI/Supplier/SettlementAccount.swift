@@ -3,18 +3,19 @@
 //  
 //
 //  Created by Kayla Hoyet on 8/12/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
 
-public struct SettlementAccount: Codable {
+public struct SettlementAccount: Decodable {
     
     internal static let path = Supplier.path + "/settlement-account"
     
-    let created: ProcuretTime
+    let created: Date
     let supplier: EntityHeadline
     let creator: HumanHeadline
-    let account: DirectDebit
+    let account: BankAccount
     
     private enum CodingKeys: String, CodingKey {
         case created

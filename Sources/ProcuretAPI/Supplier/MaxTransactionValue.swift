@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 8/12/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
@@ -14,7 +15,7 @@ public struct MaxTransactionValue: Codable {
     
     let supplierId: String
     let magnitude: String
-    let created: ProcuretTime
+    let created: Date
     let denomination: Currency
     let active: Bool
     let disposition: Disposition

@@ -10,8 +10,8 @@ import Foundation
 public struct AssessmentKernel: Codable {
     
     let indexid: Int
-    let began: ProcuretTime
-    let ended: ProcuretTime
+    let began: Date
+    let ended: Date
     let requestingAgentId: Int
     let relevantEnquiries: Array<EnquiryKernel>
     let failureNotes: Array<String>

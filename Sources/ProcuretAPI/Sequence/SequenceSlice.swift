@@ -7,9 +7,10 @@
 
 import Foundation
 
-public struct SequenceSlice: Codable {
+
+public struct SequenceSlice: Decodable {
     
-    let scheduledTime: ProcuretTime
+    let scheduledTime: Date
     let amount: Amount
     let paymentMethod: PaymentMethod
     

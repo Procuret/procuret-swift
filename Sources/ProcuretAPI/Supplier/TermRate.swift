@@ -3,6 +3,7 @@
 //
 //
 //  Created by Kayla Hoyet on 8/12/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
@@ -13,7 +14,7 @@ public struct TermRate: Codable {
     internal static let listPath = "/term-rate/list"
     
     let indexid: Int
-    let created: ProcuretTime
+    let created: Date
     let annualRate: Decimal
     let periods: Int
     let periodsPerYear: Decimal

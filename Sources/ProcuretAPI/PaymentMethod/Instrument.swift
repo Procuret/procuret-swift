@@ -11,5 +11,5 @@ import XCTest
 public enum Instrument: Int, Codable {
     
     case card = 1
-    case directDebit = 2
+    case bankAccount = 2
 }

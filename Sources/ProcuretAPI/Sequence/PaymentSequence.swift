@@ -7,8 +7,9 @@
 
 import Foundation
 
-public struct PaymentSequence: Codable {
+public struct PaymentSequence: Decodable {
     
     let publicId: String
-    let slices: Array<SequenceSlice> 
+    let slices: Array<SequenceSlice>
+
 }

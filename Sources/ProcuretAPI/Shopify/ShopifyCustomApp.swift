@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 8/11/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
@@ -17,7 +18,7 @@ public struct ShopifyCustomApp: Codable {
     let apiSecretKey: String
     let shopName: String
     let disposition: Disposition
-    let created: ProcuretTime
+    let created: Date
     
     private enum CodingKeys: String, CodingKey {
         case supplierId = "supplier_entity_id"

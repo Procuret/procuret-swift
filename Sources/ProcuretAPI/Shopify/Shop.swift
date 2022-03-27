@@ -13,7 +13,7 @@ public struct ShopifyShop: Codable {
     internal static let listPath = ShopifyShop.path + "/list"
     
     let shopName: String
-    let created: ProcuretTime
+    let created: Date
     let supplierId: String
     let active: Bool
     let disposition: Disposition

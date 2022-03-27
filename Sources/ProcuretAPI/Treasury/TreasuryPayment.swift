@@ -14,8 +14,8 @@ public struct TreasuryPayment: Codable {
     
     let publicId: String
     let executor: HumanHeadline
-    let created: ProcuretTime
-    let executed: ProcuretTime
+    let created: Date
+    let executed: Date
     let magnitude: String
     let reconciliations: Array<Reconciliation>?
     let creatingAgentId: Int?
@@ -40,7 +40,7 @@ public struct TreasuryPayment: Codable {
         amount: String,
         denomination: Currency,
         executorId: Int,
-        executionTime: ProcuretTime,
+        executionTime: Date,
         paymentMethodId: String?,
         commitmentId: String?,
         manuallyReconciled: Bool?,
@@ -88,7 +88,7 @@ public struct TreasuryPayment: Codable {
         let amount: String
         let denomination: Currency
         let executorId: Int
-        let executionTime: ProcuretTime
+        let executionTime: Date
         let paymentMethodId: String?
         let commitmentId: String?
         let manuallyReconciled: Bool?

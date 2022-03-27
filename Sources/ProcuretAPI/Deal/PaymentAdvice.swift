@@ -13,7 +13,7 @@ public struct PaymentAdvice: Codable {
     internal static let listPath = PaymentAdvice.path + "/list"
     
     let seriesId: String
-    let created: ProcuretTime
+    let created: Date
     
     private enum CodingKeys: String, CodingKey {
         case seriesId = "series_id"

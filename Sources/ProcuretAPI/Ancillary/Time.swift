@@ -3,14 +3,11 @@
 //  
 //
 //  Created by Kayla Hoyet on 7/22/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
 
-public struct ProcuretTime: Codable {
-    
-    public let dateTime: String
-}
 
 extension DateFormatter {
     

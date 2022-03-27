@@ -9,7 +9,7 @@ import Foundation
 
 public struct DocumentRevision: Codable {
     
-    let created: ProcuretTime
+    let created: Date
     let body: String
     let asHTML: Bool
     let name: String

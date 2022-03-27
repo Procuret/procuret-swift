@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 7/29/21.
+//  Modified by Hugh Jeremy 27 Mar 2022
 //
 
 import Foundation
@@ -10,11 +11,12 @@ import Foundation
 public struct PaymentMethodKernel: Codable {
     
     let publicId: String
-    let entityId: Int
-    let created: ProcuretTime
+    let entityId: Int?
+    let created: Date
     let creatingAgentId: Int
     let authorityAgentId: Int
-    let processor: Int?
+    let custodian: Custodian
+    let instrument: Instrument
     let disposition: Disposition
     
     public enum CodingKeys: String, CodingKey {
@@ -23,7 +25,8 @@ public struct PaymentMethodKernel: Codable {
         case created
         case creatingAgentId = "creating_agent_id"
         case authorityAgentId = "authority_agent_id"
-        case processor
+        case custodian
+        case instrument
         case disposition
     }
     

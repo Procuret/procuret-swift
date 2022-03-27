@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SellStage: Codable {
+public struct SellStage: Decodable {
     
     let human: Human?
     let entity: Entity?

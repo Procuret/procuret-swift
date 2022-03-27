@@ -13,7 +13,7 @@ public struct DealConfirmation: Codable {
     internal static let listPath = DealConfirmation.path + "/list"
     
     let seriesId: String
-    let created: ProcuretTime
+    let created: Date
     let sentTo: String
     
     public enum CodingKeys: String, CodingKey {

@@ -213,7 +213,7 @@ internal class Request {
         return request
     }
     
-    internal static func decodeResponse<T: Codable>(
+    internal static func decodeResponse<T: Decodable>(
         _ error: Error?,
         _ data: Data?,
         _ decodableType: T.Type,

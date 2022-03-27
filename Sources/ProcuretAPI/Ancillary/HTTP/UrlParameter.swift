@@ -49,6 +49,22 @@ internal struct UrlParameter {
         return
     }
     
+    init<E: RawRepresentable>(
+        _ value: E,
+        key: String
+    ) where E.RawValue == String {
+        self.key = key
+        self.value = value.rawValue
+    }
+    
+    init<E: RawRepresentable>(
+        _ value: E,
+        key: String
+    ) where E.RawValue == Int {
+        self.key = key
+        self.value = String(value.rawValue)
+    }
+    
     internal static func optionally(
         _ value: String?,
         key: String
@@ -81,6 +97,21 @@ internal struct UrlParameter {
         return Self(value, key: key)
     }
     
+    internal static func optionally<E: RawRepresentable>(
+        _ value: E?,
+        key: String
+    ) -> Self? where E.RawValue == String {
+        guard let value = value else { return nil }
+        return Self(value, key: key)
+    }
+    
+    internal static func optionally<E: RawRepresentable>(
+        _ value: E?,
+        key: String
+    ) -> Self? where E.RawValue == Int {
+        guard let value = value else { return nil }
+        return Self(value, key: key)
+    }
     
     internal static func createSequence(
         key: String,
