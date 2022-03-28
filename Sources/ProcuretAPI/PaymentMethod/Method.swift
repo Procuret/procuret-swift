@@ -95,10 +95,10 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
     
     public static func retrieveMany(
         session: Session,
-        limit: Int,
-        offset: Int,
-        order: Order,
-        orderBy: Self.OrderBy,
+        limit: Int = 20,
+        offset: Int = 0,
+        order: Order = Order.descending,
+        orderBy: Self.OrderBy = Self.OrderBy.created,
         entityId: String? = nil,
         authorityId: String? = nil,
         active: Bool? = nil,
