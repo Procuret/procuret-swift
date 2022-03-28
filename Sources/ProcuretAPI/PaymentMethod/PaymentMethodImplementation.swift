@@ -22,6 +22,7 @@ public protocol UnderpinnedByMethodKernel: Decodable, Identifiable, Equatable {
     var disposition: Disposition { get }
     
     var friendlyDescription: String { get }
+    var endsIn: String { get }
 
 }
 

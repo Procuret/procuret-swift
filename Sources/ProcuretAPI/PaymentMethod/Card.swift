@@ -14,6 +14,10 @@ public struct Card: UnderpinnedByMethodKernel {
     public let kernel: PaymentMethodKernel
     public let details: CardDetails
     
+    public var endsIn: String { get {
+        return self.details.last4
+    } }
+    
     public var friendlyDescription: String { get {
         return self.details.brand ?? "Card" + "..." + self.details.last4
     } }

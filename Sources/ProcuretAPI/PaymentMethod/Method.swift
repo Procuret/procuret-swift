@@ -50,6 +50,17 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
         }
 
     } }
+    
+    public var endsIn: String { get {
+        switch self {
+        case .bankAccount(let bankAccount):
+            return bankAccount.endsIn
+        case .stripeCard(let stripeCard):
+            return stripeCard.endsIn
+        case .stripeBecs(let stripeBecs):
+            return stripeBecs.endsIn
+        }
+    } }
 
     public init(from decoder: Decoder) throws {
 

@@ -20,6 +20,8 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
         return "Account ..." + self.last4
     } }
     
+    public var endsIn: String { get { return self.last4 } }
+    
     private enum CodingKeys: String, CodingKey {
         case kernel
         case last4 = "last_4"

@@ -18,6 +18,10 @@ public struct BankAccount: UnderpinnedByMethodKernel {
         return "Account ..." + self.particulars.endingIn
     } }
 
+    public var endsIn: String { get {
+        return self.particulars.endingIn
+    } }
+    
     private enum CodingKeys: String, CodingKey {
         case kernel
         case particulars
