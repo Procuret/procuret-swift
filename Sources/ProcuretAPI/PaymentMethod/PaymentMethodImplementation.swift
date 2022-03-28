@@ -8,7 +8,7 @@
 import Foundation
 
 
-public protocol UnderpinnedByMethodKernel: Decodable, Identifiable, Equatable {
+public protocol UnderpinnedByMethodKernel: Decodable, Identifiable, Hashable {
     
     var kernel: PaymentMethodKernel { get }
     
@@ -31,8 +31,12 @@ extension UnderpinnedByMethodKernel {
     public var publicId: String { get { return self.kernel.publicId } }
     public var entityId: Int? { get { return self.kernel.entityId } }
     public var created: Date { get { return self.kernel.created } }
-    public var creatingAgentId: Int { get { return self.kernel.creatingAgentId } }
-    public var authorityAgentId: Int { get { return self.kernel.authorityAgentId } }
+    public var creatingAgentId: Int { get {
+        return self.kernel.creatingAgentId
+    } }
+    public var authorityAgentId: Int { get {
+        return self.kernel.authorityAgentId
+    } }
     public var instrument: Instrument { get { return self.kernel.instrument } }
     public var custodian: Custodian { get { return self.custodian } }
     public var disposition: Disposition { get { return self.disposition } }
@@ -46,6 +50,10 @@ extension UnderpinnedByMethodKernel {
     public static func != (lhs: Self, rhs: Self) -> Bool {
         return lhs.publicId != rhs.publicId
     }
-
+    
+    public func hash(into hasher: inout Hasher) -> Void {
+        hasher.combine(self.publicId)
+        return
+    }
 
 }
