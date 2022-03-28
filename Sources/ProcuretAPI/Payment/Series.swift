@@ -12,6 +12,10 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
     internal static let path = "/payment/series"
     internal static let listPath = PaymentSeries.path + "/list"
     
+    public enum OrderBy: String {
+        case created = "created"
+    }
+    
     public let created: Date
     public let publicId: String
     public let creatingAgent: Int
@@ -47,27 +51,33 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
     }
     
     public static func retrieveMany(
-        limit: Int,
-        offset: Int,
-        order: Order,
-        orderBy: PaymentSeriesOrderBy,
-        textFragment: String?,
-        businessId: String?,
-        methodId: String?,
-        session: Session?,
+        session: Session,
+        limit: Int = 20,
+        offset: Int = 0,
+        order: Order = .descending,
+        orderBy: Self.OrderBy = .created,
+        textFragment: String? = nil,
+        businessId: String? = nil,
+        methodId: String? = nil,
         callback: @escaping (Error?, Array<Self>?) -> Void
     ) {
+        
+        typealias UP = UrlParameter
+        
         Request.make(
             path: Self.listPath,
             data: nil,
             session: session,
             query: QueryString(
                 targetsOnly: [
-                    UrlParameter(limit, key: "limit"),
-                    UrlParameter(offset, key: "offset"),
-                    UrlParameter(order.rawValue, key: "descending"),
-                    UrlParameter(orderBy.rawValue, key: "created")
-                ]
+                    UP(limit, key: "limit"),
+                    UP(offset, key: "offset"),
+                    UP(order, key: "order"),
+                    UP(orderBy, key: "order_by"),
+                    UP.optionally(textFragment, key: "fragment"),
+                    UP.optionally(businessId, key: "business_id"),
+                    UP.optionally(methodId, key: "method_id")
+                ].compactMap { $0 }
             ),
             method: .GET
         ) { error, data in
