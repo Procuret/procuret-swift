@@ -8,7 +8,8 @@
 import Foundation
 
 
-public protocol UnderpinnedByMethodKernel: Decodable, Identifiable, Hashable {
+public protocol UnderpinnedByMethodKernel: Decodable, Identifiable, Hashable,
+                IdentifiesPaymentMethod {
     
     var kernel: PaymentMethodKernel { get }
     
@@ -43,6 +44,8 @@ extension UnderpinnedByMethodKernel {
     
     public var id: String { get { return self.kernel.publicId } }
 
+    public var paymentMethodId: String { get { return self.id } }
+    
     public static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.publicId == rhs.publicId
     }

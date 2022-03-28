@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct HumanHeadline: Codable {
+public struct HumanHeadline: Codable, Agent {
     
     let agentId: Int
     let fullName: String
@@ -16,4 +16,5 @@ public struct HumanHeadline: Codable {
         case agentId = "agent_id"
         case fullName = "full_name"
     }
+
 }

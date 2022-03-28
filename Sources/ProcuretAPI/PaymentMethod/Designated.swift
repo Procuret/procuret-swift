@@ -3,39 +3,33 @@
 //  
 //
 //  Created by Kayla Hoyet on 7/29/21.
+//  Modified by Hugh Jeremy on 28 Mar 2022
 //
 
 import Foundation
 
-public struct DesignatedPaymentMethod: Codable {
+public struct DesignatedPaymentMethod {
     
     internal static let path = PaymentSeries.path + "/designated-method"
     
-    let seriesId: String
-    let methodId: String
-    
-    public enum CodingKeys: String, CodingKey {
-        case seriesId = "series_id"
-        case methodId = "method_id"
-    }
-    
-    public static func create (
-        seriesId: String,
-        methodId: String,
+    public static func create<P: IdentifiesPaymentMethod>(
+        series: PaymentSeries,
+        method: P,
         session: Session?,
         callback: @escaping (Error?) -> Void
     ) {
         Request.make(
             path: self.path,
             payload: CreatePayload(
-                seriesId: seriesId,
-                methodId: methodId
+                seriesId: series.publicId,
+                methodId: method.paymentMethodId
             ),
             session: session,
             query: nil,
             method: .POST
         ) { error, data in
-            fatalError("Not implemented")
+            callback(error)
+            return
         }
     }
         
@@ -48,4 +42,5 @@ public struct DesignatedPaymentMethod: Codable {
             case methodId = "method_id"
         }
     }
+
 }

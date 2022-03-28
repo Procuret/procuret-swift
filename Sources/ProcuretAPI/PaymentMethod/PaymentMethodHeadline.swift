@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PaymentMethodHeadline: Codable {
+public struct PaymentMethodHeadline: Codable, IdentifiesPaymentMethod {
     
     public let publicId: String
     public let description: String
@@ -16,4 +16,7 @@ public struct PaymentMethodHeadline: Codable {
         case publicId = "public_id"
         case description
     }
+    
+    public var paymentMethodId: String { get { return self.publicId } }
+
 }
