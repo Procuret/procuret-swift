@@ -13,9 +13,9 @@ public struct DesignatedPaymentMethod {
     internal static let path = PaymentSeries.path + "/designated-method"
     
     public static func create<P: IdentifiesPaymentMethod>(
+        session: Session,
         series: PaymentSeries,
         method: P,
-        session: Session?,
         callback: @escaping (Error?) -> Void
     ) {
         Request.make(
