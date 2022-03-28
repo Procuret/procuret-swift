@@ -9,8 +9,8 @@ import Foundation
 
 public struct HumanHeadline: Codable, Agent {
     
-    let agentId: Int
-    let fullName: String
+    public let agentId: Int
+    public let fullName: String
     
     private enum CodingKeys: String, CodingKey {
         case agentId = "agent_id"
