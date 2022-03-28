@@ -57,8 +57,8 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
         order: Order = .descending,
         orderBy: Self.OrderBy = .created,
         textFragment: String? = nil,
-        businessId: String? = nil,
-        methodId: String? = nil,
+        business: Entity? = nil,
+        method: PaymentMethod? = nil,
         callback: @escaping (Error?, Array<Self>?) -> Void
     ) {
         
@@ -75,8 +75,8 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
                     UP(order, key: "order"),
                     UP(orderBy, key: "order_by"),
                     UP.optionally(textFragment, key: "fragment"),
-                    UP.optionally(businessId, key: "business_id"),
-                    UP.optionally(methodId, key: "method_id")
+                    UP.optionally(business?.publicId, key: "business_id"),
+                    UP.optionally(method?.publicId, key: "method_id")
                 ].compactMap { $0 }
             ),
             method: .GET
