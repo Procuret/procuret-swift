@@ -19,7 +19,7 @@ public struct Card: UnderpinnedByMethodKernel {
     } }
     
     public var friendlyDescription: String { get {
-        return self.details.brand ?? "Card" + "..." + self.details.last4
+        return self.details.brand ?? "Card" + " ..." + self.details.last4
     } }
 
     private enum CodingKeys: String, CodingKey {
