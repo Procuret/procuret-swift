@@ -33,7 +33,7 @@ extension UnderpinnedByMethodKernel {
     public var created: Date { get { return self.kernel.created } }
     public var creatingAgentId: Int { get { return self.kernel.creatingAgentId } }
     public var authorityAgentId: Int { get { return self.kernel.authorityAgentId } }
-    public var instrument: Instrument { get { return self.instrument } }
+    public var instrument: Instrument { get { return self.kernel.instrument } }
     public var custodian: Custodian { get { return self.custodian } }
     public var disposition: Disposition { get { return self.disposition } }
     
