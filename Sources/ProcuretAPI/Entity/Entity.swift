@@ -18,7 +18,7 @@ public struct Entity: Codable, Identifiable, Hashable {
     public let entityIdentifiers: Array<EntityIdentifier>
     public let legalEntityName: String
     public let tradingName: String?
-    public let phoneNumber: String?
+    public let phoneNumber: PhoneNumber?
     public let entityType: EntityType?
     public let created: Date?
     public let disposition: Disposition
