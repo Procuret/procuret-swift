@@ -50,6 +50,29 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
         case disposition
     }
     
+    public static func retrieve(
+        session: Session,
+        publicId: String,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        
+        typealias UP = UrlParameter
+        
+        Request.make(
+            path: Self.path,
+            data: nil,
+            session: session,
+            query: QueryString(
+                targetsOnly: [UP(publicId, key: "public_id")]
+            ),
+            method: .GET
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+        
+    }
+    
     public static func retrieveMany(
         session: Session,
         limit: Int = 20,

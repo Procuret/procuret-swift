@@ -39,4 +39,45 @@ class PaymentSeriesTest: XCTestCase {
         return
 
     }
+    
+    func testRetrievePaymentSeries() {
+        
+        let expectation = XCTestExpectation()
+        let session = Session.forceFromEnvironmentVariables()
+        
+        PaymentSeries.retrieveMany(
+            session: Session.forceFromEnvironmentVariables()
+        ) { error, many in
+            
+            guard let many = many else {
+                XCTFail(); expectation.fulfill()
+                return
+            }
+            
+            guard many.count > 0 else {
+                XCTFail(); expectation.fulfill()
+                return
+            }
+            
+            PaymentSeries.retrieve(
+                session: session,
+                publicId: many[0].publicId
+            ) { error, series in
+                
+                XCTAssertNotNil(series)
+                XCTAssertNil(error)
+                
+                expectation.fulfill()
+                
+                return
+                
+            }
+            
+        }
+        
+        wait(for: [expectation], timeout: 5)
+        
+        return
+        
+    }
 }
