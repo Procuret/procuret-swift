@@ -249,7 +249,7 @@ internal class Request {
             if let decodeError = error as? DecodingError,
                let rawString = String(data: data, encoding: .utf8)
             {
-                print("DecodingError from API JSON")
+                print("DecodingError from API JSON \(decodeError)")
                 print("--- Raw JSON begins ---")
                 print(rawString)
                 print("--- Raw JSON ends ---")

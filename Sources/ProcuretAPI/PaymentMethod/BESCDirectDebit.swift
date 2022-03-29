@@ -13,19 +13,17 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
     internal static let path = "/payment/method/becs-direct-debit"
     
     public let kernel: PaymentMethodKernel
-    public let last4: String
-    public let bsb: String
+    public let details: BECSAccountDetails
     
     public var friendlyDescription: String { get {
-        return "Account ..." + self.last4
+        return "Account ..." + self.details.last4
     } }
     
-    public var endsIn: String { get { return self.last4 } }
+    public var endsIn: String { get { return self.details.last4 } }
     
     private enum CodingKeys: String, CodingKey {
         case kernel
-        case last4 = "last_4"
-        case bsb
+        case details = "account_details"
     }
     
     public static func create(
