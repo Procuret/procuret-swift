@@ -244,6 +244,18 @@ internal class Request {
         do {
             try decoded = Self.decoder.decode(decodableType, from: data)
         } catch {
+            
+            #if DEBUG
+            if let decodeError = error as? DecodingError,
+               let rawString = String(data: data, encoding: .utf8)
+            {
+                print("DecodingError from API JSON")
+                print("--- Raw JSON begins ---")
+                print(rawString)
+                print("--- Raw JSON ends ---")
+            }
+            #endif
+            
             callback(error, nil)
             return
         }
