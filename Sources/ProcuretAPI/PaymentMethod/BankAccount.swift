@@ -33,6 +33,7 @@ public struct BankAccount: UnderpinnedByMethodKernel {
         accountName: String,
         entityId: String,
         authorityId: String?,
+        session: Session?,
         callback: @escaping (Error?, BankAccount?) -> Void
     ) {
         Request.make(
@@ -44,11 +45,12 @@ public struct BankAccount: UnderpinnedByMethodKernel {
                 entityId: entityId,
                 authorityId: authorityId
             ),
-            session: nil,
+            session: session,
             query: nil,
             method: .POST
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
         }
     }
 
