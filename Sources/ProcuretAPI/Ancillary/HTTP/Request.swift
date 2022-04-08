@@ -129,8 +129,12 @@ internal class Request {
         }
         guard (200...299).contains(httpResponse.statusCode) else {
             let error: ProcuretAPIError
+            let errorBody: String?
+            if let data = data {
+                errorBody = String(data: data, encoding: .utf8)
+            } else { errorBody = nil }
             switch httpResponse.statusCode {
-            case 400: error = ProcuretAPIError(.badRequest)
+            case 400: error = ProcuretAPIError(.badRequest, message: errorBody)
             case 401: error = ProcuretAPIError(.notAuthenticated)
             case 402: error = ProcuretAPIError(.subscriptionProblem)
             case 403: error = ProcuretAPIError(.notAuthorised)
