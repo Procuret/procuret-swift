@@ -28,7 +28,7 @@ class BankAccountTests: XCTestCase {
         }
         
         BankAccount.create(
-            bsbCode: "123456789",
+            bsbCode: "123456",
             accountNumber: "987654321",
             accountName: "KaylaTest BankAccount",
             entityId: "13991055489669749",
