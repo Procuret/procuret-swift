@@ -33,6 +33,7 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
         authorityAgentId: Int,
         timeMandateAccepted: Int,
         entityId: Int?,
+        session: Session?,
         callback: @escaping (Error?, BECSDirectDebit?) -> Void
     ) {
         Request.make(
@@ -45,11 +46,12 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
                 timeMandateAccepted: timeMandateAccepted,
                 entityId: entityId
             ),
-            session: nil,
+            session: session,
             query: nil,
             method: .POST
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
         }
     }
     
