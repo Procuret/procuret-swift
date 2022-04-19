@@ -7,7 +7,20 @@
 
 import Foundation
 
-public struct StripeDDRAgreement: Codable {
-    internal static let path = "/document/stripe-ddr"
+public struct StripeDDRAgreement: Document {
+    
+    public static let path = "/document/stripe-ddr"
+    
+    public let created: Date
+    public let body: String
+    public let asHtml: Bool
+    public let name: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case created
+        case body
+        case asHtml = "as_html"
+        case name
+    }
     
 }
