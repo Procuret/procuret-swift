@@ -17,7 +17,7 @@ public struct DocumentRevision: Codable {
     private enum CodingKeys: String, CodingKey {
         case created
         case body
-        case asHTML = "as_HTML"
+        case asHTML = "as_html"
         case name
     }
 }

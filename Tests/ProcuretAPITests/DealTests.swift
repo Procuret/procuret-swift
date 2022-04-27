@@ -4,9 +4,9 @@
 //
 //  Created by Kayla Hoyet on 9/29/21.
 //
-
 import XCTest
 @testable import ProcuretAPI
+
 
 class DealTests: XCTestCase {
 
