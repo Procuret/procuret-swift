@@ -33,6 +33,8 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
         authorityAgentId: Int,
         timeMandateAccepted: Int,
         entityId: Int?,
+        mandateIp: String?,
+        mandateAgent: String?,
         session: Session?,
         callback: @escaping (Error?, BECSDirectDebit?) -> Void
     ) {
@@ -44,7 +46,9 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
                 accountName: accountName,
                 authorityAgentId: authorityAgentId,
                 timeMandateAccepted: timeMandateAccepted,
-                entityId: entityId
+                entityId: entityId,
+                mandateIp: mandateIp,
+                mandateAgent: mandateAgent
             ),
             session: session,
             query: nil,
@@ -62,6 +66,8 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
         let authorityAgentId: Int
         let timeMandateAccepted: Int
         let entityId: Int?
+        let mandateIp: String?
+        let mandateAgent: String?
         
         private enum CodingKeys: String, CodingKey {
             case bsbCode = "bsb"
@@ -70,6 +76,8 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
             case authorityAgentId = "authority_agent_id"
             case timeMandateAccepted = "time_mandate_accepted"
             case entityId = "entity_id"
+            case mandateIp = "mandate_ip"
+            case mandateAgent = "mandate_user_agent"
         }
     }
 }
