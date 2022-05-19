@@ -10,14 +10,16 @@ import Foundation
 
 public struct Country: Codable {
     
-    let id: Int
+    let countryId: Int
     let name: String
-    let abbreviation: String
+    let iso3166a2: String
+    let iso3166a3: String
     
     private enum CodingKeys: String, CodingKey {
-        case id = "indexid"
-        case name = "country_name"
-        case abbreviation = "iso_3166_a3"
+        case countryId = "country_id"
+        case name
+        case iso3166a2 = "iso_3166_a2"
+        case iso3166a3 = "iso_3166_a3"
     }
 
 }
