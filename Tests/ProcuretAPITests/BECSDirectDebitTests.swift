@@ -27,7 +27,7 @@ class BECSDirectDebitTests: XCTestCase {
         BECSDirectDebit.create(
             bsbCode: "000000",
             accountNumber: "000123456",
-            accountName: "TestKayla DirectDebit",
+            accountName: "Kayla TestDD",
             authorityAgentId: 100,
             timeMandateAccepted: Int(Date().timeIntervalSince1970),
             entityId: nil,

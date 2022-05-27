@@ -133,8 +133,35 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
         }
     }
     
+    public static func delete(
+        publicId: String,
+        session: Session?,
+        callback: @escaping (Error?) -> Void
+    ) {
+        Request.make(
+            path: PaymentMethod.path,
+            payload: DeletePayload(
+                publicId: publicId
+            ),
+            session: session,
+            query: nil,
+            method: .DELETE
+        ) { error, _ in
+            callback (error)
+            return
+        }
+    }
     
+    private struct DeletePayload: Codable {
+        let publicId: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case publicId = "public_id"
+            
+        }
+    }
 }
+
 
 struct GenericPaymentMethod: Decodable {
     let results: [PaymentMethod]

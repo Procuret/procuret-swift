@@ -44,4 +44,3 @@ class PaymentMethodTests: XCTestCase {
         return
     }
 }
-
