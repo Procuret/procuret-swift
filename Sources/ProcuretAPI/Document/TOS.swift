@@ -7,15 +7,19 @@
 
 import Foundation
 
-public struct TOS: Codable {
+public struct TOS:  Document {
     
-    internal static let path = "/document/terms-of-service"
-    internal static let name = "Terms of Service"
+    public static let path = "/document/terms-of-service"
     
-    public static func create(
-        markdownBody: String,
-        callback: @escaping (Error, DocumentRevision) -> Void
-    ) {
-        fatalError("Not implemented")
+    public let created: Date
+    public let body: String
+    public let asHtml: Bool
+    public let name: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case created
+        case body
+        case asHtml = "as_html"
+        case name
     }
 }

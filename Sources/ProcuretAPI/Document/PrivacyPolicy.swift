@@ -7,15 +7,19 @@
 
 import Foundation
 
-public struct PrivacyPolicy: Codable {
+public struct PrivacyPolicy: Document {
+
+    public static let path = "/document/privacy-policy"
     
-    internal static let name = "Privacy Policy"
-    internal static let path = "/document/privacy-policy"
+    public let created: Date
+    public let body: String
+    public let asHtml: Bool
+    public let name: String
     
-    public static func create(
-        markdownBody: String,
-        callback: @escaping (Error, DocumentRevision) -> Void
-    ) {
-        fatalError("Not implemented")
+    private enum CodingKeys: String, CodingKey {
+        case created
+        case body
+        case asHtml = "as_html"
+        case name
     }
 }
