@@ -23,8 +23,6 @@ public protocol Document: Codable {
         session: Session?
     ) -> Void
     
-    
-    
 }
 
 
@@ -48,8 +46,13 @@ extension Document {
             Request.decodeResponse(error, data, Self.self, callback)
             return
         }
-        
     }
+}
+
+extension String {
     
-    
+    var base64Decoded: String? {
+        guard let decodedData = Data(base64Encoded: self) else { return nil }
+        return String(data: decodedData, encoding: .utf8)
+    }
 }
