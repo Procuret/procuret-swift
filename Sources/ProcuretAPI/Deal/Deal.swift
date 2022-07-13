@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import XCTest
 
 public struct Deal: Codable, Identifiable {
     

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import XCTest
 
 public enum Instrument: Int, Codable, CaseIterable, Identifiable {
     
