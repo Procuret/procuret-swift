@@ -49,7 +49,7 @@ public struct Human: Codable, Agent {
         hasAgentSecret: Bool? = nil,
         signupPerspective: Perspective = .business,
         callback: @escaping (Error?, Human?) -> Void
-    ) {
+    ) -> Void {
         Request.make(
             path: self.path,
             payload: CreatePayload(
@@ -77,7 +77,7 @@ public struct Human: Codable, Agent {
         humanId: Int,
         session: Session?,
         callback: @escaping (Error?, Human?) -> Void
-    ) {
+    ) -> Void {
         Request.make(
             path: self.path,
             data: nil,
