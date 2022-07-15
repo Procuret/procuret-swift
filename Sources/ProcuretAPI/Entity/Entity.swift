@@ -21,9 +21,17 @@ public struct Entity: Codable, Identifiable, Hashable {
     public let phoneNumber: PhoneNumber?
     public let entityType: EntityType?
     public let created: Date?
+    public let hasBusinessRecord: Bool?
+    public let hasSupplierRecord: Bool?
     public let disposition: Disposition
     
     public var id: Int { get { return self.publicId } }
+    public var isBusinessCustomer: Bool { get {
+        return self.hasBusinessRecord ?? false
+    } }
+    public var offersProcuretAsSupplier: Bool { get {
+        return self.hasSupplierRecord ?? false
+    } }
     
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
@@ -34,6 +42,8 @@ public struct Entity: Codable, Identifiable, Hashable {
         case phoneNumber = "phone_number"
         case entityType = "entity_type_name"
         case created
+        case hasBusinessRecord = "has_business_record"
+        case hasSupplierRecord = "has_supplier_record"
         case disposition
     }
     
