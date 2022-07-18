@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct SecretResetRequest {
+public struct SecretResetRequest {
     
     internal static let path = "/human/secret/reset-request"
     
