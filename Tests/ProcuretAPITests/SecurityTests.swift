@@ -42,5 +42,26 @@ final class SecurityTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         
         return
+
     }
+    
+    
+    func testSendResetRequest() {
+        
+        let expectation = XCTestExpectation()
+        
+        SecretResetRequest.create(
+            email: "someone@procuret-test-domain.org",
+            callback: { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+
+    }
+    
 }
