@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum PhoneCountryCode: String {
+public enum PhoneCountryCode: String, Identifiable, Hashable {
     
     case Australia = "+61"
     case NewZealand = "+64"
@@ -15,19 +15,21 @@ public enum PhoneCountryCode: String {
     case Singapore = "+65"
     case Other = ""
     
+    public var id: String { get { return self.rawValue } }
+
     public var flagEmoji: String { get {
         
         switch self {
         case .Australia:
-            return 🇦🇺
+            return "🇦🇺"
         case .NewZealand:
-            return 🇳🇿
+            return "🇳🇿"
         case .UnitedStates:
-            return 🇺🇸
+            return "🇺🇸"
         case .Singapore:
-            return 🇸🇬
+            return "🇸🇬"
         case .Other:
-            return 🌏
+            return "🌏"
         }
         
     } }
@@ -37,5 +39,9 @@ public enum PhoneCountryCode: String {
         return "\(self.flagEmoji) \(self.rawValue)"
 
     } }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+    }
 
 }
