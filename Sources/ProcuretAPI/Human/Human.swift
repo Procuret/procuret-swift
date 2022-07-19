@@ -10,6 +10,9 @@ import Foundation
 
 public struct Human: Codable, Agent {
     
+    public static let maxNameLength: Int = 64
+    public static let minNameLength: Int = 1
+
     internal static let path = "/human"
     
     public let humanId: Int
