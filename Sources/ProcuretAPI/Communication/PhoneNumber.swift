@@ -11,8 +11,8 @@ public struct PhoneNumber: Codable {
     
     internal static let path = "/phone-number"
     
-    let phoneId: Int
-    let digits: String
+    public let phoneId: Int
+    public let digits: String
     
     private enum CodingKeys: String, CodingKey {
         case phoneId = "indexid"
