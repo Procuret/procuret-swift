@@ -89,6 +89,17 @@ public enum PhoneCountryCode: String, Identifiable, Hashable, CaseIterable {
 
     }
 
+    public func numberAppearsSmsCapable(
+        digitsSansCode: String
+    ) -> Bool {
+        
+        return Self.numberAppearsSmsCapable(
+            code: self,
+            digitsSansCode: digitsSansCode
+        )
+
+    }
+
     public var smsNumbersMayBeginWith: Array<String>? {
         
         switch self {
