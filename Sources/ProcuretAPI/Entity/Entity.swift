@@ -19,6 +19,7 @@ public struct Entity: Codable, Identifiable, Hashable {
     public let legalEntityName: String
     public let tradingName: String?
     public let phoneNumber: PhoneNumber?
+    public let businessAddress: String
     public let entityType: EntityType?
     public let created: Date?
     public let hasBusinessRecord: Bool?
@@ -40,6 +41,7 @@ public struct Entity: Codable, Identifiable, Hashable {
         case legalEntityName = "legal_entity_name"
         case tradingName = "trading_name"
         case phoneNumber = "phone_number"
+        case businessAddress = "business_address"
         case entityType = "entity_type_name"
         case created
         case hasBusinessRecord = "has_business_record"
