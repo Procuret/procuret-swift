@@ -19,7 +19,6 @@ public struct Entity: Codable, Identifiable, Hashable {
     public let legalEntityName: String
     public let tradingName: String?
     public let phoneNumber: PhoneNumber?
-    public let businessAddress: AddressCreationStruct
     public let entityType: EntityType?
     public let created: Date?
     public let hasBusinessRecord: Bool?
