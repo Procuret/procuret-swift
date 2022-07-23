@@ -40,7 +40,6 @@ public struct Entity: Codable, Identifiable, Hashable {
         case legalEntityName = "legal_entity_name"
         case tradingName = "trading_name"
         case phoneNumber = "phone_number"
-        case businessAddress = "business_address"
         case entityType = "entity_type_name"
         case created
         case hasBusinessRecord = "has_business_record"
