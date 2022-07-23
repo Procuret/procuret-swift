@@ -8,14 +8,14 @@
 import Foundation
 
 public struct Address: Codable {
-    let line1: String
-    let line2: String?
-    let line3: String?
-    let line4: String?
-    let locality: String
-    let postalCode: String
-    let region: Region
-    let country: Country
+    public let line1: String
+    public let line2: String?
+    public let line3: String?
+    public let line4: String?
+    public let locality: String
+    public let postalCode: String
+    public let region: Region
+    public let country: Country
     
     private enum CodingKeys: String, CodingKey {
         case line1 = "line_1"
