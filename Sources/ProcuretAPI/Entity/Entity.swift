@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Entity: Codable, Identifiable, Hashable {
+public struct Entity: Codable {
     
     internal static let path = "/entity/permissions"
     internal static let listPath = "/entity/list"
@@ -19,6 +19,7 @@ public struct Entity: Codable, Identifiable, Hashable {
     public let legalEntityName: String
     public let tradingName: String?
     public let phoneNumber: PhoneNumber?
+    public let address: Address
     public let entityType: EntityType?
     public let created: Date?
     public let hasBusinessRecord: Bool?
@@ -40,6 +41,7 @@ public struct Entity: Codable, Identifiable, Hashable {
         case legalEntityName = "legal_entity_name"
         case tradingName = "trading_name"
         case phoneNumber = "phone_number"
+        case address = "business_address"
         case entityType = "entity_type_name"
         case created
         case hasBusinessRecord = "has_business_record"
@@ -111,7 +113,7 @@ public struct Entity: Codable, Identifiable, Hashable {
         offset: Int = 0,
         order: Order = Order.descending,
         orderBy: Self.OrderBy = Self.OrderBy.created,
-        callback: @escaping (Error?, Array<Self>?) -> Void
+        callback: @escaping (Error?, Array<Entity>?) -> Void
     ) -> Void {
         
         typealias UP = UrlParameter
@@ -132,9 +134,10 @@ public struct Entity: Codable, Identifiable, Hashable {
         ) { error, data in
             Request.decodeResponse(error, data, Array<Self>.self, callback)
             return
-        }
+            
+            }
         
-        return
+            return
 
     }
 
