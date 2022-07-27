@@ -11,8 +11,8 @@ public struct EntityIdentifier: Codable {
     
     public static let path = "/"
     
-    let idType: EntityIdType
-    let idString: String
+    public let idType: EntityIdType
+    public let idString: String
     
     public enum CodingKeys: String, CodingKey {
         case idType = "id_type"
