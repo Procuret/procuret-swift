@@ -10,10 +10,10 @@ import Foundation
 
 public struct Country: Codable {
     
-    let countryId: Int
-    let name: String
-    let iso3166a2: String
-    let iso3166a3: String
+    public let countryId: Int
+    public let name: String
+    public let iso3166a2: String
+    public let iso3166a3: String
     
     private enum CodingKeys: String, CodingKey {
         case countryId = "country_id"
