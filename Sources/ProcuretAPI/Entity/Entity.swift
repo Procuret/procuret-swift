@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Entity: Codable {
+public struct Entity: Codable, Hashable, Identifiable {
     
     internal static let path = "/entity/permissions"
     internal static let listPath = "/entity/list"
