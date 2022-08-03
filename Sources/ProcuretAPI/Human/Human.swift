@@ -32,7 +32,7 @@ public struct Human: Codable, Agent {
         case identity
         case created
         case disposition
-        case documents
+        case documents = "document_type_id"
     }
     
     var fullName: String {
