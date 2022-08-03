@@ -18,10 +18,10 @@ public struct Human: Codable, Agent {
     public let humanId: Int
     public let firstName: String
     public let lastName: String
-    let identity: HumanIdentity?
-    let created: String
-    let disposition: Disposition
-    let documents: Array<HumanIdentityDocument>?
+    public let identity: HumanIdentity?
+    public let created: String
+    public let disposition: Disposition
+    public let documents: Array<HumanIdentityDocument>?
     
     public var agentId: Int { get { return self.humanId } }
 

@@ -11,8 +11,8 @@ public struct HumanIdentity: Codable {
     
     internal static let path = "/human/identity"
     
-    let dateOfBirth: String?
-    let address: Address?
+    public let dateOfBirth: String?
+    public let address: Address?
     
     private enum CodingKeys: String, CodingKey {
         case dateOfBirth = "date_of_birth"
