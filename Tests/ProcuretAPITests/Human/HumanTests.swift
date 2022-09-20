@@ -54,10 +54,11 @@ final class HumanTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: "create Human")
         
-        func generateHuman(error: Error?, human: Human?) {
+        func receiveHuman(error: Error?, human: Human?, code: String?) {
             
-            XCTAssertNil(error, "An error occurred.")
-            XCTAssertNotNil(human, "Human is nil.")
+            XCTAssertNil(error, "An error occurred")
+            XCTAssertNotNil(human, "Human is nil")
+            XCTAssertNotNil(code, "2FA code is nil")
             
             expectation.fulfill()
             
@@ -76,7 +77,7 @@ final class HumanTests: XCTestCase {
             session: provideTestSession(),
             hasAgentSecret: false,
             signupPerspective: .business,
-            callback: generateHuman
+            callback: receiveHuman
         )
         
         wait(for: [expectation], timeout: 5.0)
