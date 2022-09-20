@@ -18,10 +18,12 @@ public struct Human: Codable, Agent {
     public let humanId: Int
     public let firstName: String
     public let lastName: String
-    let identity: HumanIdentity?
-    let created: String
-    let disposition: Disposition
-    let documents: Array<HumanIdentityDocument>?
+    public let emailAddress: EmailAddress
+    public let phone: PhoneNumber
+    public let identity: HumanIdentity?
+    public let created: String
+    public let disposition: Disposition
+    public let documents: Array<HumanIdentityDocument>?
     
     public var agentId: Int { get { return self.humanId } }
 
@@ -29,10 +31,12 @@ public struct Human: Codable, Agent {
         case humanId = "public_id"
         case firstName = "first_name"
         case lastName = "last_name"
+        case emailAddress = "email_address"
+        case phone = "phone_number"
         case identity
         case created
         case disposition
-        case documents
+        case documents = "document_type_id"
     }
     
     var fullName: String {
@@ -125,8 +129,8 @@ public struct Human: Codable, Agent {
     public static func create(
         firstName: String,
         lastName: String,
-        emailAddress: String,
-        phone: String,
+        emailAddress: String? = nil,
+        phone: String? = nil,
         secret: String? = nil,
         existingPhone: PhoneNumber? = nil,
         verifyPhone: Bool? = nil,
@@ -175,7 +179,7 @@ public struct Human: Codable, Agent {
             ),
             method: .GET
         ) { error, data in
-            Request.decodeResponse(error, data, Self.self, callback)
+            Request.decodeResponse(error, data, self, callback)
             return
         }
     }
@@ -183,8 +187,8 @@ public struct Human: Codable, Agent {
     private struct CreatePayload: Codable {
         let firstName: String
         let lastName: String
-        let emailAddress: String
-        let phone: String
+        let emailAddress: String?
+        let phone: String?
         let secret: String?
         let existingPhone: PhoneNumber?
         let verifyPhone: Bool?

@@ -7,12 +7,14 @@
 
 import Foundation
 
-public struct EntityIdentifier: Codable {
+public struct EntityIdentifier: Codable, Identifiable {
     
     public static let path = "/"
     
-    let idType: EntityIdType
-    let idString: String
+    public let idType: EntityIdType
+    public let idString: String
+    
+    public var id: String { get { return self.idString } }
     
     public enum CodingKeys: String, CodingKey {
         case idType = "id_type"

@@ -11,11 +11,11 @@ public struct HumanIdentityDocument: Codable {
     
     internal static let path = "/human/identity-document"
     
-    let documentTypeId: Int
-    let documentName: String
-    let documentIdentifier: String
-    let stateID: Int
-    let stateName: String
+    public let documentTypeId: Int
+    public let documentName: String
+    public let documentIdentifier: String
+    public let stateID: Int
+    public let stateName: String
     
     public enum CodingKeys: String, CodingKey {
         case documentTypeId = "document_type_id"
