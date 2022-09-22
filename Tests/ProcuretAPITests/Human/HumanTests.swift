@@ -25,6 +25,59 @@ final class HumanTests: XCTestCase {
         }
     }
     
+    func provideTestHuman(
+        expectation: XCTestExpectation,
+        callback: @escaping (
+            _ human: Human,
+            _ secret: String,
+            _ code: String
+        ) -> Void,
+        verifyPhone: Bool = false,
+        withEnvironmentSession: Bool = true
+    ) {
+        
+        let dummySecret = RandomNumber(.large).string
+        let email = provideTestEmail()
+        
+        let session: Session?
+        
+        if withEnvironmentSession {
+            session = self.provideTestSession()
+        } else {
+            session = nil
+        }
+        
+        Human.create(
+            firstName: "SwiftTest",
+            lastName: "TestAgent",
+            emailAddress: email,
+            phone: "+61400010001",
+            secret: dummySecret,
+            existingPhone: nil,
+            verifyPhone: verifyPhone,
+            creationNote: nil,
+            session: session,
+            hasAgentSecret: false,
+            signupPerspective: .business,
+            callback: { (error, human, code) in
+                
+                guard let human = human, let code = code else {
+                    XCTFail("Unable to create test Human")
+                    expectation.fulfill()
+                    return
+                }
+                
+                callback(human, dummySecret, code)
+                
+                return
+
+            }
+        )
+        
+        return
+        
+    }
+    
     func testRetrieveHuman() {
         
         let expectation = XCTestExpectation(description: "retrieve Human")
@@ -173,14 +226,41 @@ final class HumanTests: XCTestCase {
         return
     }
     
+    func testNewHumanRequiresPhoneConfirmation() {
+        
+        let expectation = XCTestExpectation(
+            description: "A newly created Human requires phone confirmation"
+        )
+        
+        func receiveHuman(human: Human, secret: String, code: String) {
+            
+            if human.phone.confirmationRequired != true {
+                XCTFail("Human phone does not require confirmation")
+            }
+            
+            expectation.fulfill()
+            
+            return
+            
+        }
+        
+        self.provideTestHuman(
+            expectation: expectation,
+            callback: receiveHuman,
+            verifyPhone: true
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+        
+    }
+    
     func testHumanAgentFromSession() {
         
         let expectation = XCTestExpectation(
             description: "Extract a Human agent from a Session"
         )
-        
-        let dummySecret = RandomNumber(.large).string
-        let email = provideTestEmail()
         
         func recieveSession(error: Error?, session: Session?) -> Void {
             
@@ -194,39 +274,18 @@ final class HumanTests: XCTestCase {
 
         }
         
-        Human.create(
-            firstName: "TestKayla",
-            lastName: "Test",
-            emailAddress: email,
-            phone: "+61400010001",
-            secret: dummySecret,
-            existingPhone: nil,
-            verifyPhone: false,
-            creationNote: nil,
-            session: provideTestSession(),
-            hasAgentSecret: false,
-            signupPerspective: .business,
-            callback: { (error, human, code) in
-                
-                guard let code = code else {
-                    XCTFail("Second factor code not available")
-                    expectation.fulfill()
-                    return
-                }
-                
-                Session.create(
-                    secret: dummySecret,
-                    email: email,
-                    code: code,
-                    perspective: .business,
-                    callback: recieveSession
-                )
-                
-                return
-    
-            }
-            
-        )
+        self.provideTestHuman(
+            expectation: expectation
+        ) { human, secret, code in
+            Session.create(
+                secret: secret,
+                email: human.emailAddress.emailAddress,
+                code: code,
+                perspective: .business,
+                callback: recieveSession
+            )
+            return
+        }
         
         wait(for: [expectation], timeout: 5.0)
         
