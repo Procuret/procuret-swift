@@ -26,6 +26,10 @@ public struct Human: Codable, Agent {
     public let documents: Array<HumanIdentityDocument>?
     
     public var agentId: Int { get { return self.humanId } }
+    
+    public var asStandaloneAgent: StandaloneAgent { get {
+        return StandaloneAgent(agentId: self.agentId)
+    } }
 
     private enum CodingKeys: String, CodingKey {
         case humanId = "public_id"

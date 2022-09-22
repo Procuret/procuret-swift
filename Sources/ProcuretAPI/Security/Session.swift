@@ -22,7 +22,26 @@ public struct Session: Codable, Agent {
     public let sessionKey: String
     public let apiKey: String
     public let perspective: Perspective
-    public let agent: StandaloneAgent
+    
+    private let genericAgent: GenericAgent
+    
+    public var agent: StandaloneAgent { get {
+        switch self.genericAgent {
+        case .human(let human):
+            return human.asStandaloneAgent
+        case .standaloneAgent(let agent):
+            return agent
+        }
+    } }
+    
+    public var human: Human? { get {
+        switch self.genericAgent {
+        case .human(let human):
+            return human
+        case .standaloneAgent:
+            return nil
+        }
+    } }
     
     public var agentId: Int { get { return self.agent.agentId } }
 
@@ -31,7 +50,41 @@ public struct Session: Codable, Agent {
         case sessionKey = "session_key"
         case apiKey = "api_key"
         case perspective
-        case agent
+        case genericAgent = "agent"
+    }
+    
+    public init(
+        sessionId: Int,
+        sessionKey: String,
+        apiKey: String,
+        perspective: Perspective,
+        genericAgent: GenericAgent
+    ) {
+
+        self.sessionId = sessionId
+        self.sessionKey = sessionKey
+        self.apiKey = apiKey
+        self.perspective = perspective
+        self.genericAgent = genericAgent
+        
+        return
+    }
+    
+    public init(
+        sessionId: Int,
+        sessionKey: String,
+        apiKey: String,
+        perspective: Perspective,
+        agent: StandaloneAgent
+    ) {
+
+        self.sessionId = sessionId
+        self.sessionKey = sessionKey
+        self.apiKey = apiKey
+        self.perspective = perspective
+        self.genericAgent = GenericAgent(agent)
+        
+        return
     }
 
     public static func create(
