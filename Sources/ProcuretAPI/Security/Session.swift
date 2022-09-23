@@ -110,6 +110,39 @@ public struct Session: Codable, Agent {
             return
         }
     }
+
+    public static func retrieve(
+        sessionId: Int,
+        session: Session?,
+        callback: @escaping (Error?, Session?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            data: nil,
+            session: session,
+            query: QueryString(
+                targetsOnly: [UrlParameter(sessionId, key: "session_id")]
+            ),
+            method: .GET
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+    }
+    
+    public func refresh(
+        callback: @escaping (Error?, Session?) -> Void
+    ) {
+        
+        Self.retrieve(
+            sessionId: self.sessionId,
+            session: self,
+            callback: callback
+        )
+
+        return
+
+    }
     
     public static func forceFromEnvironmentVariables(
         keyVariableName: String = Self.defaultKeyEnvName,

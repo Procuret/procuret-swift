@@ -11,22 +11,22 @@ public struct HumanIdentityDocument: Codable {
     
     internal static let path = "/human/identity-document"
     
-    public let documentTypeId: Int
-    public let documentName: String
+    public let publicId: String
+    public let documentType: Int
     public let documentIdentifier: String
-    public let stateID: Int
-    public let stateName: String
+    public let state: Int
+    public let disposition: Disposition
     
     public enum CodingKeys: String, CodingKey {
-        case documentTypeId = "document_type_id"
-        case documentName = "document_name"
+        case publicId = "public_id"
+        case documentType = "document_type"
         case documentIdentifier = "document_identifier"
-        case stateID = "state_id"
-        case stateName = "state_name"
+        case state
+        case disposition
     }
     
     public static func create(
-        humanId: String,
+        humanId: Int,
         idDocumentType: IdentityDocumentType.RawValue,
         idDocumentIdentifier: String,
         session: Session?,
@@ -49,7 +49,7 @@ public struct HumanIdentityDocument: Codable {
     }
     
     private struct CreatePayload: Codable {
-        let humanId: String
+        let humanId: Int
         let idDocumentType: IdentityDocumentType.RawValue
         let idDocumentIdentifier: String
         

@@ -13,6 +13,10 @@ public struct EmailAddress: Codable {
     public let emailAddress: String
     public let confirmationRequired: Bool
     
+    public var rawEmailString: String { get {
+        return self.emailAddress
+    } }
+    
     private enum CodingKeys: String, CodingKey {
         case created
         case emailAddress = "email_address"
@@ -20,3 +24,4 @@ public struct EmailAddress: Codable {
     }
         
 }
+

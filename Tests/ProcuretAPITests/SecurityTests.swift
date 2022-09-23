@@ -9,40 +9,54 @@ import XCTest
 @testable import ProcuretAPI
 
 final class SecurityTests: XCTestCase {
-    
-    func provideSecret() -> String {
-        
-        do {
-            return try SecondFactorCode.fromEnvironmentVariables()
-        } catch {
-            fatalError("Unable to return secret: \(error)")
-        }
-    }
 
     func testCreateSecondFactor() {
         
-        let expectation = XCTestExpectation(description: "create Second Factor Code")
+        let expectation = XCTestExpectation(description: "create 2FA Code")
         
-        func checkForError(error: Error?) {
-            
-            XCTAssertNil(error, "An error occurred.")
-            
-            expectation.fulfill()
-            
-            return
+        Utility.provideTestHuman(
+            expectation: expectation
+        ) { human, secret, code in
+            SecondFactorCode.create(
+                email: human.emailAddress.rawEmailString,
+                secret: secret,
+                perspective: nil
+            ) { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
         }
-        
-        SecondFactorCode.create(
-            email: "kayla.h@procuret.com", 
-            secret: provideSecret(),
-            perspective: nil,
-            callback: checkForError
-        )
-        
+
         wait(for: [expectation], timeout: 5.0)
         
         return
 
+    }
+    
+    func testRefreshSession() {
+        
+        let expectation = XCTestExpectation(description: "Refresh Session")
+        
+        Utility.provideTestHumanWithSession(
+            expectation: expectation
+        ) { human, session in
+            
+            session.refresh { error, refreshedSession in
+                
+                XCTAssertNil(error)
+                XCTAssertNotNil(refreshedSession)
+                XCTAssertEqual(refreshedSession?.sessionId, session.sessionId)
+                
+                expectation.fulfill()
+                
+                return
+
+            }
+            
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
     }
     
     

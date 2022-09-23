@@ -9,74 +9,6 @@ import XCTest
 
 final class HumanTests: XCTestCase {
     
-    func provideTestSession() -> Session {
-        
-        do {
-            return try Session.fromEnvironmentVariables()
-        } catch {
-            fatalError("Unable to initalise test session: \(error)")
-        }
-    }
-    
-    func provideTestEmail() ->  String {
-        
-        do {
-            return TestEmail.generateEmail()
-        }
-    }
-    
-    func provideTestHuman(
-        expectation: XCTestExpectation,
-        callback: @escaping (
-            _ human: Human,
-            _ secret: String,
-            _ code: String
-        ) -> Void,
-        verifyPhone: Bool = false,
-        withEnvironmentSession: Bool = true
-    ) {
-        
-        let dummySecret = RandomNumber(.large).string
-        let email = provideTestEmail()
-        
-        let session: Session?
-        
-        if withEnvironmentSession {
-            session = self.provideTestSession()
-        } else {
-            session = nil
-        }
-        
-        Human.create(
-            firstName: "SwiftTest",
-            lastName: "TestAgent",
-            emailAddress: email,
-            phone: "+61400010001",
-            secret: dummySecret,
-            existingPhone: nil,
-            verifyPhone: verifyPhone,
-            creationNote: nil,
-            session: session,
-            hasAgentSecret: false,
-            signupPerspective: .business,
-            callback: { (error, human, code) in
-                
-                guard let human = human, let code = code else {
-                    XCTFail("Unable to create test Human")
-                    expectation.fulfill()
-                    return
-                }
-                
-                callback(human, dummySecret, code)
-                
-                return
-
-            }
-        )
-        
-        return
-        
-    }
     
     func testRetrieveHuman() {
         
@@ -92,35 +24,19 @@ final class HumanTests: XCTestCase {
             return
         }
         
-        Human.create(
-            firstName: "TestKayla",
-            lastName: "Test",
-            emailAddress: provideTestEmail(),
-            phone: "+61400010001",
-            secret: "sooper secret code",
-            existingPhone: nil,
-            verifyPhone: false,
-            creationNote: nil,
-            session: provideTestSession(),
-            hasAgentSecret: false,
-            signupPerspective: .business,
-            callback: { (error, human) in
-                
-                guard let human = human else {
-                    XCTFail("Could not create target Human")
-                    expectation.fulfill()
-                    return
-                }
-                
-                Human.retrieve(
-                    humanId: human.humanId,
-                    session: self.provideTestSession(),
-                    callback: recieveHuman
-                )
-                
-                return
-            }
-        )
+        Utility.provideTestHuman(
+            expectation: expectation
+        ) { human, secret, code in
+            
+            Human.retrieve(
+                humanId: human.humanId,
+                session: Utility.provideTestSession(),
+                callback: recieveHuman
+            )
+            
+            return
+            
+        }
 
         wait(for: [expectation], timeout: 5.0)
         
@@ -131,31 +47,15 @@ final class HumanTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: "create Human")
         
-        func receiveHuman(error: Error?, human: Human?, code: String?) {
-            
-            XCTAssertNil(error, "An error occurred")
-            XCTAssertNotNil(human, "Human is nil")
-            XCTAssertNotNil(code, "2FA code is nil")
+        Utility.provideTestHuman(
+            expectation: expectation
+        ) { human, secret, code in
             
             expectation.fulfill()
             
             return
+            
         }
-        
-        Human.create(
-            firstName: "TestKayla",
-            lastName: "Test",
-            emailAddress: provideTestEmail(),
-            phone: "+61400010001",
-            secret: "sooper secret code",
-            existingPhone: nil,
-            verifyPhone: false,
-            creationNote: nil,
-            session: provideTestSession(),
-            hasAgentSecret: false,
-            signupPerspective: .business,
-            callback: receiveHuman
-        )
         
         wait(for: [expectation], timeout: 5.0)
         
@@ -166,7 +66,7 @@ final class HumanTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: "create Human Identity")
         
-        func generateHumanIdentity(error: Error?, self: HumanIdentity?) {
+        func receiveHumanIdentity(error: Error?, self: HumanIdentity?) {
             
             XCTAssertNil(error, "An error occurred.")
             XCTAssertNotNil(self, "Human Identity is nil.")
@@ -176,21 +76,29 @@ final class HumanTests: XCTestCase {
             return
         }
         
-        HumanIdentity.create(
-            humanId: "27144684924846194",
-            dateOfBirth: "1987-10-13",
-            address: AddressCreationStruct(
-                line1: "44 Bridge Street",
-                line2: nil,
-                line3: nil,
-                line4: nil,
-                postalCode: "2000",
-                locality: "NSW",
-                regionId: 1,
-                countryId: 1),
-            session: provideTestSession(),
-            callback: generateHumanIdentity
-        )
+        Utility.provideTestHuman(
+            expectation: expectation
+        ) { human, secret, code in
+            
+            HumanIdentity.create(
+                humanId: human.humanId,
+                dateOfBirth: "1987-10-13",
+                address: AddressCreationStruct(
+                    line1: "44 Bridge Street",
+                    line2: nil,
+                    line3: nil,
+                    line4: nil,
+                    postalCode: "2000",
+                    locality: "NSW",
+                    regionId: 1,
+                    countryId: 1),
+                session: Utility.provideTestSession(),
+                callback: receiveHumanIdentity
+            )
+            
+            return
+
+        }
         
         wait(for: [expectation], timeout: 5.0)
         
@@ -202,7 +110,7 @@ final class HumanTests: XCTestCase {
         let expectation = XCTestExpectation(description:
             "create Human Identity Document")
         
-        func generateHumanIdentityDocument(error: Error?,
+        func receiveHumanIdentityDocument(error: Error?,
             self: HumanIdentityDocument?) {
             
             XCTAssertNil(error, "An error occurred.")
@@ -213,13 +121,19 @@ final class HumanTests: XCTestCase {
             return
         }
         
-        HumanIdentityDocument.create(
-            humanId: "39885555918766603",
-            idDocumentType: 1,
-            idDocumentIdentifier: "123456",
-            session: provideTestSession(),
-            callback: generateHumanIdentityDocument
-        )
+        Utility.provideTestHuman(
+            expectation: expectation
+        ) { human, secret, code in
+            
+            HumanIdentityDocument.create(
+                humanId: human.humanId,
+                idDocumentType: 1,
+                idDocumentIdentifier: "123456",
+                session: Utility.provideTestSession(),
+                callback: receiveHumanIdentityDocument
+            )
+            
+        }
         
         wait(for: [expectation], timeout: 5.0)
         
@@ -244,11 +158,12 @@ final class HumanTests: XCTestCase {
             
         }
         
-        self.provideTestHuman(
+        Utility.provideTestHuman(
             expectation: expectation,
             callback: receiveHuman,
             verifyPhone: true
         )
+
         
         wait(for: [expectation], timeout: 5.0)
         
@@ -274,7 +189,7 @@ final class HumanTests: XCTestCase {
 
         }
         
-        self.provideTestHuman(
+        Utility.provideTestHuman(
             expectation: expectation
         ) { human, secret, code in
             Session.create(

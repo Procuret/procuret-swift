@@ -20,7 +20,7 @@ public struct HumanIdentity: Codable {
     }
     
     public static func create(
-        humanId: String,
+        humanId: Int,
         dateOfBirth: String,
         address: AddressCreationStruct,
         session: Session,
@@ -42,7 +42,7 @@ public struct HumanIdentity: Codable {
     }
     
     private struct CreatePayload: Codable {
-        let humanId: String
+        let humanId: Int
         let dateOfBirth: String
         let address: AddressCreationStruct
         
