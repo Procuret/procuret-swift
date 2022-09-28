@@ -24,11 +24,12 @@ public struct PhoneNumber: Codable {
     public static func create (
         digits: String,
         session: Session?,
-        callback: @escaping (Error?, PhoneNumber?) -> Void
+        callback: @escaping (Error?, PhoneNumber?) -> Void,
+        debugEmail: String? = nil
     ) {
         Request.make(
             path: self.path,
-            payload: CreatePayload(digits: digits),
+            payload: CreatePayload(digits: digits, debugEmail: debugEmail),
             session: session,
             query: nil,
             method: .POST
@@ -39,9 +40,11 @@ public struct PhoneNumber: Codable {
     
     private struct CreatePayload: Codable {
         let digits: String
+        let debugEmail: String?
         
         private enum CodingKeys: String, CodingKey {
             case digits = "phone"
+            case debugEmail = "debug_email"
         }
     }
 }
