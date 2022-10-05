@@ -13,11 +13,13 @@ public struct PhoneNumber: Codable {
     
     public let phoneId: Int
     public let digits: String
+    public let confirmed: Bool?
     public let confirmationRequired: Bool?
     
     private enum CodingKeys: String, CodingKey {
         case phoneId = "indexid"
         case digits
+        case confirmed
         case confirmationRequired = "confirmation_required"
     }
     
