@@ -10,7 +10,7 @@ import Foundation
 
 public struct Entity: Codable, Hashable, Identifiable {
     
-    internal static let path = "/entity/permissions"
+    internal static let path = "/entity"
     internal static let listPath = "/entity/list"
     
     public let publicId: Int
@@ -55,6 +55,30 @@ public struct Entity: Codable, Hashable, Identifiable {
         case modified = "modified"
     }
     
+    public static func create(
+        identifier: String,
+        identifierType: EntityIdType,
+        address: AddressCreationStruct,
+        session: Session,
+        callback: @escaping (Error?, Entity?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(
+                identifier: identifier,
+                identifierType: identifierType,
+                address: address
+            ),
+            session: session,
+            query: nil,
+            method: .POST
+        ) {
+            error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+    }
+    
     public static func setPermissions(
         entityId: Int,
         granteeAgentId: Int,
@@ -77,6 +101,18 @@ public struct Entity: Codable, Hashable, Identifiable {
             method: .POST
         ) { error, data in
             fatalError("Not implemented")
+        }
+    }
+    
+    private struct CreatePayload: Codable {
+        let identifier: String
+        let identifierType: EntityIdType
+        let address: AddressCreationStruct
+        
+        private enum CodingKeys: String, CodingKey {
+            case identifier
+            case identifierType = "identifier_type"
+            case address
         }
     }
         

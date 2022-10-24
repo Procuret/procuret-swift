@@ -33,5 +33,39 @@ class EntityTests: XCTestCase {
         return
 
     }
-
+    
+    func testCreateEntity() {
+        
+        let expectation = XCTestExpectation(
+            description: "create Entity"
+        )
+        
+        func testCreateEntity(error: Error?, entity: Entity?) {
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(entity, "Entity is nil.")
+            
+            expectation.fulfill()
+            return
+        }
+        
+        Entity.create(
+            identifier: "77630036789",
+            identifierType: .abn,
+            address: AddressCreationStruct(
+                line1: "44 Bridge Street",
+                line2: nil,
+                line3: nil,
+                line4: nil,
+                postalCode: "2000",
+                locality: "NSW",
+                regionId: 1,
+                countryId: 1
+            ),
+            session: Utility.provideTestSession(),
+            callback: testCreateEntity
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
+        return
+    }
 }
