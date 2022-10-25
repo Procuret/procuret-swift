@@ -51,7 +51,7 @@ class EntityTests: XCTestCase {
         Entity.create(
             identifier: "77630036789",
             identifierType: .abn,
-            address: AddressCreationStruct(
+            address: Address.CreationData(
                 line1: "44 Bridge Street",
                 line2: nil,
                 line3: nil,

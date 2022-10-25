@@ -35,7 +35,7 @@ class BusinessTests: XCTestCase {
         
         Business.create(
             abn: "77630036789",
-            address: AddressCreationStruct(
+            address: Address.CreationData(
                 line1: "47 Brighton Rd",
                 line2: nil,
                 line3: nil,

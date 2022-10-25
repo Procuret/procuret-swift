@@ -83,7 +83,7 @@ final class HumanTests: XCTestCase {
             HumanIdentity.create(
                 humanId: human.humanId,
                 dateOfBirth: "1987-10-13",
-                address: AddressCreationStruct(
+                address: Address.CreationData(
                     line1: "44 Bridge Street",
                     line2: nil,
                     line3: nil,

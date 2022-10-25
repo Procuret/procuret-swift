@@ -58,7 +58,7 @@ public struct Entity: Codable, Hashable, Identifiable {
     public static func create(
         identifier: String,
         identifierType: EntityIdType,
-        address: AddressCreationStruct,
+        address: Address.CreationData,
         session: Session,
         callback: @escaping (Error?, Entity?) -> Void
     ) {
@@ -107,7 +107,7 @@ public struct Entity: Codable, Hashable, Identifiable {
     private struct CreatePayload: Codable {
         let identifier: String
         let identifierType: EntityIdType
-        let address: AddressCreationStruct
+        let address: Address.CreationData
         
         private enum CodingKeys: String, CodingKey {
             case identifier

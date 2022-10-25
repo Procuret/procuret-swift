@@ -19,7 +19,7 @@ public struct Business: Codable {
     
     public static func create(
         abn: String,
-        address: AddressCreationStruct,
+        address: Address.CreationData,
         session: Session?,
         callback: @escaping (Error?, Business?) -> Void
     ) {
@@ -40,7 +40,7 @@ public struct Business: Codable {
     
     private struct CreatePayload: Codable {
         let abn: String
-        let address: AddressCreationStruct
+        let address: Address.CreationData
         
         private enum CodingKeys: String, CodingKey {
             case abn
