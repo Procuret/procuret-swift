@@ -58,14 +58,14 @@ public struct Address: Codable {
     
     public struct CreationData: Codable {
         
-        let line1: String
-        let line2, line3, line4: String?
-        let postalCode: String
-        let locality: String
-        let regionId: Int
-        let countryId: Int
+        public let line1: String
+        public let line2, line3, line4: String?
+        public let postalCode: String
+        public let locality: String
+        public let regionId: Int
+        public let countryId: Int
         
-        init(line1: String, line2: String?, line3: String?, line4: String?,
+        public init(line1: String, line2: String?, line3: String?, line4: String?,
              postalCode: String, locality: String, regionId: Int,
              countryId: Int) {
             self.line1 = line1
