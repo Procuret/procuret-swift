@@ -57,14 +57,26 @@ public struct Address: Codable {
     }
     
     public struct CreationData: Codable {
-        public let line1: String
-        public let line2: String?
-        public let line3: String?
-        public let line4: String?
-        public let postalCode: String
-        public let locality: String
-        public let regionId: Int
-        public let countryId: Int
+        
+        let line1: String
+        let line2, line3, line4: String?
+        let postalCode: String
+        let locality: String
+        let regionId: Int
+        let countryId: Int
+        
+        init(line1: String, line2: String?, line3: String?, line4: String?,
+             postalCode: String, locality: String, regionId: Int,
+             countryId: Int) {
+            self.line1 = line1
+            self.line2 = line2
+            self.line3 = line3
+            self.line4 = line4
+            self.postalCode = postalCode
+            self.locality = locality
+            self.regionId = regionId
+            self.countryId = countryId 
+        }
         
         private enum CodingKeys: String, CodingKey {
             case line1 = "line_1"
