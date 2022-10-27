@@ -10,6 +10,17 @@ import Foundation
 
 public struct Region: Codable {
     
+    public enum AustralianRegionId: Int {
+        case NSW = 1
+        case VIC = 2
+        case QLD = 3
+        case SA = 4
+        case WA = 5
+        case TAS = 6
+        case NT = 7
+        case ACT = 8
+    }
+    
     public let indexId: Int
     public let name: String
     public let abbreviation: String
@@ -21,5 +32,5 @@ public struct Region: Codable {
         case abbreviation = "abbreviation"
         case countryId = "country_id"
     }
-
 }
+
