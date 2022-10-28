@@ -65,9 +65,16 @@ public struct Address: Codable {
         public let regionId: Int
         public let countryId: Int
         
-        public init(line1: String, line2: String?, line3: String?, line4: String?,
-             postalCode: String, locality: String, regionId: Int,
-             countryId: Int) {
+        public init(
+            line1: String,
+            line2: String?,
+            line3: String?,
+            line4: String?,
+            postalCode: String,
+            locality: String,
+            regionId: Int,
+            countryId: Int
+        ) {
             self.line1 = line1
             self.line2 = line2
             self.line3 = line3
@@ -75,7 +82,9 @@ public struct Address: Codable {
             self.postalCode = postalCode
             self.locality = locality
             self.regionId = regionId
-            self.countryId = countryId 
+            self.countryId = countryId
+                
+            return
         }
         
         private enum CodingKeys: String, CodingKey {
