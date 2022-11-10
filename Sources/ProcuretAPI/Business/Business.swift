@@ -20,7 +20,7 @@ public struct Business: Codable {
     public static func create(
         abn: String,
         address: Address.CreationData,
-        session: Session?,
+        session: Session,
         callback: @escaping (Error?, Business?) -> Void
     ) {
         Request.make(
@@ -38,6 +38,26 @@ public struct Business: Codable {
         }
     }
     
+    public static func create(
+        entity: Entity,
+        session: Session,
+        callback: @escaping (Error?, Business?) -> Void
+    ) {
+
+        Request.make(
+            path: self.path,
+            payload: CreateWithEntityPayload(entity_id: entity.publicId),
+            session: session,
+            query: nil,
+            method: .POST
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+
+    }
+    
+    
     private struct CreatePayload: Codable {
         let abn: String
         let address: Address.CreationData
@@ -47,4 +67,9 @@ public struct Business: Codable {
             case address
         }
     }
+    
+    private struct CreateWithEntityPayload: Codable {
+        let entity_id: Int
+    }
+    
 }

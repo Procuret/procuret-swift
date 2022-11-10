@@ -10,20 +10,11 @@ import XCTest
 
 class BusinessTests: XCTestCase {
 
-    func provideTestSession() -> Session {
-        
-        do {
-            return try Session.fromEnvironmentVariables()
-        } catch {
-            fatalError("Unable to initalise test session: \(error)")
-        }
-    }
-    
     func testCreateBusiness() {
         
         let expectation = XCTestExpectation(description: "create Business")
         
-        func createBusiness(error: Error?, business: Business?) {
+        func receiveResponse(error: Error?, business: Business?) {
             
             XCTAssertNil(error, "An error occurred.")
             XCTAssertNotNil(business, "Business is nil.")
@@ -44,13 +35,49 @@ class BusinessTests: XCTestCase {
                 locality: "QLD",
                 regionId: 1,
                 countryId: 1),
-            session: provideTestSession(),
-            callback: createBusiness
+            session: Utility.provideTestSession(),
+            callback: receiveResponse
         )
         
         
         wait(for: [expectation], timeout: 5.0)
         
         return
+
     }
+    
+    func testCreateBusinessWithEntity() {
+        
+        let expectation = XCTestExpectation(description: "create business")
+        
+        func receiveResponse(error: Error?, business: Business?) {
+            
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(business, "Business is nil.")
+            
+            expectation.fulfill()
+            
+            return
+        }
+        
+        func createBusiness(entity: Entity) {
+            Business.create(
+                entity: entity,
+                session: Utility.provideTestSession(),
+                callback: receiveResponse
+            )
+        }
+        
+        Utility.provideTestEntity(
+            expectation: expectation,
+            callback: createBusiness
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+
+    }
+    
+    
 }
