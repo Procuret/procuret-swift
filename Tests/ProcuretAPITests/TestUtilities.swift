@@ -103,6 +103,47 @@ internal struct Utility {
         return
         
     }
+    
+    static func provideTestEntity(
+        expectation: XCTestExpectation,
+        callback: @escaping (Entity) -> Void
+    ) -> Void {
+        
+        
+        Entity.create(
+            identifier: "77630036789",
+            identifierType: .abn,
+            address: Address.CreationData(
+                line1: "44 Bridge Street",
+                line2: nil,
+                line3: nil,
+                line4: nil,
+                postalCode: "2000",
+                locality: "NSW",
+                regionId: 1,
+                countryId: 1
+            ),
+            session: Utility.provideTestSession(),
+            callback: { error, entity in
+                
+                XCTAssertNil(error)
+                XCTAssertNotNil(entity)
+                
+                guard let entity = entity else {
+                    expectation.fulfill()
+                    return
+                }
+                
+                callback(entity)
+                
+                return
+
+            }
+        )
+        
+        return
+
+    }
 
     
 }
