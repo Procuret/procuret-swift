@@ -11,7 +11,7 @@ public struct Business: Codable {
     
     internal static let path = "/business"
     
-    let entity: Entity //need to confirm type
+    public let entity: Entity
     
     private enum CodingKeys: String, CodingKey {
         case entity
