@@ -36,6 +36,7 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
         mandateIp: String?,
         mandateAgent: String?,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, BECSDirectDebit?) -> Void
     ) {
         Request.make(
@@ -52,7 +53,8 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return

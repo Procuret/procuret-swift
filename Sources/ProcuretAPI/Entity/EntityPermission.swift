@@ -32,6 +32,7 @@ public struct EntityPermission: Codable {
         entityId: String,
         privileges: Array<Privilege>,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -43,7 +44,8 @@ public struct EntityPermission: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }
@@ -53,6 +55,7 @@ public struct EntityPermission: Codable {
         entityId: String,
         humanId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -63,7 +66,8 @@ public struct EntityPermission: Codable {
             ),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

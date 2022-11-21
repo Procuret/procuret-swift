@@ -18,9 +18,10 @@ public protocol Document: Codable {
     var name: String { get }
     
     static func retrieveLatest(
-        callback: @escaping (Error?, Self?) -> Void,
         asHtml: Bool,
-        session: Session?
+        session: Session?,
+        endpoint: ApiEndpoint,
+        callback: @escaping (Error?, Self?) -> Void
     ) -> Void
     
 }
@@ -29,9 +30,10 @@ public protocol Document: Codable {
 extension Document {
     
     public static func retrieveLatest(
-        callback: @escaping (Error?, Self?) -> Void,
         asHtml: Bool = false,
-        session: Session? = nil
+        session: Session? = nil,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
+        callback: @escaping (Error?, Self?) -> Void
     ) -> Void {
         
         Request.make(
@@ -41,7 +43,8 @@ extension Document {
             query: QueryString(
                 targetsOnly: [UrlParameter(asHtml, key: "as_html")]
             ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return

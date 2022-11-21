@@ -12,10 +12,11 @@ public struct DesignatedPaymentMethod {
     
     internal static let path = PaymentSeries.path + "/designated-method"
     
-    public static func create<P: IdentifiesPaymentMethod>(
+    public static func create<GenericMethod: IdentifiesPaymentMethod>(
         session: Session,
         series: PaymentSeries,
-        method: P,
+        method: GenericMethod,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         Request.make(
@@ -26,7 +27,8 @@ public struct DesignatedPaymentMethod {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             callback(error)
             return

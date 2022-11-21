@@ -39,6 +39,7 @@ public struct InstalmentLink: Codable {
         inviteeEmail: String,
         communicate: Bool,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, InstalmentLink?) -> Void
     ) {
         Request.make(
@@ -52,7 +53,8 @@ public struct InstalmentLink: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }
@@ -61,6 +63,7 @@ public struct InstalmentLink: Codable {
     public static func retrieve(
         publicId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, InstalmentLink?) -> Void
     ) {
         Request.make(
@@ -68,7 +71,8 @@ public struct InstalmentLink: Codable {
             payload: RetrieveParameters(publicId: publicId),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

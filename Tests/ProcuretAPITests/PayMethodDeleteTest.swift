@@ -16,8 +16,10 @@ class PayMethodDeleteTest: XCTestCase {
             description: "create then delete BECSDD payment method"
         )
 
-        func receiveCreatedBecsDD(error: Error?, becsDirectDebit:
-            BECSDirectDebit?) {
+        func receiveCreatedBecsDD(
+            error: Error?,
+            becsDirectDebit: BECSDirectDebit?
+        ) {
             
             guard let becsDirectDebit = becsDirectDebit else {
                 XCTFail("Unexpected nil BECS Direct Debit.")
@@ -32,12 +34,18 @@ class PayMethodDeleteTest: XCTestCase {
             }
             
             PaymentMethod.delete(
-                
                 publicId: becsDirectDebit.publicId,
                 session: Session.forceFromEnvironmentVariables(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: checkDeletionSuccess
             )
+            
+            return
+    
         }
+        
+        // test will fail due to hard coded agent having no Stripe customer
+        // record. Test should use a Human generated at runtime as the agent.
         
         BECSDirectDebit.create(
             bsbCode: "000000",
@@ -49,6 +57,7 @@ class PayMethodDeleteTest: XCTestCase {
             mandateIp: "0.0.0.0",
             mandateAgent: "GarbageAgent",
             session: Session.forceFromEnvironmentVariables(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: receiveCreatedBecsDD
         )
         

@@ -36,6 +36,7 @@ public struct Card: UnderpinnedByMethodKernel {
         cvc: String,
         postalCode: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Card?) -> Void
     ) {
         Request.make(
@@ -51,7 +52,8 @@ public struct Card: UnderpinnedByMethodKernel {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return

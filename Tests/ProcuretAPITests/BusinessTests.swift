@@ -36,6 +36,7 @@ class BusinessTests: XCTestCase {
                 regionId: 1,
                 countryId: 1),
             session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: receiveResponse
         )
         
@@ -64,6 +65,7 @@ class BusinessTests: XCTestCase {
             Business.create(
                 entity: entity,
                 session: Utility.provideTestSession(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: receiveResponse
             )
         }

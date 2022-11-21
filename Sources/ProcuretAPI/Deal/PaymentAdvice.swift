@@ -24,6 +24,7 @@ public struct PaymentAdvice: Codable {
         seriesId: String,
         recipientEmail: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -34,7 +35,8 @@ public struct PaymentAdvice: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }
@@ -43,6 +45,7 @@ public struct PaymentAdvice: Codable {
     public static func retrieveMany(
         seriesId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<Self>?) -> Void
     ) {
         Request.make(
@@ -50,7 +53,8 @@ public struct PaymentAdvice: Codable {
             payload: RetrieveManyParameters(seriesId: seriesId),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

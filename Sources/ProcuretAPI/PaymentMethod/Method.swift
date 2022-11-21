@@ -104,6 +104,7 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
         active: Bool? = nil,
         instrument: Instrument? = nil,
         processor: Processor? = nil,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<PaymentMethod>?) -> Void
     ) {
         
@@ -126,7 +127,8 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
                     UP.optionally(processor, key: "processor")
                 ].compactMap { $0 }
             ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Array<Self>.self, callback)
             return
@@ -136,6 +138,7 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
     public static func delete(
         publicId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         Request.make(
@@ -145,7 +148,8 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
             ),
             session: session,
             query: nil,
-            method: .DELETE
+            method: .DELETE,
+            endpoint: endpoint
         ) { error, _ in
             callback (error)
             return
@@ -166,52 +170,3 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
 struct GenericPaymentMethod: Decodable {
     let results: [PaymentMethod]
 }
-
-/*
-
-public struct PaymentMethodX: Codable, Identifiable {
-    
-    internal static let path = "/payment/method"
-    internal static let listPath = PaymentMethod.path + "/list"
-    
-    public enum OrderBy: String {
-        case created = "created"
-    }
-    
-    private enum CodingKeys: CodingKey {
-        
-    }
-    
-    public static func retrieveMany(
-        limit: Int,
-        offset: Int,
-        order: Order,
-        orderBy: PaymentMethod.OrderBy,
-        entityId: String?,
-        authorityId: String?,
-        active: Bool?,
-        instrument: Instrument?,
-        processor: Processor?,
-        session: Session?,
-        callback: @escaping (Error?, Array<PaymentMethod>?) -> Void
-    ) {
-        Request.make(
-            path: PaymentMethod.listPath,
-            data: nil,
-            session: session,
-            query: QueryString(
-                targetsOnly: [
-                    UrlParameter(limit, key: "limit"),
-                    UrlParameter(offset, key: "offset"),
-                    UrlParameter(order.rawValue, key: "descending"),
-                    UrlParameter(orderBy.rawValue, key: "created")
-                ]
-            ),
-            method: .GET
-        ) { error, data in
-            Request.decodeResponse(error, data, Array<Self>.self, callback)
-            return
-        }
-    }
-}
-*/

@@ -15,6 +15,7 @@ public struct SupplierAuthorisation: Codable {
         supplierId: String,
         authorise: Bool,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback:  @escaping (Error?) -> Void
     ) {
         Request.make(
@@ -25,7 +26,8 @@ public struct SupplierAuthorisation: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

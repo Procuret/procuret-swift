@@ -14,7 +14,7 @@ class BECSDirectDebitTests: XCTestCase {
             description: "create BECS Direct Debit"
         )
 
-        func createBECSDirectDebit(error: Error?, becsDirectDebit:
+        func receiveBECSDirectDebit(error: Error?, becsDirectDebit:
             BECSDirectDebit?) {
             XCTAssertNil(error, "An error occurred.")
             XCTAssertNotNil(becsDirectDebit, "BECS Direct Debit is nil.")
@@ -34,7 +34,8 @@ class BECSDirectDebitTests: XCTestCase {
             mandateIp: "0.0.0.0",
             mandateAgent: "GarbageAgent",
             session: Session.forceFromEnvironmentVariables(),
-            callback: createBECSDirectDebit
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+            callback: receiveBECSDirectDebit
         )
         
         wait(for: [expectation], timeout: 5.0)

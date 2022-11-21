@@ -21,6 +21,7 @@ public struct Business: Codable {
         abn: String,
         address: Address.CreationData,
         session: Session,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Business?) -> Void
     ) {
         Request.make(
@@ -31,7 +32,8 @@ public struct Business: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return
@@ -41,6 +43,7 @@ public struct Business: Codable {
     public static func create(
         entity: Entity,
         session: Session,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Business?) -> Void
     ) {
 
@@ -49,7 +52,8 @@ public struct Business: Codable {
             payload: CreateWithEntityPayload(entity_id: entity.publicId),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return

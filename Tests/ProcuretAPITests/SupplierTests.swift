@@ -36,6 +36,7 @@ class SupplierTests: XCTestCase {
         Supplier.retrieve(
             supplierId: 71205185107785336, // some valid supplierId
             session: provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: recieveSupplier
         )
         

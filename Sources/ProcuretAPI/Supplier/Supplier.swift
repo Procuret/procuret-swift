@@ -31,6 +31,7 @@ public struct Supplier: Codable {
         tradingName: String?,
         phoneNumber: String,
         address: Address,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Supplier?) -> Void
     ) {
         Request.make(
@@ -43,7 +44,8 @@ public struct Supplier: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }
@@ -52,6 +54,7 @@ public struct Supplier: Codable {
     public static func retrieve(
         supplierId: Int,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -61,7 +64,8 @@ public struct Supplier: Codable {
             query: QueryString(
                 targetsOnly: [UrlParameter(supplierId, key: "supplier_id")]
                 ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return

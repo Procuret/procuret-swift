@@ -33,7 +33,8 @@ internal struct Utility {
                 secret: secret,
                 email: human.emailAddress.rawEmailString,
                 code: code,
-                perspective: perspective
+                perspective: perspective,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables()
             ) { error, session in
 
                 guard let session = session else {
@@ -85,6 +86,7 @@ internal struct Utility {
             session: session,
             hasAgentSecret: false,
             signupPerspective: .business,
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { (error, human, code) in
                 
                 guard let human = human, let code = code else {
@@ -124,6 +126,7 @@ internal struct Utility {
                 countryId: 1
             ),
             session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { error, entity in
                 
                 XCTAssertNil(error)

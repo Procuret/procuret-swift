@@ -16,6 +16,7 @@ public struct ProspectivePayment: Codable {
         cycle: Cycle,
         supplierId: Int,
         periods: Int,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, ProspectivePayment?) -> Void
     ) {
         Request.make(
@@ -28,7 +29,8 @@ public struct ProspectivePayment: Codable {
             ),
             session: nil,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

@@ -31,6 +31,7 @@ class PaymentSeriesTest: XCTestCase {
         
         PaymentSeries.retrieveMany(
             session: Session.forceFromEnvironmentVariables(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: recieveManyPaymentSeries
         )
         
@@ -46,7 +47,8 @@ class PaymentSeriesTest: XCTestCase {
         let session = Session.forceFromEnvironmentVariables()
         
         PaymentSeries.retrieveMany(
-            session: Session.forceFromEnvironmentVariables()
+            session: Session.forceFromEnvironmentVariables(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables()
         ) { error, many in
             
             guard let many = many else {
@@ -61,7 +63,8 @@ class PaymentSeriesTest: XCTestCase {
             
             PaymentSeries.retrieve(
                 session: session,
-                publicId: many[0].publicId
+                publicId: many[0].publicId,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables()
             ) { error, series in
                 
                 XCTAssertNotNil(series)

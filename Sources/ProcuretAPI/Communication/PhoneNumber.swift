@@ -27,14 +27,16 @@ public struct PhoneNumber: Codable {
         digits: String,
         session: Session?,
         callback: @escaping (Error?, PhoneNumber?) -> Void,
-        debugEmail: String? = nil
+        debugEmail: String? = nil,
+        endpoint: ApiEndpoint = ApiEndpoint.live
     ) {
         Request.make(
             path: self.path,
             payload: CreatePayload(digits: digits, debugEmail: debugEmail),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

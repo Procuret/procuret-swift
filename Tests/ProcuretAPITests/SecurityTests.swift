@@ -20,7 +20,8 @@ final class SecurityTests: XCTestCase {
             SecondFactorCode.create(
                 email: human.emailAddress.rawEmailString,
                 secret: secret,
-                perspective: nil
+                perspective: nil,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables()
             ) { error in
                 XCTAssertNil(error)
                 expectation.fulfill()
@@ -41,7 +42,9 @@ final class SecurityTests: XCTestCase {
             expectation: expectation
         ) { human, session in
             
-            session.refresh { error, refreshedSession in
+            session.refresh(
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+            ) { error, refreshedSession in
                 
                 XCTAssertNil(error)
                 XCTAssertNotNil(refreshedSession)
@@ -66,6 +69,7 @@ final class SecurityTests: XCTestCase {
         
         SecretResetRequest.create(
             email: "someone@procuret-test-domain.org",
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { error in
                 XCTAssertNil(error)
                 expectation.fulfill()

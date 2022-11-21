@@ -14,7 +14,9 @@ class DocumentTests: XCTestCase {
         
         let expectation = XCTestExpectation()
         
-        StripeDDRAgreement.retrieveLatest { error, agreement in
+        StripeDDRAgreement.retrieveLatest(
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+        ) { error, agreement in
             XCTAssertNil(error)
             XCTAssertNotNil(agreement)
             expectation.fulfill()
@@ -31,7 +33,9 @@ class DocumentTests: XCTestCase {
         
         let expectation = XCTestExpectation()
         
-        TOS.retrieveLatest { error, agreement in
+        TOS.retrieveLatest(
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+        ) { error, agreement in
             XCTAssertNil(error)
             XCTAssertNotNil(agreement)
             expectation.fulfill()
@@ -39,6 +43,7 @@ class DocumentTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 3.0)
+
         return
         
     }
@@ -47,7 +52,9 @@ class DocumentTests: XCTestCase {
         
         let expectation = XCTestExpectation()
         
-        PrivacyPolicy.retrieveLatest { error, agreement in
+        PrivacyPolicy.retrieveLatest(
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+        ) { error, agreement in
             XCTAssertNil(error)
             XCTAssertNotNil(agreement)
             expectation.fulfill()

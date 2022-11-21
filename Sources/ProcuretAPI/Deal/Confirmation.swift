@@ -26,6 +26,7 @@ public struct DealConfirmation: Codable {
         seriesId: String?,
         commitmentId: String?,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, DealConfirmation?) -> Void
     ) {
         Request.make(
@@ -36,7 +37,8 @@ public struct DealConfirmation: Codable {
             ),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }

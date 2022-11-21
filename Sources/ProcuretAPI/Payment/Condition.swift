@@ -22,6 +22,7 @@ public struct SeriesCondition: Codable {
     public static func retrieveFulfilled(
         commitmentId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -29,7 +30,8 @@ public struct SeriesCondition: Codable {
             payload: RetrieveParameters(commitmentId: commitmentId),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

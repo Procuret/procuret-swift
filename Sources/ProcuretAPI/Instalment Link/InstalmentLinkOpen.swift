@@ -22,6 +22,7 @@ public struct InstalmentLinkOpen: Codable {
     public static func create(
         instalmentLinkId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         Request.make(
@@ -29,7 +30,8 @@ public struct InstalmentLinkOpen: Codable {
             payload: CreatePayload(instalmentLinkId: instalmentLinkId),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

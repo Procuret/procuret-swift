@@ -16,7 +16,7 @@ class CardTests: XCTestCase {
             description: "create Credit Card"
         )
         
-        func createCreditCard(error: Error?, card: Card?) {
+        func receiveCreditCard(error: Error?, card: Card?) {
             XCTAssertNil(error, "An error occurred.")
             XCTAssertNotNil(card, "Credit card is nil.")
             
@@ -33,7 +33,8 @@ class CardTests: XCTestCase {
             cvc: "424",
             postalCode: "42424",
             session: Session.forceFromEnvironmentVariables(),
-            callback: createCreditCard
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+            callback: receiveCreditCard
         )
         
         wait(for: [expectation], timeout: 5.0)

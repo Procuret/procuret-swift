@@ -17,7 +17,6 @@ public struct TreasuryPayment: Codable {
     let created: Date
     let executed: Date
     let magnitude: String
-    let reconciliations: Array<Reconciliation>?
     let creatingAgentId: Int?
     let method: PaymentMethodHeadline?
     let denomination: Currency
@@ -29,7 +28,6 @@ public struct TreasuryPayment: Codable {
         case created
         case executed
         case magnitude
-        case reconciliations
         case creatingAgentId = "creating_agent_id"
         case method
         case denomination
@@ -46,6 +44,7 @@ public struct TreasuryPayment: Codable {
         manuallyReconciled: Bool?,
         active: Bool,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -62,7 +61,8 @@ public struct TreasuryPayment: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }
@@ -71,6 +71,7 @@ public struct TreasuryPayment: Codable {
     public static func retrieve(
         publicId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -78,7 +79,8 @@ public struct TreasuryPayment: Codable {
             payload: RetrieveParameters(publicId: publicId),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

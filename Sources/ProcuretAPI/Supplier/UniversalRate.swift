@@ -14,6 +14,7 @@ public struct UniversalRate: Codable {
     public static func create(
         supplierId: Int,
         rate: Decimal,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Data?) -> Void
     ) {
         Request.make(
@@ -24,7 +25,8 @@ public struct UniversalRate: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }

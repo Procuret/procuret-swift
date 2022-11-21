@@ -27,7 +27,8 @@ public struct ErrorReport: Codable {
     }
     
     public static func create(
-        attributes: Array<ErrorAttribute>
+        attributes: Array<ErrorAttribute>,
+        endpoint: ApiEndpoint = ApiEndpoint.live
     ) {
         Request.make(
             path: self.path,
@@ -36,7 +37,8 @@ public struct ErrorReport: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

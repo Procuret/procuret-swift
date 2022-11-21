@@ -60,6 +60,7 @@ public struct Entity: Codable, Hashable, Identifiable {
         identifierType: EntityIdType,
         address: Address.CreationData,
         session: Session,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Entity?) -> Void
     ) {
         Request.make(
@@ -71,7 +72,8 @@ public struct Entity: Codable, Hashable, Identifiable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) {
             error, data in
             Request.decodeResponse(error, data, Self.self, callback)
@@ -85,6 +87,7 @@ public struct Entity: Codable, Hashable, Identifiable {
         read: Bool,
         write: Bool,
         manage: Bool,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Entity?) -> Void
     ) {
         Request.make(
@@ -98,7 +101,8 @@ public struct Entity: Codable, Hashable, Identifiable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }
@@ -149,6 +153,7 @@ public struct Entity: Codable, Hashable, Identifiable {
         offset: Int = 0,
         order: Order = Order.descending,
         orderBy: Self.OrderBy = Self.OrderBy.created,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<Entity>?) -> Void
     ) -> Void {
         
@@ -166,7 +171,8 @@ public struct Entity: Codable, Hashable, Identifiable {
                 UP.optionally(accessibleTo?.agentId, key: "accessible_to"),
                 UP.optionally(nameFragment, key: "name_fragment")
             ].compactMap{ $0 }),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Array<Self>.self, callback)
             return

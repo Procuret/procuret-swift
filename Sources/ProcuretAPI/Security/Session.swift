@@ -92,6 +92,7 @@ public struct Session: Codable, Agent {
         email: String,
         code: String,
         perspective: Perspective,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Session?) -> Void
     ) {
         Request.make(
@@ -104,7 +105,8 @@ public struct Session: Codable, Agent {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return
@@ -114,6 +116,7 @@ public struct Session: Codable, Agent {
     public static func retrieve(
         sessionId: Int,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Session?) -> Void
     ) {
         Request.make(
@@ -123,7 +126,8 @@ public struct Session: Codable, Agent {
             query: QueryString(
                 targetsOnly: [UrlParameter(sessionId, key: "session_id")]
             ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return
@@ -131,12 +135,14 @@ public struct Session: Codable, Agent {
     }
     
     public func refresh(
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Session?) -> Void
     ) {
         
         Self.retrieve(
             sessionId: self.sessionId,
             session: self,
+            endpoint: endpoint,
             callback: callback
         )
 

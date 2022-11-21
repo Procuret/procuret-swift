@@ -34,6 +34,7 @@ public struct BankAccount: UnderpinnedByMethodKernel {
         entityId: String,
         authorityId: String?,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, BankAccount?) -> Void
     ) {
         Request.make(
@@ -47,7 +48,8 @@ public struct BankAccount: UnderpinnedByMethodKernel {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return

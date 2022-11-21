@@ -31,6 +31,7 @@ final class HumanTests: XCTestCase {
             Human.retrieve(
                 humanId: human.humanId,
                 session: Utility.provideTestSession(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: recieveHuman
             )
             
@@ -93,6 +94,7 @@ final class HumanTests: XCTestCase {
                     regionId: 1,
                     countryId: 1),
                 session: Utility.provideTestSession(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: receiveHumanIdentity
             )
             
@@ -130,6 +132,7 @@ final class HumanTests: XCTestCase {
                 idDocumentType: 1,
                 idDocumentIdentifier: "123456",
                 session: Utility.provideTestSession(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: receiveHumanIdentityDocument
             )
             
@@ -197,6 +200,7 @@ final class HumanTests: XCTestCase {
                 email: human.emailAddress.emailAddress,
                 code: code,
                 perspective: .business,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: recieveSession
             )
             return

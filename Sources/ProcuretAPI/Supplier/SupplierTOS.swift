@@ -14,6 +14,7 @@ public struct SupplierTOS: Codable {
     public static func create(
         supplierId: Int,
         markdown: String,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, SupplierTOS?) -> Void
     ) {
         Request.make(
@@ -24,7 +25,8 @@ public struct SupplierTOS: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }

@@ -35,6 +35,7 @@ public struct MaxTransactionValue: Codable {
         magnitude: String,
         active: Bool,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -47,7 +48,8 @@ public struct MaxTransactionValue: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }
@@ -57,6 +59,7 @@ public struct MaxTransactionValue: Codable {
         denomination: Currency,
         supplierId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -67,7 +70,8 @@ public struct MaxTransactionValue: Codable {
             ),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }

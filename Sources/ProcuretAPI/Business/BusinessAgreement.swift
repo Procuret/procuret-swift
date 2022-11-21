@@ -22,6 +22,7 @@ public struct BusinessAgreement: Codable {
     public static func create(
         businessId: String,
         signaturePNG: String,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, String?) -> Void
     ) {
         Request.make(
@@ -32,7 +33,8 @@ public struct BusinessAgreement: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

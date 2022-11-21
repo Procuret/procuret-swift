@@ -53,6 +53,7 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
     public static func retrieve(
         session: Session,
         publicId: String,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         
@@ -65,7 +66,8 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
             query: QueryString(
                 targetsOnly: [UP(publicId, key: "public_id")]
             ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return
@@ -82,6 +84,7 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
         textFragment: String? = nil,
         business: Entity? = nil,
         method: PaymentMethod? = nil,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<Self>?) -> Void
     ) {
         
@@ -102,7 +105,8 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
                     UP.optionally(method?.publicId, key: "method_id")
                 ].compactMap { $0 }
             ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Array<Self>.self, callback)
             return

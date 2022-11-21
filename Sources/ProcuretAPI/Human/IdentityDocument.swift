@@ -30,6 +30,7 @@ public struct HumanIdentityDocument: Codable {
         idDocumentType: IdentityDocumentType.RawValue,
         idDocumentIdentifier: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -41,7 +42,8 @@ public struct HumanIdentityDocument: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return

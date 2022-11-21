@@ -23,6 +23,7 @@ public struct PresentedInvoice: Codable {
         invoiceIdentifier: String,
         preferredPeriods: Int,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Human?) -> Void
     ) {
         Request.make(
@@ -35,7 +36,8 @@ public struct PresentedInvoice: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

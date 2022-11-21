@@ -10,15 +10,6 @@ import XCTest
 
 class DealTests: XCTestCase {
 
-    func provideTestSession() -> Session {
-        
-        do {
-            return try Session.fromEnvironmentVariables()
-        } catch {
-            fatalError("Unable to initalise test session: \(error)")
-        }
-    }
-    
     func testRetrieveDeal() {
         
         let expectation = XCTestExpectation(description: "retrieve Deal")
@@ -35,7 +26,8 @@ class DealTests: XCTestCase {
         
         Deal.retrieve(
             commitmentId: "iXviBZSHjaZmdBen", // some valid commitmentId
-            session: provideTestSession(),
+            session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: recieveDeal
         )
         
@@ -64,7 +56,8 @@ class DealTests: XCTestCase {
             order: Order.descending,
             orderBy: Deal.OrderBy.created,
             anyNameFragment: nil,
-            session: provideTestSession(),
+            session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: recieveManyDeal
         )
         

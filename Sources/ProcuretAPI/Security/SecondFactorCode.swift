@@ -16,6 +16,7 @@ public struct SecondFactorCode: Codable {
         agentId: String?,
         secret: String,
         perspective: Perspective?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         Request.make(
@@ -28,7 +29,8 @@ public struct SecondFactorCode: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, _ in
             callback(error)
         }
@@ -38,6 +40,7 @@ public struct SecondFactorCode: Codable {
         email: String,
         secret: String,
         perspective: Perspective?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         return Self.create(
@@ -45,6 +48,7 @@ public struct SecondFactorCode: Codable {
             agentId: nil,
             secret: secret,
             perspective: perspective,
+            endpoint: endpoint,
             callback: callback
         )
     }
@@ -53,6 +57,7 @@ public struct SecondFactorCode: Codable {
         agentId: String,
         secret: String,
         perspective: Perspective?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         return Self.create(
@@ -60,6 +65,7 @@ public struct SecondFactorCode: Codable {
             agentId: agentId,
             secret: secret,
             perspective: perspective,
+            endpoint: endpoint,
             callback: callback
         )
     }

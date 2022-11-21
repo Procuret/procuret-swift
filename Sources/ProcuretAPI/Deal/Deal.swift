@@ -54,6 +54,7 @@ public struct Deal: Codable, Identifiable {
     public static func retrieve(
         commitmentId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Deal?) -> Void
     ) {
         Request.make(
@@ -63,7 +64,8 @@ public struct Deal: Codable, Identifiable {
             query: QueryString(
             targetsOnly: [UrlParameter(commitmentId, key: "commitment_id")]
             ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return
@@ -77,6 +79,7 @@ public struct Deal: Codable, Identifiable {
         orderBy: Deal.OrderBy,
         anyNameFragment: String?,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<Deal>?) -> Void
     ) {
         Request.make(
@@ -91,7 +94,8 @@ public struct Deal: Codable, Identifiable {
                     UrlParameter(orderBy.rawValue, key: "created")
                 ]
             ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Array<Self>.self, callback)
             return

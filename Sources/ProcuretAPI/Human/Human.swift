@@ -69,8 +69,12 @@ public struct Human: Codable, Agent {
         session: Session? = nil,
         hasAgentSecret: Bool? = nil,
         signupPerspective: Perspective = .business,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Human?, String?) -> Void
     ) -> Void {
+        
+        print("create human")
+        print(endpoint)
         
         func extractCode(error: Error?, human: Human?, data: Data?) -> Void {
             
@@ -121,7 +125,8 @@ public struct Human: Codable, Agent {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self) { error, human in
                 extractCode(error: error, human: human, data: data)
@@ -142,8 +147,12 @@ public struct Human: Codable, Agent {
         session: Session? = nil,
         hasAgentSecret: Bool? = nil,
         signupPerspective: Perspective = .business,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Human?) -> Void
     ) -> Void {
+        
+        print("create human")
+        print(endpoint)
 
         Request.make(
             path: self.path,
@@ -161,7 +170,8 @@ public struct Human: Codable, Agent {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return
@@ -172,6 +182,7 @@ public struct Human: Codable, Agent {
     public static func retrieve(
         humanId: Int,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Human?) -> Void
     ) -> Void {
         Request.make(
@@ -181,7 +192,8 @@ public struct Human: Codable, Agent {
             query: QueryString(
                 targetsOnly: [UrlParameter(humanId, key: "human_id")]
             ),
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, self, callback)
             return

@@ -14,6 +14,7 @@ public struct SecretResetRequest {
     
     public static func create(
         email: String,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         
@@ -23,6 +24,7 @@ public struct SecretResetRequest {
             session: nil,
             query: nil,
             method: .POST,
+            endpoint: endpoint,
             then: { error, _ in callback(error); return }
         )
         

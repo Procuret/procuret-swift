@@ -32,6 +32,7 @@ public struct CreditAssessment: Codable {
         creditModel: CreditModel,
         forceFresh: Bool,
         forcePositive: Bool,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         Request.make(
@@ -45,7 +46,8 @@ public struct CreditAssessment: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }
@@ -54,6 +56,7 @@ public struct CreditAssessment: Codable {
     public static func retrieve(
         assessmentId: Int,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, CreditAssessment?) -> Void
     ) {
         Request.make(
@@ -61,7 +64,8 @@ public struct CreditAssessment: Codable {
             payload: RetrieveParameters(assessmentId: assessmentId),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

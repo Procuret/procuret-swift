@@ -28,6 +28,7 @@ public struct SettlementAccount: Decodable {
         supplierId: String,
         accountId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Self?, Error?) -> Void
     ) {
         Request.make(
@@ -38,7 +39,8 @@ public struct SettlementAccount: Decodable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }
@@ -47,6 +49,7 @@ public struct SettlementAccount: Decodable {
     public static func retrieve(
         supplierId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Self?, Error?) -> Void
     ) {
         Request.make(
@@ -54,7 +57,8 @@ public struct SettlementAccount: Decodable {
             payload: RetrieveParameters(supplierId: supplierId),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

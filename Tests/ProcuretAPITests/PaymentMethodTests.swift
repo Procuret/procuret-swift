@@ -36,6 +36,7 @@ class PaymentMethodTests: XCTestCase {
             offset: 0,
             order: Order.descending,
             orderBy: PaymentMethod.OrderBy.created,
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: recieveManyPaymentMethod
         )
         

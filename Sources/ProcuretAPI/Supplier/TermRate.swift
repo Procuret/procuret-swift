@@ -32,6 +32,7 @@ public struct TermRate: Codable {
         annualRate: Decimal,
         periods: Int,
         periodsPerYear: Int,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, TermRate?) -> Void
     ) {
         Request.make(
@@ -44,7 +45,8 @@ public struct TermRate: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }

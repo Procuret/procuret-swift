@@ -34,6 +34,7 @@ class BankAccountTests: XCTestCase {
             entityId: "13991055489669749",
             authorityId: nil,
             session: Session.forceFromEnvironmentVariables(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: generateBankAccount
         )
         

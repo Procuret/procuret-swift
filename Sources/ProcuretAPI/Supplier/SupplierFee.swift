@@ -24,6 +24,7 @@ public struct SupplierFee: Codable {
         feePercentage: String,
         supplierId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -34,7 +35,8 @@ public struct SupplierFee: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }
@@ -44,6 +46,7 @@ public struct SupplierFee: Codable {
         supplierId: String,
         termRateId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Session?) -> Void
     ) {
         Request.make(
@@ -54,7 +57,8 @@ public struct SupplierFee: Codable {
             ),
             session: session,
             query: nil,
-            method: .GET
+            method: .GET,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

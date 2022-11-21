@@ -10,10 +10,8 @@ import Foundation
 
 internal class Request {
     
-    private static let endpointEnvironmentKey = "PROCURET_ENDPOINT"
     private static let debugDataPrintEnvironmentKey = "PROCURET_DEBUG_DATA"
     private static let agent = "Procuret API Swift 0.0.1"
-    private static let liveApiEndpoint = "https://procuret.com/api"
     private static let apiSession = URLSession(
         configuration: URLSessionConfiguration.ephemeral
     )
@@ -24,18 +22,6 @@ internal class Request {
         decoder.dateDecodingStrategy = .formatted(DateFormatter.nozomiTime)
         return decoder
     }()
-
-    private static var apiEndpoint: String {
-        get {
-            if let eEnvEndpoint = getenv(Self.endpointEnvironmentKey) {
-                guard let envEndpoint = String(utf8String: eEnvEndpoint) else {
-                    fatalError("Unable to parse environment endpoint")
-                }
-                return envEndpoint
-            }
-            return Self.liveApiEndpoint
-        }
-    }
     
     public static func make<T: Encodable>(
         path: String,
@@ -43,6 +29,7 @@ internal class Request {
         session: Session?,
         query: QueryString?,
         method: HTTPMethod,
+        endpoint: ApiEndpoint,
         then callback: @escaping (Error?, Data?) -> Void
     ) {
         
@@ -56,6 +43,7 @@ internal class Request {
             session: session,
             query: query,
             method: method,
+            endpoint: endpoint,
             then: callback
         )
         
@@ -69,6 +57,7 @@ internal class Request {
         session: Session?,
         query: QueryString?,
         method: HTTPMethod,
+        endpoint: ApiEndpoint,
         then callback: @escaping (Error?, Data?) -> Void
     ) {
         
@@ -82,12 +71,13 @@ internal class Request {
         let request: URLRequest
         
         do {
-            request = try buildRequest(
+            request = try Self.buildRequest(
                 path,
                 data,
                 session,
                 query,
-                method
+                method,
+                endpoint
             )
         } catch {
             callback(error, nil)
@@ -95,7 +85,11 @@ internal class Request {
         }
         
         if Self.shouldDebugPrint() {
-            Self.debugPrintRequest(path: path, method: method)
+            Self.debugPrintRequest(
+                endpoint: endpoint,
+                path: path,
+                method: method
+            )
         }
 
         let _ = Self.apiSession.dataTask(
@@ -159,11 +153,11 @@ internal class Request {
         _ data: RequestData?,
         _ session: Session?,
         _ query: QueryString?,
-        _ method: HTTPMethod
+        _ method: HTTPMethod,
+        _ endpoint: ApiEndpoint
     ) throws -> URLRequest {
 
         let fullURL: String
-        let endpoint = Self.deriveEndpoint()
 
         if let query = query {
             guard let parameters = query.paramString.addingPercentEncoding(
@@ -174,9 +168,9 @@ internal class Request {
                     message: "bad url encode"
                 )
             }
-            fullURL = endpoint + path + parameters
+            fullURL = endpoint.url + path + parameters
         } else {
-            fullURL = endpoint + path
+            fullURL = endpoint.url + path
         }
         
         guard let targetURL = URL(string: fullURL) else {
@@ -269,17 +263,7 @@ internal class Request {
         return
         
     }
-    
-    private static func deriveEndpoint() -> String {
-        if let environment = getenv("Procuret_API_ENDPOINT") {
-            guard let endpoint = String(utf8String: environment) else {
-                fatalError("Bad environment variable")
-            }
-            return endpoint
-        }
-        return Self.apiEndpoint
-    }
-    
+
     private static func shouldDebugPrint() -> Bool {
         if let dValue = getenv(Self.debugDataPrintEnvironmentKey) {
             guard let value = String(utf8String: dValue) else {
@@ -313,11 +297,12 @@ internal class Request {
     }
     
     private static func debugPrintRequest(
+        endpoint: ApiEndpoint,
         path: String,
         method: HTTPMethod
     ) -> Void {
         
-        print("Making request to Procuret API: \(path)|\(method.rawValue)")
+        print("Making request to \(endpoint): \(path)|\(method.rawValue)")
         print("Raw response data (if any) will be printed below.")
         
     }

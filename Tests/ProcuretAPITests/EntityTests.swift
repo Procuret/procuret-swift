@@ -15,7 +15,8 @@ class EntityTests: XCTestCase {
         let expectation = XCTestExpectation()
         
         Entity.retrieveMany(
-            session: Session.forceFromEnvironmentVariables()
+            session: Session.forceFromEnvironmentVariables(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables()
         ) { error, entities in
         
             XCTAssertNil(error)
@@ -62,6 +63,7 @@ class EntityTests: XCTestCase {
                 countryId: 1
             ),
             session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: testCreateEntity
         )
         

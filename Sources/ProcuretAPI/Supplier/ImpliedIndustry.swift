@@ -22,6 +22,7 @@ public struct ImpliedCustomerIndustry: Codable {
     public static func create(
         supplierId: Int,
         industryId: Int,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, ImpliedCustomerIndustry?) -> Void
     ) {
         Request.make(
@@ -32,7 +33,8 @@ public struct ImpliedCustomerIndustry: Codable {
             ),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
                 fatalError("Not implemented")
         }

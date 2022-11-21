@@ -30,6 +30,7 @@ public struct Brand: Codable {
         saleMessage: String,
         entityId: String,
         session: Session?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Brand?) -> Void
     ) {
         Request.make(
@@ -42,7 +43,8 @@ public struct Brand: Codable {
             ),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }

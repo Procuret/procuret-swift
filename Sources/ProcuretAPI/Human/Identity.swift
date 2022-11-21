@@ -24,6 +24,7 @@ public struct HumanIdentity: Codable {
         dateOfBirth: String,
         address: Address.CreationData,
         session: Session,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
@@ -34,7 +35,8 @@ public struct HumanIdentity: Codable {
                 address: address),
             session: session,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             Request.decodeResponse(error, data, Self.self, callback)
             return

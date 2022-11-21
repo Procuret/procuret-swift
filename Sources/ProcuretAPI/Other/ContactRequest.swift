@@ -31,6 +31,7 @@ public struct ContactRequest: Codable {
         firstName: String,
         lastName: String,
         message: String,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
         Request.make(
@@ -40,7 +41,8 @@ public struct ContactRequest: Codable {
                 lastName: lastName, message: message),
             session: nil,
             query: nil,
-            method: .POST
+            method: .POST,
+            endpoint: endpoint
         ) { error, data in
             fatalError("Not implemented")
         }
