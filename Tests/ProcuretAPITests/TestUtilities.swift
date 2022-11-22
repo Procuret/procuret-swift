@@ -66,7 +66,7 @@ internal struct Utility {
         let dummySecret = RandomNumber(.large).string
         let email = TestEmail.generateEmail()
         
-        let session: Session?
+        let session: SessionRepresentative?
         
         if withEnvironmentSession {
             session = self.provideTestSession()

@@ -34,7 +34,7 @@ public struct MaxTransactionValue: Codable {
         supplierId: String,
         magnitude: String,
         active: Bool,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
@@ -58,7 +58,7 @@ public struct MaxTransactionValue: Codable {
     public static func retrieve(
         denomination: Currency,
         supplierId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

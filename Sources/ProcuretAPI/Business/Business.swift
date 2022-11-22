@@ -20,7 +20,7 @@ public struct Business: Codable {
     public static func create(
         abn: String,
         address: Address.CreationData,
-        session: Session,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Business?) -> Void
     ) {
@@ -42,7 +42,7 @@ public struct Business: Codable {
     
     public static func create(
         entity: Entity,
-        session: Session,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Business?) -> Void
     ) {

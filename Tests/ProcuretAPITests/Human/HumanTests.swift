@@ -180,7 +180,7 @@ final class HumanTests: XCTestCase {
             description: "Extract a Human agent from a Session"
         )
         
-        func recieveSession(error: Error?, session: Session?) -> Void {
+        func recieveSession(error: Error?, session: SessionRepresentative?) -> Void {
             
             XCTAssertNil(error)
             XCTAssertNotNil(session)

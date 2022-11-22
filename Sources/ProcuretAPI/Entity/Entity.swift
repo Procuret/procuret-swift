@@ -59,7 +59,7 @@ public struct Entity: Codable, Hashable, Identifiable {
         identifier: String,
         identifierType: EntityIdType,
         address: Address.CreationData,
-        session: Session,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Entity?) -> Void
     ) {
@@ -146,7 +146,7 @@ public struct Entity: Codable, Hashable, Identifiable {
     }
     
     public static func retrieveMany(
-        session: Session,
+        session: SessionRepresentative,
         accessibleTo: Agent? = nil,
         nameFragment: String? = nil,
         limit: Int = 20,

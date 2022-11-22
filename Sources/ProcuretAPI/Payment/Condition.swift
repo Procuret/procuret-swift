@@ -21,7 +21,7 @@ public struct SeriesCondition: Codable {
     
     public static func retrieveFulfilled(
         commitmentId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

@@ -19,7 +19,7 @@ public protocol Document: Codable {
     
     static func retrieveLatest(
         asHtml: Bool,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint,
         callback: @escaping (Error?, Self?) -> Void
     ) -> Void
@@ -31,7 +31,7 @@ extension Document {
     
     public static func retrieveLatest(
         asHtml: Bool = false,
-        session: Session? = nil,
+        session: SessionRepresentative? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) -> Void {

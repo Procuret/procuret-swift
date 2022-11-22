@@ -38,7 +38,7 @@ public struct InstalmentLink: Codable {
         identifier: String,
         inviteeEmail: String,
         communicate: Bool,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, InstalmentLink?) -> Void
     ) {
@@ -62,7 +62,7 @@ public struct InstalmentLink: Codable {
     
     public static func retrieve(
         publicId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, InstalmentLink?) -> Void
     ) {

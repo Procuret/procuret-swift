@@ -13,7 +13,7 @@ public struct DesignatedPaymentMethod {
     internal static let path = PaymentSeries.path + "/designated-method"
     
     public static func create<GenericMethod: IdentifiesPaymentMethod>(
-        session: Session,
+        session: SessionRepresentative,
         series: PaymentSeries,
         method: GenericMethod,
         endpoint: ApiEndpoint = ApiEndpoint.live,

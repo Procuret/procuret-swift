@@ -23,7 +23,7 @@ public struct DealLedger: Codable {
     
     public static func retrieve(
         commitmentId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

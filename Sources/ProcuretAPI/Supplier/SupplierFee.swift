@@ -23,7 +23,7 @@ public struct SupplierFee: Codable {
     public static func create(
         feePercentage: String,
         supplierId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
@@ -45,7 +45,7 @@ public struct SupplierFee: Codable {
     public static func retrieve(
         supplierId: String,
         termRateId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Session?) -> Void
     ) {

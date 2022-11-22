@@ -43,7 +43,7 @@ public struct TreasuryPayment: Codable {
         commitmentId: String?,
         manuallyReconciled: Bool?,
         active: Bool,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
@@ -70,7 +70,7 @@ public struct TreasuryPayment: Codable {
     
     public static func retrieve(
         publicId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

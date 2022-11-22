@@ -26,7 +26,7 @@ public struct HouseAccount: Decodable {
         bsbCode: String,
         accountNumber: String,
         accountName: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, HouseAccount?) -> Void
     ) {
@@ -49,7 +49,7 @@ public struct HouseAccount: Decodable {
     
     public static func retrieve(
         currency: Currency,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, HouseAccount?) -> Void
     ) {

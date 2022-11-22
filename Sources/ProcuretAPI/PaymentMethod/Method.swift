@@ -94,7 +94,7 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
     }
     
     public static func retrieveMany(
-        session: Session,
+        session: SessionRepresentative,
         limit: Int = 20,
         offset: Int = 0,
         order: Order = Order.descending,
@@ -137,7 +137,7 @@ public enum PaymentMethod: UnderpinnedByMethodKernel {
     
     public static func delete(
         publicId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {

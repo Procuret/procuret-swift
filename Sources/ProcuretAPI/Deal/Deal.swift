@@ -53,7 +53,7 @@ public struct Deal: Codable, Identifiable {
     
     public static func retrieve(
         commitmentId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Deal?) -> Void
     ) {
@@ -78,7 +78,7 @@ public struct Deal: Codable, Identifiable {
         order: Order,
         orderBy: Deal.OrderBy,
         anyNameFragment: String?,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<Deal>?) -> Void
     ) {

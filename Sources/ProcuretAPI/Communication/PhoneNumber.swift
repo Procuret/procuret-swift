@@ -25,7 +25,7 @@ public struct PhoneNumber: Codable {
     
     public static func create (
         digits: String,
-        session: Session?,
+        session: SessionRepresentative?,
         callback: @escaping (Error?, PhoneNumber?) -> Void,
         debugEmail: String? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live

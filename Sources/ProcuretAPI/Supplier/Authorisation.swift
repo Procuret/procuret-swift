@@ -14,7 +14,7 @@ public struct SupplierAuthorisation: Codable {
     public static func create(
         supplierId: String,
         authorise: Bool,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback:  @escaping (Error?) -> Void
     ) {

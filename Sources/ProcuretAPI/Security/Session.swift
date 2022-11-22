@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct Session: Codable, Agent {
+public struct Session: Codable, Agent, SessionRepresentative {
     
     private static let path = "/session"
     
@@ -115,7 +115,7 @@ public struct Session: Codable, Agent {
 
     public static func retrieve(
         sessionId: Int,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Session?) -> Void
     ) {

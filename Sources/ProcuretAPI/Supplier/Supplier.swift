@@ -53,7 +53,7 @@ public struct Supplier: Codable {
     
     public static func retrieve(
         supplierId: Int,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

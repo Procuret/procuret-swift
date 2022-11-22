@@ -23,7 +23,7 @@ public struct PaymentAdvice: Codable {
     public static func create(
         seriesId: String,
         recipientEmail: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
@@ -44,7 +44,7 @@ public struct PaymentAdvice: Codable {
     
     public static func retrieveMany(
         seriesId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<Self>?) -> Void
     ) {

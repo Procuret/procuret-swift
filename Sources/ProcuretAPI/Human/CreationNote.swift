@@ -21,7 +21,7 @@ public struct CreationNote: Codable {
     
     public static func retrieve(
         humanId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

@@ -31,7 +31,7 @@ public struct EntityPermission: Codable {
         humanId: String,
         entityId: String,
         privileges: Array<Privilege>,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
@@ -54,7 +54,7 @@ public struct EntityPermission: Codable {
     public static func retrieve(
         entityId: String,
         humanId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

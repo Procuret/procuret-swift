@@ -21,7 +21,7 @@ public struct InstalmentLinkOpen: Codable {
     
     public static func create(
         instalmentLinkId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {

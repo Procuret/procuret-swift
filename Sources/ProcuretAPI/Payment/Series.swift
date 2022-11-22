@@ -51,7 +51,7 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
     }
     
     public static func retrieve(
-        session: Session,
+        session: SessionRepresentative,
         publicId: String,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
@@ -76,7 +76,7 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
     }
     
     public static func retrieveMany(
-        session: Session,
+        session: SessionRepresentative,
         limit: Int = 20,
         offset: Int = 0,
         order: Order = .descending,

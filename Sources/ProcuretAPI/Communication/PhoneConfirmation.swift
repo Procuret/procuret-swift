@@ -14,7 +14,7 @@ public struct PhoneConfirmation: Codable {
     public static func create (
         phoneId: Int,
         code: String,
-        session: Session,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {

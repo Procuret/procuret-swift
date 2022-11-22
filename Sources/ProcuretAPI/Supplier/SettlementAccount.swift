@@ -27,7 +27,7 @@ public struct SettlementAccount: Decodable {
     public static func create(
         supplierId: String,
         accountId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Self?, Error?) -> Void
     ) {
@@ -48,7 +48,7 @@ public struct SettlementAccount: Decodable {
     
     public static func retrieve(
         supplierId: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Self?, Error?) -> Void
     ) {

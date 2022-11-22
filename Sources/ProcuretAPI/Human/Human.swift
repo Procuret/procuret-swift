@@ -66,7 +66,7 @@ public struct Human: Codable, Agent {
         existingPhone: PhoneNumber? = nil,
         verifyPhone: Bool? = nil,
         creationNote: String? = nil,
-        session: Session? = nil,
+        session: SessionRepresentative? = nil,
         hasAgentSecret: Bool? = nil,
         signupPerspective: Perspective = .business,
         endpoint: ApiEndpoint = ApiEndpoint.live,
@@ -144,7 +144,7 @@ public struct Human: Codable, Agent {
         existingPhone: PhoneNumber? = nil,
         verifyPhone: Bool? = nil,
         creationNote: String? = nil,
-        session: Session? = nil,
+        session: SessionRepresentative? = nil,
         hasAgentSecret: Bool? = nil,
         signupPerspective: Perspective = .business,
         endpoint: ApiEndpoint = ApiEndpoint.live,
@@ -181,7 +181,7 @@ public struct Human: Codable, Agent {
     
     public static func retrieve(
         humanId: Int,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Human?) -> Void
     ) -> Void {

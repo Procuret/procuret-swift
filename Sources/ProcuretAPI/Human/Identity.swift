@@ -23,7 +23,7 @@ public struct HumanIdentity: Codable {
         humanId: Int,
         dateOfBirth: String,
         address: Address.CreationData,
-        session: Session,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

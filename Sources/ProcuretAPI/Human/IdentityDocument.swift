@@ -29,7 +29,7 @@ public struct HumanIdentityDocument: Codable {
         humanId: Int,
         idDocumentType: IdentityDocumentType.RawValue,
         idDocumentIdentifier: String,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

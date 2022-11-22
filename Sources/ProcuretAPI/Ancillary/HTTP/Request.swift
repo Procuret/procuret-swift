@@ -26,7 +26,7 @@ internal class Request {
     public static func make<T: Encodable>(
         path: String,
         payload: T,
-        session: Session?,
+        session: SessionRepresentative?,
         query: QueryString?,
         method: HTTPMethod,
         endpoint: ApiEndpoint,
@@ -54,7 +54,7 @@ internal class Request {
     public static func make(
         path: String,
         data: RequestData?,
-        session: Session?,
+        session: SessionRepresentative?,
         query: QueryString?,
         method: HTTPMethod,
         endpoint: ApiEndpoint,
@@ -151,7 +151,7 @@ internal class Request {
     private static func buildRequest(
         _ path: String,
         _ data: RequestData?,
-        _ session: Session?,
+        _ session: SessionRepresentative?,
         _ query: QueryString?,
         _ method: HTTPMethod,
         _ endpoint: ApiEndpoint

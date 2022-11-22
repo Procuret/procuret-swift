@@ -22,7 +22,7 @@ public struct PresentedInvoice: Codable {
         supplierId: Int,
         invoiceIdentifier: String,
         preferredPeriods: Int,
-        session: Session?,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Human?) -> Void
     ) {
