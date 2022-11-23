@@ -31,7 +31,7 @@ public struct EntityPermission: Codable {
         humanId: String,
         entityId: String,
         privileges: Array<Privilege>,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {

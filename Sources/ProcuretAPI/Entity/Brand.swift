@@ -29,7 +29,7 @@ public struct Brand: Codable {
         media: Array<BrandMedia>,
         saleMessage: String,
         entityId: String,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Brand?) -> Void
     ) {
