@@ -31,7 +31,7 @@ public struct PrincipalInvitation: Codable {
         amount: Amount,
         invoiceId: String,
         inviteeEmail: String,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?) -> Void
     ) {
