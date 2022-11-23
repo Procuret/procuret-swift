@@ -25,7 +25,7 @@ public struct DealConfirmation: Codable {
     public static func retrieveMany (
         seriesId: String?,
         commitmentId: String?,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, DealConfirmation?) -> Void
     ) {

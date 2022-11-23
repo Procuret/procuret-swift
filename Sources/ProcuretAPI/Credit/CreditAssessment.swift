@@ -55,7 +55,7 @@ public struct CreditAssessment: Codable {
     
     public static func retrieve(
         assessmentId: Int,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, CreditAssessment?) -> Void
     ) {

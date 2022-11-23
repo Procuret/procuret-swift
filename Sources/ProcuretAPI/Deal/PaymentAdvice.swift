@@ -44,7 +44,7 @@ public struct PaymentAdvice: Codable {
     
     public static func retrieveMany(
         seriesId: String,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<Self>?) -> Void
     ) {
