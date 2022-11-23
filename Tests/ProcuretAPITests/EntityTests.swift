@@ -41,7 +41,7 @@ class EntityTests: XCTestCase {
             description: "create Entity"
         )
         
-        func testCreateEntity(error: Error?, entity: Entity?) {
+        func receiveCreateEntityResult(error: Error?, entity: Entity?) {
             XCTAssertNil(error, "An error occurred.")
             XCTAssertNotNil(entity, "Entity is nil.")
             
@@ -64,7 +64,7 @@ class EntityTests: XCTestCase {
             ),
             session: Utility.provideTestSession(),
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: testCreateEntity
+            callback: receiveCreateEntityResult
         )
         
         wait(for: [expectation], timeout: 5.0)
