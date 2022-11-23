@@ -35,7 +35,7 @@ public struct Card: UnderpinnedByMethodKernel {
         expiryYear: String,
         cvc: String,
         postalCode: String,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Card?) -> Void
     ) {

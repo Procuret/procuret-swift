@@ -35,7 +35,7 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
         entityId: Int?,
         mandateIp: String?,
         mandateAgent: String?,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, BECSDirectDebit?) -> Void
     ) {

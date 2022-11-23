@@ -33,7 +33,7 @@ public struct BankAccount: UnderpinnedByMethodKernel {
         accountName: String,
         entityId: String,
         authorityId: String?,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, BankAccount?) -> Void
     ) {
