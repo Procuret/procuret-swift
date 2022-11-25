@@ -178,6 +178,28 @@ internal struct Utility {
         
         return
     }
-
     
+    static func provideTestSupplierFromEntity(
+        expectation: XCTestExpectation,
+        callback: @escaping (Supplier) -> Void
+    ) -> Void {
+        Supplier.createFromEntity(
+            entityId: "13991055489669749",
+            session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+            callback: { error, supplier in
+                XCTAssertNil(error)
+                XCTAssertNotNil(supplier)
+                
+                guard let supplier = supplier else {
+                    expectation.fulfill()
+                    return
+                }
+                callback(supplier)
+                return
+            }
+        )
+        
+        return
+    }
 }
