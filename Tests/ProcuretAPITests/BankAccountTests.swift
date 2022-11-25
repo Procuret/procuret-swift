@@ -10,33 +10,19 @@ import XCTest
 
 class BankAccountTests: XCTestCase {
     
-    
     func testCreateBankAccount() {
         
         let expectation = XCTestExpectation(
             description: "create Bank Account"
         )
         
-        func generateBankAccount(error: Error?, bankAccount: BankAccount?) {
-            
-            XCTAssertNil(error, "An error occurred.")
-            XCTAssertNotNil(bankAccount, "Bank Account is nil.")
+        Utility.provideTestBankAccount(
+            expectation: expectation
+        ) { bankAccount in
             
             expectation.fulfill()
-            
             return
         }
-        
-        BankAccount.create(
-            bsbCode: "123456",
-            accountNumber: "987654321",
-            accountName: "KaylaTest BankAccount",
-            entityId: "13991055489669749",
-            authorityId: nil,
-            session: Session.forceFromEnvironmentVariables(),
-            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: generateBankAccount
-        )
         
         wait(for: [expectation], timeout: 5.0)
         

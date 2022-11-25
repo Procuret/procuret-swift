@@ -147,6 +147,37 @@ internal struct Utility {
         return
 
     }
+    
+    static func provideTestBankAccount(
+        expectation: XCTestExpectation,
+        callback: @escaping (BankAccount) -> Void
+    ) -> Void {
+        BankAccount.create(
+            bsbCode: "000000",
+            accountNumber: "000123456",
+            accountName: "SwiftTest BankAccount",
+            entityId: "13991055489669749",
+            authorityId: nil,
+            session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+            callback: { error, bankAccount in
+                
+                XCTAssertNil(error)
+                XCTAssertNotNil(bankAccount)
+                
+                guard let bankAccount = bankAccount else {
+                    expectation.fulfill()
+                    return
+                }
+                
+                callback(bankAccount)
+                return
+                
+            }
+        )
+        
+        return
+    }
 
     
 }
