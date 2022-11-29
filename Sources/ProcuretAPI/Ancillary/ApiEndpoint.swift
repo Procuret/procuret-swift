@@ -69,9 +69,7 @@ public struct ApiEndpoint: Codable, Identifiable, Hashable,
         return
     }
     
-    public static func fromEnvironmentVariables(
-        defaultTo: Self? = nil
-    ) -> Self? {
+    public static func fromEnvironmentVariables() -> Self? {
         if let rawVariable = getenv(Self.endpointEnvironmentKey) {
             guard let endpoint = String(utf8String: rawVariable) else {
                 fatalError("Bad environment variable")
@@ -82,6 +80,13 @@ public struct ApiEndpoint: Codable, Identifiable, Hashable,
                 customScheme: String(components[0]) + "//",
                 customRootPath: "/" + String(components[2])
             )
+        }
+        return nil
+    }
+    
+    public static func fromEnvironmentVariables(defaultTo: Self) -> Self {
+        if let defined = Self.fromEnvironmentVariables() {
+            return defined
         }
         return defaultTo
     }

@@ -183,6 +183,10 @@ internal struct Utility {
         expectation: XCTestExpectation,
         callback: @escaping (Supplier) -> Void
     ) -> Void {
+        
+        fatalError(".createFromEntity not implemented")
+        
+        /*
         Supplier.createFromEntity(
             entityId: "13991055489669749",
             session: Utility.provideTestSession(),
@@ -201,5 +205,7 @@ internal struct Utility {
         )
         
         return
+         
+         */
     }
 }
