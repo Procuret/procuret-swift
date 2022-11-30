@@ -118,7 +118,8 @@ public struct Session: Codable, Agent, SessionRepresentative {
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Session?) -> Void
-    ) {
+    ) -> Void {
+
         Request.make(
             path: self.path,
             data: nil,
@@ -132,12 +133,15 @@ public struct Session: Codable, Agent, SessionRepresentative {
             Request.decodeResponse(error, data, Self.self, callback)
             return
         }
+        
+        return
+        
     }
     
     public func refresh(
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Session?) -> Void
-    ) {
+    ) -> Void {
         
         Self.retrieve(
             sessionId: self.sessionId,
@@ -148,6 +152,32 @@ public struct Session: Codable, Agent, SessionRepresentative {
 
         return
 
+    }
+    
+    public func changePerspective(
+        newPerspective: Perspective,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
+        callback: @escaping (Error?, Session?) -> Void
+    ) -> Void {
+        
+        struct ChangePayload: Codable {
+            let perspective_id: Int
+        }
+        
+        Request.make(
+            path: Self.path,
+            payload: ChangePayload(perspective_id: newPerspective.rawValue),
+            session: self,
+            query: nil,
+            method: .PUT,
+            endpoint: endpoint
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+        
+        return
+        
     }
     
     public static func forceFromEnvironmentVariables(

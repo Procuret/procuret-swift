@@ -22,8 +22,8 @@ internal struct Utility {
     
     static func provideTestHumanWithSession(
         expectation: XCTestExpectation,
-        callback: @escaping (_ human: Human, _ session: Session) -> Void,
-        perspective: Perspective = .business
+        perspective: Perspective = .business,
+        callback: @escaping (_ human: Human, _ session: Session) -> Void
     ) {
         
         Self.provideTestHuman(

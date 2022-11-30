@@ -62,6 +62,48 @@ final class SecurityTests: XCTestCase {
         
     }
     
+    func testChangeSessionPerspective() {
+        
+        let expectation = XCTestExpectation(description: "Update Session")
+        
+        Utility.provideTestHumanWithSession(
+            expectation: expectation,
+            perspective: Perspective.business
+        ) { human, session in
+            
+            XCTAssert(session.perspective == Perspective.business)
+            
+            session.changePerspective(
+                newPerspective: Perspective.supplier,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+            ) { error, updatedSession in
+                
+                XCTAssertNil(error)
+                
+                guard let updatedSession = updatedSession else {
+                    XCTFail()
+                    expectation.fulfill()
+                    return
+                }
+                
+                XCTAssert(updatedSession.perspective == Perspective.supplier)
+                
+                expectation.fulfill()
+                
+                return
+                
+            }
+            
+            return
+            
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+
+    }
+    
     
     func testSendResetRequest() {
         
