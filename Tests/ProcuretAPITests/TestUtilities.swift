@@ -179,6 +179,31 @@ internal struct Utility {
         return
     }
     
+    static func provideTestSeries(
+        expectation: XCTestExpectation,
+        callback: @escaping (PaymentSeries) -> Void
+    ) -> Void {
+        PaymentSeries.retrieve(
+            session: Utility.provideTestSession(),
+            publicId: "uiK3ihKJvYtw",
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+            callback: { error, paymentSeries in
+                XCTAssertNil(error)
+                XCTAssertNotNil(paymentSeries)
+                
+                guard let paymentSeries = paymentSeries else {
+                    expectation.fulfill()
+                    return
+                }
+                
+                callback(paymentSeries)
+                return
+            }
+        )
+        
+        return
+    }
+    
     static func provideTestSupplierFromEntity(
         expectation: XCTestExpectation,
         callback: @escaping (Supplier) -> Void

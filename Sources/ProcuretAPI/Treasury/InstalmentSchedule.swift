@@ -8,6 +8,9 @@
 import Foundation
 
 public struct InstalmentSchedule: Codable {
+    
+    internal static let path = "/instalment-schedule"
+    
     let seriesId: String
     let lines: Array<DealLedgerLine>
     let hasInterest: Bool
@@ -21,8 +24,24 @@ public struct InstalmentSchedule: Codable {
     }
     
     public static func retrieve(
+        seriesId: String,
+        session: SessionRepresentative,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
-        fatalError("Not implemented")
+        Request.make(
+            path: "/instalment-schedule",
+            data: nil,
+            session: session,
+            query: QueryString(
+                targetsOnly: [UrlParameter(seriesId, key: "series_id")]
+            ),
+            method: .GET,
+            endpoint: endpoint
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+            
     }
 }
