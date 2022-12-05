@@ -9,15 +9,15 @@ import Foundation
 
 public struct DealLedgerLine: Codable {
     
-    let sequence: Int
-    let date: String
-    let nominalPayment: String
-    let openingBalance: String
-    let interestPaid: String
-    let principalPaid: String
-    let closingBalance: String
-    let commitmentPublicId: String
-    let payment: Payment?
+    public let sequence: Int
+    public let date: String
+    public let nominalPayment: String
+    public let openingBalance: String
+    public let interestPaid: String
+    public let principalPaid: String
+    public let closingBalance: String
+    public let commitmentPublicId: String
+    public let payment: Payment?
     
     public enum CodingKeys: String, CodingKey {
         case sequence
