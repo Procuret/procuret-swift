@@ -11,10 +11,10 @@ public struct InstalmentSchedule: Codable {
     
     internal static let path = "/instalment-schedule"
     
-    let seriesId: String
-    let lines: Array<DealLedgerLine>
-    let hasInterest: Bool
-    let totalRow: ScheduleTotalRow
+    public let seriesId: String
+    public let lines: Array<DealLedgerLine>
+    public let hasInterest: Bool
+    public let totalRow: ScheduleTotalRow
     
     private enum CodingKeys: String, CodingKey {
         case seriesId = "series_id"
