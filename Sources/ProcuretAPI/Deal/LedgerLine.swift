@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DealLedgerLine: Codable {
+public struct DealLedgerLine: Codable, Identifiable {
     
     public let sequence: Int
     public let date: String
@@ -18,6 +18,7 @@ public struct DealLedgerLine: Codable {
     public let closingBalance: String
     public let commitmentPublicId: String
     public let payment: Payment?
+    public let id = UUID()
     
     public enum CodingKeys: String, CodingKey {
         case sequence
