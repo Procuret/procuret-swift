@@ -183,11 +183,30 @@ internal struct Utility {
         expectation: XCTestExpectation,
         callback: @escaping (PaymentSeries) -> Void
     ) -> Void {
+
+        Self.provideTestSeries(
+            expectation: expectation
+        ) { _, series in
+            callback(series)
+        }
+        
+        return
+
+    }
+    
+    static func provideTestSeries(
+        expectation: XCTestExpectation,
+        callback: @escaping (SessionRepresentative, PaymentSeries) -> Void
+    ) -> Void {
+        
+        let session = Utility.provideTestSession()
+
         PaymentSeries.retrieve(
-            session: Utility.provideTestSession(),
+            session: session,
             publicId: "uiK3ihKJvYtw",
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { error, paymentSeries in
+
                 XCTAssertNil(error)
                 XCTAssertNotNil(paymentSeries)
                 
@@ -196,12 +215,13 @@ internal struct Utility {
                     return
                 }
                 
-                callback(paymentSeries)
+                callback(session, paymentSeries)
                 return
             }
         )
         
         return
+
     }
     
     static func provideTestSupplierFromEntity(

@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import PDFKit
 
 public struct InstalmentSchedule: Codable {
     
     internal static let path = "/instalment-schedule"
+    internal static let pdfPath = Self.path + "/pdf"
     
     public let seriesId: String
     public let lines: Array<DealLedgerLine>
@@ -44,4 +46,74 @@ public struct InstalmentSchedule: Codable {
         }
             
     }
+    
+    public static func retrievePDF(
+        seriesId: String,
+        session: SessionRepresentative,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
+        callback: @escaping (Error?, PDFDocument?) -> Void
+    ) {
+        
+        Request.make(
+            path: Self.pdfPath,
+            data: nil,
+            session: session,
+            query: QueryString(
+                targetsOnly: [UrlParameter(seriesId, key: "series_id")]
+            ),
+            method: .GET,
+            endpoint: endpoint,
+            then: { (error: Error?, data: Data?) in
+                
+                guard let data = data else {
+                    callback(
+                        error ?? ProcuretAPIError(.inconsistentState),
+                        nil
+                    )
+                    return
+                }
+                
+                let pdf = PDFDocument(data: data)
+                
+                callback(nil, pdf)
+                
+                return
+
+            }
+        )
+        
+    }
+    
+    public static func retrievePDF(
+        series: PaymentSeries,
+        session: SessionRepresentative,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
+        callback: @escaping (Error?, PDFDocument?) -> Void
+    ) {
+        
+        return Self.retrievePDF(
+            seriesId: series.publicId,
+            session: session,
+            endpoint: endpoint,
+            callback: callback
+        )
+        
+    }
+    
+    public static func retrievePDF(
+        schedule: InstalmentSchedule,
+        session: SessionRepresentative,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
+        callback: @escaping (Error?, PDFDocument?) -> Void
+    ) {
+        
+        return Self.retrievePDF(
+            seriesId: schedule.seriesId,
+            session: session,
+            endpoint: endpoint,
+            callback: callback
+        )
+
+    }
+    
 }

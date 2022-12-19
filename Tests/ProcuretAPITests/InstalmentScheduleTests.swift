@@ -5,6 +5,7 @@
 //  Created by Kayla Hoyet on 12/2/22.
 //
 import XCTest
+import PDFKit
 @testable import ProcuretAPI
 
 class InstalmentScheduleTests: XCTestCase {
@@ -16,7 +17,9 @@ class InstalmentScheduleTests: XCTestCase {
         )
         
         func receiveInstalmentScheduleResults(
-            error: Error?, plan: InstalmentSchedule?) {
+            error: Error?,
+            plan: InstalmentSchedule?
+        ) {
                 
             XCTAssertNil(error, "An error occurred.")
             XCTAssertNotNil(plan, "Instalment Schedule is nil.")
@@ -42,4 +45,39 @@ class InstalmentScheduleTests: XCTestCase {
         
         return
     }
+    
+    func testRetrieveInstalmentSchedulePDF() {
+        
+        let expectation = XCTestExpectation(
+            description: "retrieve instalment plan"
+        )
+        
+        func receiveResult(error: Error?, pdf: PDFDocument?) {
+                
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(pdf, "PDF is nil.")
+
+            expectation.fulfill()
+                
+            return
+                
+        }
+        
+        Utility.provideTestSeries(
+            expectation: expectation
+        ) { session, paymentSeries in
+            InstalmentSchedule.retrievePDF(
+                series: paymentSeries,
+                session: session,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                callback: receiveResult
+            )
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+        
+    }
+
 }
