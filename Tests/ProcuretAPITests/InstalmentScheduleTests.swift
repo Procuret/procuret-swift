@@ -49,7 +49,7 @@ class InstalmentScheduleTests: XCTestCase {
     func testRetrieveInstalmentSchedulePDF() {
         
         let expectation = XCTestExpectation(
-            description: "retrieve instalment plan"
+            description: "retrieve instalment plan PDF"
         )
         
         func receiveResult(error: Error?, pdf: PDFDocument?) {
