@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum PaymentMethod: UnderpinnedByMethodKernel {
+public enum PaymentMethod: UnderpinnedByMethodKernel, IdentifiesPaymentMethod {
     
     internal static let path: String = "/payment/method"
     internal static let listPath: String = Self.path + "/list"
