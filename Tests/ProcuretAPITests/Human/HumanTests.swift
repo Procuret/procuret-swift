@@ -65,12 +65,12 @@ final class HumanTests: XCTestCase {
     
     func testCreateHumanIdentity() {
         
-        let expectation = XCTestExpectation(description: "create Human Identity")
+        let expectation = XCTestExpectation()
         
-        func receiveHumanIdentity(error: Error?, self: HumanIdentity?) {
+        func receiveHumanIdentity(error: Error?, identity: HumanIdentity?) {
             
             XCTAssertNil(error, "An error occurred.")
-            XCTAssertNotNil(self, "Human Identity is nil.")
+            XCTAssertNotNil(identity, "Human Identity is nil.")
             
             expectation.fulfill()
             
@@ -92,7 +92,8 @@ final class HumanTests: XCTestCase {
                     postalCode: "2000",
                     locality: "NSW",
                     regionId: 1,
-                    countryId: 1),
+                    countryId: 1
+                ),
                 session: Utility.provideTestSession(),
                 endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: receiveHumanIdentity
@@ -100,6 +101,79 @@ final class HumanTests: XCTestCase {
             
             return
 
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+    }
+    
+    func testRetrieveHumanIdentityOnHuman() {
+        
+        let expectation = XCTestExpectation()
+        
+        Utility.provideTestHuman(
+            expectation: expectation
+        ) { human, secret, code in
+            
+            HumanIdentity.create(
+                humanId: human.humanId,
+                dateOfBirth: "1987-10-13",
+                address: Address.CreationData(
+                    line1: "44 Bridge Street",
+                    line2: nil,
+                    line3: nil,
+                    line4: nil,
+                    postalCode: "2000",
+                    locality: "NSW",
+                    regionId: 1,
+                    countryId: 1),
+                session: Utility.provideTestSession(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                callback: { error, identity in
+                    receiveHumanIdentity(
+                        error: error,
+                        identity: identity,
+                        humanId: human.agentId
+                    )
+                }
+            )
+            
+            return
+
+        }
+        
+        func receiveHumanIdentity(
+            error: Error?,
+            identity: HumanIdentity?,
+            humanId: Int
+        ) {
+            
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(self, "Human Identity is nil.")
+            
+            Human.retrieve(
+                humanId: humanId,
+                session: Utility.provideTestSession(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+            ) { error, human in
+                
+                XCTAssertNil(error)
+
+                guard let human = human else {
+                    XCTFail("Human not retrieved")
+                    expectation.fulfill(); return
+                }
+                
+                XCTAssertNotNil(human.identity)
+                
+                expectation.fulfill()
+                
+                return
+                
+            }
+            
+            return
         }
         
         wait(for: [expectation], timeout: 5.0)
