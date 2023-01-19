@@ -9,32 +9,50 @@ import XCTest
 
 
 class DealTests: XCTestCase {
-
+    
     func testRetrieveDeal() {
         
-        let expectation = XCTestExpectation(description: "retrieve Deal")
+        let expectation = XCTestExpectation()
+        let session = Session.forceFromEnvironmentVariables()
         
-        func recieveDeal(error: Error?, deal: Deal?) {
-            XCTAssertNil(error, "An error occurred.")
-            XCTAssertNotNil(deal, "Deal is nil.")
+        Deal.retrieveMany(
+            limit: 5,
+            offset: 1,
+            order: Order.descending,
+            orderBy: Deal.OrderBy.created,
+            anyNameFragment: nil,
+            session: Session.forceFromEnvironmentVariables(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+        ) { error, many in
             
-            expectation.fulfill()
+            guard let many = many else {
+                XCTFail(); expectation.fulfill()
+                return
+            }
             
-            return
+            guard many.count > 0 else {
+                XCTFail(); expectation.fulfill()
+                return
+            }
             
+            Deal.retrieve(
+                commitmentId: many[0].commitmentId,
+                session: session,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+            ) { error, deal in
+                
+                XCTAssertNotNil(deal)
+                XCTAssertNil(error)
+                
+                expectation.fulfill()
+                
+                return
+            }
         }
         
-        Deal.retrieve(
-            commitmentId: "iXviBZSHjaZmdBen", // some valid commitmentId
-            session: Utility.provideTestSession(),
-            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: recieveDeal
-        )
-        
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 5)
         
         return
-        
     }
     
     func testRetreieveManyDeal() {
@@ -62,5 +80,7 @@ class DealTests: XCTestCase {
         )
         
         wait(for: [expectation], timeout: 5.0)
+        
+        return
     }
 }

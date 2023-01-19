@@ -44,22 +44,25 @@ class PayMethodDeleteTest: XCTestCase {
     
         }
         
-        // test will fail due to hard coded agent having no Stripe customer
-        // record. Test should use a Human generated at runtime as the agent.
-        
-        BECSDirectDebit.create(
-            bsbCode: "000000",
-            accountNumber: "000123456",
-            accountName: "Test DD",
-            authorityAgentId: 100,
-            timeMandateAccepted: Int(Date().timeIntervalSince1970),
-            entityId: nil,
-            mandateIp: "0.0.0.0",
-            mandateAgent: "GarbageAgent",
-            session: Session.forceFromEnvironmentVariables(),
-            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: receiveCreatedBecsDD
-        )
+        Utility.provideTestEntity(
+            expectation: expectation
+        ) { entity, session in
+            
+            BECSDirectDebit.create(
+                bsbCode: "000000",
+                accountNumber: "000123456",
+                accountName: "Becs Test",
+                authorityAgentId: session.agentId,
+                timeMandateAccepted: Int(Date().timeIntervalSince1970),
+                entityId: entity.publicId,
+                mandateIp: "0.0.0.0",
+                mandateAgent: "GarbageAgent",
+                session: session,
+                callback: receiveCreatedBecsDD
+            )
+            
+            return
+        }
         
         wait(for: [expectation], timeout: 5.0)
         
