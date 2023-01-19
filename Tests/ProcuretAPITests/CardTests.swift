@@ -24,20 +24,31 @@ class CardTests: XCTestCase {
             return
         }
         
-        Card.createFromPlainDetails(
-            entityId: 7063459056099762,
-            authorityAgentId: 100,
-            cardNumber: "4242424242424242",
-            expiryMonth: "12",
-            expiryYear: "25",
-            cvc: "424",
-            postalCode: "42424",
-            session: Session.forceFromEnvironmentVariables(),
-            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: receiveCardCreateResult
-        )
+        Utility.provideTestEntity(
+            expectation: expectation
+        ) { entity, session in
+            
+            Card.createFromPlainDetails(
+                entityId: entity.publicId,
+                authorityAgentId: session.agentId,
+                cardNumber: "4242424242424242",
+                expiryMonth: "12",
+                expiryYear: "25",
+                cvc: "424",
+                postalCode: "42424",
+                session: session,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                callback: receiveCardCreateResult
+            )
+            
+            return
+            
+        }
         
         wait(for: [expectation], timeout: 5.0)
+
         return
+
     }
+
 }

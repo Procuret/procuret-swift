@@ -106,11 +106,24 @@ internal struct Utility {
         
     }
     
+    
     static func provideTestEntity(
         expectation: XCTestExpectation,
         callback: @escaping (Entity) -> Void
     ) -> Void {
         
+        return Self.provideTestEntity(
+            expectation: expectation
+        ) { entity, _ in callback(entity)}
+
+    }
+    
+    static func provideTestEntity(
+        expectation: XCTestExpectation,
+        callback: @escaping (Entity, Session) -> Void
+    ) -> Void {
+        
+        let session = Utility.provideTestSession()
         
         Entity.create(
             identifier: "77630036789",
@@ -137,7 +150,7 @@ internal struct Utility {
                     return
                 }
                 
-                callback(entity)
+                callback(entity, session)
                 
                 return
 
