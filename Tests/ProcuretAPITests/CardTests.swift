@@ -24,12 +24,12 @@ class CardTests: XCTestCase {
             return
         }
         
-        Utility.provideTestEntity(
+        Utility.provideTestHumanWithSession(
             expectation: expectation
-        ) { entity, session in
+        ) { human, session in
             
             Card.createFromPlainDetails(
-                entityId: entity.publicId,
+                entityId: nil,
                 authorityAgentId: session.agentId,
                 cardNumber: "4242424242424242",
                 expiryMonth: "12",

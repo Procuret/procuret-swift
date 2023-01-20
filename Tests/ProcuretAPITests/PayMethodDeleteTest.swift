@@ -44,20 +44,21 @@ class PayMethodDeleteTest: XCTestCase {
     
         }
         
-        Utility.provideTestEntity(
+        Utility.provideTestHumanWithSession(
             expectation: expectation
-        ) { entity, session in
+        ) { human, session in
             
             BECSDirectDebit.create(
                 bsbCode: "000000",
                 accountNumber: "000123456",
-                accountName: "Becs Test",
+                accountName: human.fullName,
                 authorityAgentId: session.agentId,
                 timeMandateAccepted: Int(Date().timeIntervalSince1970),
-                entityId: entity.publicId,
+                entityId: nil,
                 mandateIp: "0.0.0.0",
                 mandateAgent: "GarbageAgent",
                 session: session,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: receiveCreatedBecsDD
             )
             

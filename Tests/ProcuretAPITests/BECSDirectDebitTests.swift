@@ -23,20 +23,28 @@ class BECSDirectDebitTests: XCTestCase {
             return
             
         }
-
-        BECSDirectDebit.create(
-            bsbCode: "000000",
-            accountNumber: "000123456",
-            accountName: "Kayla TestDD",
-            authorityAgentId: 100,
-            timeMandateAccepted: Int(Date().timeIntervalSince1970),
-            entityId: nil,
-            mandateIp: "0.0.0.0",
-            mandateAgent: "GarbageAgent",
-            session: Session.forceFromEnvironmentVariables(),
-            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: receiveBECSDirectDebit
-        )
+        
+        Utility.provideTestHumanWithSession(
+            expectation: expectation
+        ) { human, session in
+            
+            BECSDirectDebit.create(
+                bsbCode: "000000",
+                accountNumber: "000123456",
+                accountName: human.fullName,
+                authorityAgentId: session.agentId,
+                timeMandateAccepted: Int(Date().timeIntervalSince1970),
+                entityId: nil,
+                mandateIp: "0.0.0.0",
+                mandateAgent: "GarbageAgent",
+                session: Session.forceFromEnvironmentVariables(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                callback: receiveBECSDirectDebit
+            )
+            
+            return
+            
+        }
         
         wait(for: [expectation], timeout: 5.0)
         return
