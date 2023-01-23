@@ -18,7 +18,8 @@ public struct Business: Codable {
     }
     
     public static func create(
-        abn: String,
+        identifier: String,
+        idType: EntityIdType,
         address: Address.CreationData,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
@@ -27,7 +28,8 @@ public struct Business: Codable {
         Request.make(
             path: self.path,
             payload: CreatePayload(
-                abn: abn,
+                identifier: identifier,
+                idType: idType,
                 address: address
             ),
             session: session,
@@ -63,11 +65,13 @@ public struct Business: Codable {
     
     
     private struct CreatePayload: Codable {
-        let abn: String
+        let identifier: String
+        let idType: EntityIdType
         let address: Address.CreationData
         
         private enum CodingKeys: String, CodingKey {
-            case abn
+            case identifier
+            case idType = "identifier_type"
             case address
         }
     }

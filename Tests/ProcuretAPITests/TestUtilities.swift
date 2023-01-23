@@ -192,6 +192,44 @@ internal struct Utility {
         return
     }
     
+    static func provideTestBusiness(
+        expectation: XCTestExpectation,
+        callback: @escaping (Business) -> Void
+    ) -> Void {
+        
+        Business.create(
+            identifier: "77630036789",
+            idType: .abn,
+            address: Address.CreationData(
+                line1: "47 Brighton Rd",
+                line2: nil,
+                line3: nil,
+                line4: nil,
+                postalCode: "4101",
+                locality: "QLD",
+                regionId: 1,
+                countryId: 1
+            ),
+            session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+            callback: { error, business in
+                
+                XCTAssertNil(error)
+                XCTAssertNotNil(business)
+                
+                guard let business = business else {
+                    expectation.fulfill()
+                    return
+                }
+                
+                callback(business)
+                return
+            }
+        )
+        
+        return
+    }
+    
     static func provideTestSeries(
         expectation: XCTestExpectation,
         callback: @escaping (PaymentSeries) -> Void
