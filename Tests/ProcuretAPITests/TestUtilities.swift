@@ -304,4 +304,41 @@ internal struct Utility {
          
          */
     }
+    
+    static func provideTestSupplier(
+        expectation: XCTestExpectation,
+        callback: @escaping (Supplier) -> Void
+    ) -> Void {
+        Supplier.create(
+            legalName: "Test Supplier",
+            tradingName: nil,
+            phoneNumber: "+61400010001",
+            address: Address.CreationData(
+                line1: "44 Bridge Street",
+                line2: nil,
+                line3: nil,
+                line4: nil,
+                postalCode: "2000",
+                locality: "NSW",
+                regionId: 1,
+                countryId: 1
+            ),
+            session: Utility.provideTestSession(),
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+            callback: { error, supplier in
+                
+                XCTAssertNil(error)
+                XCTAssertNotNil(supplier)
+                
+                guard let supplier = supplier else {
+                    expectation.fulfill()
+                    return
+                }
+                
+                callback(supplier)
+                return
+                
+            }
+        )
+    }
 }

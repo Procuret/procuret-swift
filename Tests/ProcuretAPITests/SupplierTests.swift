@@ -9,15 +9,6 @@ import XCTest
 @testable import ProcuretAPI
 
 class SupplierTests: XCTestCase {
-
-    func provideTestSession() -> Session {
-        
-        do {
-            return try Session.fromEnvironmentVariables()
-        } catch {
-            fatalError("Unable to initalise test session: \(error)")
-        }
-    }
     
     func testRetrieveSupplier() {
         
@@ -33,12 +24,19 @@ class SupplierTests: XCTestCase {
             return
         }
         
-        Supplier.retrieve(
-            supplierId: 71205185107785336, // some valid supplierId
-            session: provideTestSession(),
-            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: recieveSupplier
-        )
+        Utility.provideTestSupplier(
+            expectation: expectation
+        ) { supplier in
+            Supplier.retrieve(
+                supplierId: supplier.entity.publicId,
+                session: Utility.provideTestSession(),
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                callback: recieveSupplier
+            )
+            
+            return
+            
+        }
         
         wait(for: [expectation], timeout: 5.0)
         

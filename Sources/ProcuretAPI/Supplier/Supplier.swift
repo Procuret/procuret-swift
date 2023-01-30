@@ -30,24 +30,25 @@ public struct Supplier: Codable {
         legalName: String,
         tradingName: String?,
         phoneNumber: String,
-        address: Address,
+        address: Address.CreationData,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Supplier?) -> Void
     ) {
         Request.make(
-            path: self.path,
+            path: "/supplier/raw",
             payload: CreatePayload(
                 legalName: legalName,
                 tradingName: tradingName,
                 phoneNumber: phoneNumber,
                 address: address
             ),
-            session: nil,
+            session: session,
             query: nil,
             method: .POST,
             endpoint: endpoint
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
         }
     }
     
@@ -76,7 +77,7 @@ public struct Supplier: Codable {
         let legalName: String
         let tradingName: String?
         let phoneNumber: String
-        let address: Address
+        let address: Address.CreationData
         
         private enum CodingKeys: String, CodingKey {
             case legalName = "legal_name"
