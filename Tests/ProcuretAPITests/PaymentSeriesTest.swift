@@ -83,4 +83,45 @@ class PaymentSeriesTest: XCTestCase {
         return
         
     }
+    
+    func testRetrieveManyPendingSeries() {
+        
+        let expectation = XCTestExpectation()
+        let session = Session.forceFromEnvironmentVariables()
+        
+        func receivePendingResult(
+            error: Error?,
+            seriesPending: Array<PendingSeries>?
+        ) {
+            XCTAssertNil(error, "An error occurred.")
+            XCTAssertNotNil(seriesPending, "Pending series is nil.")
+            
+            expectation.fulfill()
+            return
+        }
+            
+        Utility.provideTestBusiness(
+            expectation: expectation
+        ) { business in
+                    
+            PendingSeries.retrieveMany(
+                limit: 0,
+                offset: 20,
+                supplierId: nil,
+                businessId: String(business.entity.publicId),
+                humanId: nil,
+                awaitingIdentity: nil,
+                awaitingCredit: nil,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                session: session,
+                callback: receivePendingResult
+            )
+            
+            return
+        }
+        
+        wait(for: [expectation], timeout: 5)
+        
+        return
+    }
 }
