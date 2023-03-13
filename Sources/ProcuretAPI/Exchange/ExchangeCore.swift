@@ -10,7 +10,7 @@ import Foundation
 public struct ExchangeCore: Codable {
     
     public let publicId: String
-    public let created: ProcuretDate
+    public let created: Date
     public let supplier: EntityHeadline
     public let amount: Amount
     public let description: String
