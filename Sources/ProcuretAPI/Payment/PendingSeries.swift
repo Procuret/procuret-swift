@@ -38,7 +38,7 @@ public struct PendingSeries: Codable, Identifiable {
         awaitingCredit: Bool?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         session: SessionRepresentative,
-        callback: @escaping (Error?, Array<Self>?) -> Void
+        callback: @escaping (Error?, Array<PendingSeries>?) -> Void
     ) {
         typealias UP = UrlParameter
         
