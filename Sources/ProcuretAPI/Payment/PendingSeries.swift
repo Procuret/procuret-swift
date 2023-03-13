@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PendingSeries: Codable {
+public struct PendingSeries: Codable, Identifiable {
     
     internal static let path = "/payment-series/pending"
     internal static let listPath = PendingSeries.path + "/list"
@@ -17,6 +17,7 @@ public struct PendingSeries: Codable {
     public let awaitingIdentityAssessment: Bool?
     public let awaitingCreditAssessment: Bool?
     public let disposition: Disposition
+    public let id = UUID()
     
     public enum CodingKeys: String, CodingKey {
         case exchangeCore = "exchange_core"
