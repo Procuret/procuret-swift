@@ -95,33 +95,25 @@ class PaymentSeriesTest: XCTestCase {
         ) {
             XCTAssertNil(error, "An error occurred.")
             XCTAssertNotNil(seriesPending, "Pending series is nil.")
+            XCTAssert(seriesPending?.count ?? 0 > 0)
             
             expectation.fulfill()
             return
         }
-            
-        Utility.provideTestBusiness(
-            expectation: expectation
-        ) { business in
                     
-            PendingSeries.retrieveMany(
-                limit: 0,
-                offset: 20,
-                supplierId: nil,
-                businessId: String(business.entity.publicId),
-                humanId: nil,
-                awaitingIdentity: nil,
-                awaitingCredit: nil,
-                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-                session: session,
-                callback: receivePendingResult
-            )
-            
+        PendingSeries.retrieveMany(
+            limit: 20,
+            offset: 0,
+            supplierId: nil,
+            businessId: "40668472298990965",
+            humanId: "29775495020456470",
+            awaitingIdentity: nil,
+            awaitingCredit: nil,
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+            session: session,
+            callback: receivePendingResult
+        )
+            wait(for: [expectation], timeout: 5.0)
             return
-        }
-        
-        wait(for: [expectation], timeout: 5)
-        
-        return
     }
 }

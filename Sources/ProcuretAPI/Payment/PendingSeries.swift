@@ -20,7 +20,7 @@ public struct PendingSeries: Codable, Identifiable {
     public let id = UUID()
     
     public enum CodingKeys: String, CodingKey {
-        case exchangeCore = "exchange_core"
+        case exchangeCore = "exchange"
         case commitmentId = "commitment_id"
         case awaitingIdentityAssessment = "awaiting_identity_assessment"
         case awaitingCreditAssessment = "awaiting_credit_assessment"
