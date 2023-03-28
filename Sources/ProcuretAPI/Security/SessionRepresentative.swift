@@ -12,7 +12,6 @@ public protocol SessionRepresentative {
     
     var apiKey: String { get }
     var sessionId: Int { get }
-    var sessionKey: String { get }
     var perspective: Perspective { get }
 
     var agent: StandaloneAgent { get }
