@@ -22,4 +22,5 @@ public struct ExchangeCore: Codable {
         case amount
         case description
     }
+
 }

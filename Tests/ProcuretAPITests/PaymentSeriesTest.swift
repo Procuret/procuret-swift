@@ -102,18 +102,14 @@ class PaymentSeriesTest: XCTestCase {
         }
                     
         PendingSeries.retrieveMany(
-            limit: 20,
-            offset: 0,
-            supplierId: nil,
-            businessId: "40668472298990965",
-            humanId: "29775495020456470",
-            awaitingIdentity: nil,
-            awaitingCredit: nil,
+            authenticatedBy: session,
+            businessId: 40668472298990965,
+            humanId: 29775495020456470,
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            session: session,
             callback: receivePendingResult
         )
             wait(for: [expectation], timeout: 5.0)
             return
     }
+
 }
