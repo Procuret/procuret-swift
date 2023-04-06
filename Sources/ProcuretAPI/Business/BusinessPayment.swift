@@ -68,8 +68,8 @@ public struct BusinessPayment: Codable, Identifiable {
             ),
             method: .GET,
             endpoint: endpoint
-        ) { error, data in
-            Request.decodeResponse(error, data, Array<Self>.self, callback)
+        ) { e, d in
+            Request.decodeResponse(e, d, Array<Self>.self, callback, false)
             return
         }
     }
