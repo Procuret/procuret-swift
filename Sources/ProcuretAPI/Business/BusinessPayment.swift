@@ -19,8 +19,9 @@ public struct BusinessPayment: Codable, Identifiable {
     public let amount: Amount
     public let method: PaymentMethodHeadline?
     public let disposition: Disposition
-    public let id = UUID()
     
+    public var id: String { get { return self.publicId } }
+
     public enum OrderBy: String {
         case created = "created"
     }
@@ -36,8 +37,8 @@ public struct BusinessPayment: Codable, Identifiable {
     }
     
     public static func retrieveMany(
-        limit: Int=20,
-        offset: Int=0,
+        limit: Int = 20,
+        offset: Int = 0,
         order: Order = .descending,
         orderBy: Self.OrderBy = .created,
         textFragment: String? = nil,
@@ -72,5 +73,6 @@ public struct BusinessPayment: Codable, Identifiable {
             return
         }
     }
+
 }
 
