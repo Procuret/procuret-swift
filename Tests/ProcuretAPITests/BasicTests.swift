@@ -27,7 +27,7 @@ final class BasicTests: XCTestCase {
         do {
             //let _ = try Session.fromEnvironmentVariables()
             let nilSession = try Session.optionallyFromEnvironmentVariables(
-                keyVariableName: "GARBAGE_NAME"
+                idVariableName: "GARBAGE_NAME"
             )
             guard nilSession == nil else {
                 XCTFail("Session unexpectedly not nil")

@@ -12,6 +12,11 @@ public struct StandaloneAgent: Agent, Codable {
     
     public let agentId: Int
     
+    public init(agentId: Int) {
+        self.agentId = agentId
+        return
+    }
+
     private enum CodingKeys: String, CodingKey {
         case agentId = "agent_id"
     }

@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 3/9/23.
+//  Modified by Hugh Jeremy 6 Apr 2023
 //
 
 import Foundation
@@ -28,18 +29,18 @@ public struct PendingSeries: Codable, Identifiable {
     }
     
     public static func retrieveMany(
-        
-        limit: Int,
-        offset: Int,
-        supplierId: String?,
-        businessId: String?,
-        humanId: String?,
-        awaitingIdentity: Bool?,
-        awaitingCredit: Bool?,
+        authenticatedBy session: SessionRepresentative,
+        limit: Int = 20,
+        offset: Int = 0,
+        supplierId: Int? = nil,
+        businessId: Int? = nil,
+        humanId: Int? = nil,
+        awaitingIdentity: Bool? = nil,
+        awaitingCredit: Bool? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        session: SessionRepresentative,
         callback: @escaping (Error?, Array<PendingSeries>?) -> Void
     ) {
+
         typealias UP = UrlParameter
         
         Request.make(
@@ -65,5 +66,9 @@ public struct PendingSeries: Codable, Identifiable {
             Request.decodeResponse(error, data, Array<Self>.self, callback)
             return
         }
+        
+        return
+
     }
+    
 }
