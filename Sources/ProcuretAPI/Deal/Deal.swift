@@ -25,7 +25,8 @@ public struct Deal: Codable, Identifiable {
     public let sumPayments: String
     public let denomination: Currency
     public let disposition: Disposition
-    public let id = UUID()
+    
+    public var id: String { get { return self.setupId } }
     
     public enum CodingKeys: String, CodingKey {
         case setupId = "setup_id"
