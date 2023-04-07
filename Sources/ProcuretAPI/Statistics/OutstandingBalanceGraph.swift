@@ -24,6 +24,19 @@ public struct OutstandingBalanceGraph: Decodable {
         case xLabels = "x_labels"
     }
     
+    public struct Value {
+        
+        public let xLabel: Date
+        public let yValue: Decimal
+        
+    }
+    
+    public var values: Array<Self.Value> { get {
+        return self.xLabels.enumerated().map { i, xLabel in
+            return Value(xLabel: xLabel, yValue: self.yValues[i])
+        }
+    } }
+
     public static func retrieve(
         authenticatedBy session: SessionRepresentative,
         describing business: Business,
