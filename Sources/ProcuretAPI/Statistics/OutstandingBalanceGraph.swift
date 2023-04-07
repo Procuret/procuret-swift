@@ -24,11 +24,13 @@ public struct OutstandingBalanceGraph: Decodable {
         case xLabels = "x_labels"
     }
     
-    public struct Value {
+    public struct Value: Identifiable {
         
         public let xLabel: Date
         public let yValue: Decimal
         
+        public var id: Date { get { return self.xLabel } }
+    
     }
     
     public var values: Array<Self.Value> { get {
