@@ -18,7 +18,8 @@ public struct DealLedgerLine: Codable, Identifiable {
     public let closingBalance: String
     public let commitmentPublicId: String
     public let payment: Payment?
-    public let id = UUID()
+    
+    public var id: String { get { return self.commitmentPublicId } }
     
     public enum CodingKeys: String, CodingKey {
         case sequence

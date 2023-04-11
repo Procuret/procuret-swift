@@ -18,7 +18,8 @@ public struct PendingSeries: Codable, Identifiable {
     public let awaitingIdentityAssessment: Bool?
     public let awaitingCreditAssessment: Bool?
     public let disposition: Disposition
-    public let id = UUID()
+    
+    public var id: String { get { return self.commitmentId } }
     
     public enum CodingKeys: String, CodingKey {
         case exchangeCore = "exchange"
