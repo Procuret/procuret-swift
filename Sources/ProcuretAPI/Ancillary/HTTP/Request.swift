@@ -122,25 +122,10 @@ internal class Request {
             return
         }
         guard (200...299).contains(httpResponse.statusCode) else {
-            let error: ProcuretAPIError
-            let errorBody: String?
-            if let data = data {
-                errorBody = String(data: data, encoding: .utf8)
-            } else { errorBody = nil }
-            switch httpResponse.statusCode {
-            case 400: error = ProcuretAPIError(.badRequest, message: errorBody)
-            case 401: error = ProcuretAPIError(.notAuthenticated)
-            case 402: error = ProcuretAPIError(.subscriptionProblem)
-            case 403: error = ProcuretAPIError(.notAuthorised)
-            case 404: error = ProcuretAPIError(.notFound)
-            case 429: error = ProcuretAPIError(.rateLimit)
-            case 500: error = ProcuretAPIError(.genericServerError)
-            case 502, 503, 504: error = ProcuretAPIError(.serviceDisruption)
-            default: error = ProcuretAPIError(
-                    .inconsistentState,
-                    message: "Error code outside known bounds"
-                )
-            }
+            let error = ProcuretAPIError.fromResponse(
+                data: data,
+                code: httpResponse.statusCode
+            )
             callback(error, nil)
             return
         }

@@ -51,6 +51,14 @@ public struct ProcuretAPIError: ProcuretError {
         responsibility of this library (Procuret API Swift) to supply correctly \
         formed requests, so please consider filing a bug report on GitHub.
         """
+        case contentTooLarge = """
+        Your request exceeded a size limit imposed by the Procuret API.
+        """
+        case unprocessable = """
+        The Procuret API could not process your request, it may have containe\
+        d data that violated a condition of processing, or which in combinatio\
+        n with existing data may have violated a constraint.
+        """
         case genericServerError = """
         The Procuret API replied with a generic error response, indicating that \
         it has failed internally. Either Procuret is experiencing temporary \
@@ -87,6 +95,55 @@ public struct ProcuretAPIError: ProcuretError {
         case testError = """
         A test case has entered an unexpected state
         """
+    }
+    
+    private struct ErrorBody: Decodable {
+        let errorInformation: String
+        let responseCode: Int
+        
+        private enum CodingKeys: String, CodingKey {
+            case errorInformation = "error-information"
+            case responseCode = "response-code"
+        }
+    }
+    
+    internal static func fromResponse(
+        data: Data?,
+        code: Int
+    ) -> Self {
+        
+        func deriveKind(code: Int) -> Self.Kind {
+            
+            switch code {
+            case 400: return .badRequest
+            case 401: return .notAuthenticated
+            case 402: return .subscriptionProblem
+            case 403: return .notAuthorised
+            case 404: return .notFound
+            case 413: return .contentTooLarge
+            case 422: return .unprocessable
+            case 429: return .rateLimit
+            case 500: return .genericServerError
+            case 502, 503, 504: return .serviceDisruption
+            default: return .inconsistentState
+            }
+            
+        }
+        
+        let kind = deriveKind(code: code)
+        let errorBody: ErrorBody
+        
+        guard let data = data else { return Self(kind, message: nil) }
+        
+        do {
+            let decoder = JSONDecoder()
+            errorBody = try decoder.decode(Self.ErrorBody.self, from: data)
+        } catch {
+            return Self(kind, message: nil)
+        }
+        
+        return Self(kind, message: errorBody.errorInformation)
+
     }
     
 }
