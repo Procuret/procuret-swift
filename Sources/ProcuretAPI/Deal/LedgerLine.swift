@@ -81,7 +81,7 @@ public struct DealLedgerLine: Codable, Identifiable {
         
         if self.payment != nil { return .paid }
         if self.due24hrsStarting > Date.now { return .notDue }
-        if self.due24hrsStarting < Date.now.addingTimeInterval(60 * 60 * 24) {
+        if Date.now < self.due24hrsStarting.addingTimeInterval(60 * 60 * 24) {
             return .dueUnpaid
         }
         return .overdue
