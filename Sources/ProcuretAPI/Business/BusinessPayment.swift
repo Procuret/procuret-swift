@@ -42,7 +42,7 @@ public struct BusinessPayment: Codable, Identifiable {
         order: Order = .descending,
         orderBy: Self.OrderBy = .created,
         textFragment: String? = nil,
-        businessId: String? = nil,
+        businessId: Int? = nil,
         methodId: String? = nil,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
