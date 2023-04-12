@@ -10,6 +10,14 @@ import Foundation
 
 public struct DealLedgerLine: Codable, Identifiable {
     
+    public enum PaymentStatus {
+        case notDue
+        case dueUnpaid
+        case overdue
+        case paid
+        case prolongedPaymentInProgress
+    }
+    
     // TO DO: Add Prolonged Payment
     
     public let sequence: Int
@@ -52,6 +60,8 @@ public struct DealLedgerLine: Codable, Identifiable {
         magnitude: Decimal(string: self.rawClosingBalance) ?? -1,
         denomination: self.denomination
     ) } }
+    
+    public var status: PaymentStatus { get { return self.deriveStatus() } }
 
     public enum CodingKeys: String, CodingKey {
         case sequence
@@ -65,6 +75,17 @@ public struct DealLedgerLine: Codable, Identifiable {
         case commitmentPublicId = "commitment_public_id"
         case payment
         case denomination
+    }
+    
+    private func deriveStatus() -> PaymentStatus {
+        
+        if self.payment != nil { return .paid }
+        if self.due24hrsStarting > Date.now { return .notDue }
+        if self.due24hrsStarting < Date.now.addingTimeInterval(60 * 60 * 24) {
+            return .dueUnpaid
+        }
+        return .overdue
+
     }
 
 }
