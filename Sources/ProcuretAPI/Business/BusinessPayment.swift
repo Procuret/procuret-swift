@@ -10,7 +10,7 @@ import Foundation
 public struct BusinessPayment: Codable, Identifiable {
     
     internal static let path = "/business/payment"
-    internal static let listPath = "/businesss/payment/list"
+    internal static let listPath = Self.path + "/list"
     
     public let publicId: String
     public let created: Date
