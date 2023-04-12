@@ -73,9 +73,6 @@ public struct Human: Codable, Agent {
         callback: @escaping (Error?, Human?, String?) -> Void
     ) -> Void {
         
-        print("create human")
-        print(endpoint)
-        
         func extractCode(error: Error?, human: Human?, data: Data?) -> Void {
             
             guard error == nil else { return callback(error, nil, nil) }
