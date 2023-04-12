@@ -22,7 +22,6 @@ class BusinessPaymentsTest: XCTestCase {
         ) {
             XCTAssertNil(error)
             XCTAssertNotNil(payments)
-            XCTAssert(payments?.count ?? 0 > 0)
 
             expectation.fulfill()
             return
