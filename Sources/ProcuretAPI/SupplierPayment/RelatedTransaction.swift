@@ -7,21 +7,15 @@
 
 import Foundation
 
-public enum RelatedTransaction: Int, Codable, CaseIterable, Identifiable {
+public struct RelatedTransaction: Codable {
     
-    case payNow = 1
-    case instalmentPlan = 2
+    public let transactionType: TransactionType
+    public let transactionId: String
     
-    public var name: String {
-        get {
-            switch self {
-            case .payNow:
-                return "Pay Now"
-            case .instalmentPlan:
-                return "Instalment Plan"
-            }
-        }
+    public enum CodingKeys: String, CodingKey {
+        case transactionType = "transaction_type"
+        case transactionId = "transaction_id"
     }
-    
-    public var id: Int { get { return self.rawValue } }
 }
+
+
