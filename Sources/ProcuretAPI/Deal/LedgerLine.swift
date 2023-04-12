@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 7/28/21.
+//  Modified by HJeremy 12 Apr 2023
 //
 
 import Foundation
@@ -21,7 +22,9 @@ public struct DealLedgerLine: Codable, Identifiable {
     public let payment: Payment?
     public let denomination: Currency
     
-    public var id: String { get { return self.commitmentPublicId } }
+    public var id: String { get {
+        return "\(self.commitmentPublicId)_\(self.sequence)"
+    } }
     
     public enum CodingKeys: String, CodingKey {
         case sequence
