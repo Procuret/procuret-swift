@@ -13,9 +13,9 @@ public struct TermRate: Codable, Hashable, Identifiable, Equatable {
     internal static let path = "/term-rate"
     internal static let listPath = "/term-rate/list"
     
-    let supplierId: Int
-    let periods: Int
-    let rawPeriodsPerYear: String
+    public let supplierId: Int
+    public let periods: Int
+    public let rawPeriodsPerYear: String
     
     public var periodsPerYear: Decimal { get {
         return Decimal(string: self.rawPeriodsPerYear) ?? -1
