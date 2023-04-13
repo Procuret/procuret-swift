@@ -15,12 +15,16 @@ public struct TermRate: Codable {
     
     let supplierId: Int
     let periods: Int
-    let periodsPerYear: Decimal
+    let rawPeriodsPerYear: String
     
+    public var periodsPerYear: Decimal { get {
+        return Decimal(string: self.rawPeriodsPerYear) ?? -1
+    } }
+
     private enum CodingKeys: String, CodingKey {
         case supplierId = "supplier_entity_id"
         case periods
-        case periodsPerYear = "periods_in_year"
+        case rawPeriodsPerYear = "periods_in_year"
     }
     
 }
