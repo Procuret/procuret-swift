@@ -7,6 +7,9 @@
 
 import Foundation
 
-public struct Cycle: Codable {
+public enum Cycle: Int, Codable {
+    
+    case inAdvance = 1
+    case inArrears = 2
     
 }
