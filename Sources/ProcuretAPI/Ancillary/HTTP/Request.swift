@@ -110,7 +110,9 @@ internal class Request {
         _ error: Error?,
         _ callback: @escaping (Error?, Data?) -> Void
     ) {
+    
         if error != nil {
+            if Self.shouldDebugPrint() { Self.debugPrintError(error: error) }
             callback(error, nil)
             return
         }
@@ -126,6 +128,7 @@ internal class Request {
                 data: data,
                 code: httpResponse.statusCode
             )
+            if Self.shouldDebugPrint() { Self.debugPrintError(error: error) }
             callback(error, nil)
             return
         }
@@ -261,21 +264,42 @@ internal class Request {
         return false
     }
     
+    private static func debugPrintError(error: Error?) -> Void {
+        
+        guard let error = error else { return }
+        
+        if let apiError = error as? ProcuretAPIError {
+            
+            print("-$- Procuret API Error -$- ")
+            print(apiError.message)
+            print("-$- End Procuret API Error -$-")
+            
+            return
+            
+        }
+        
+        print("-#- Other (non API) Error -#-")
+        print(error.localizedDescription)
+        print("-#- End Other (non API) Error -#-")
+        
+        
+    }
+    
     private static func debugPrintData(data: Data?) -> Void {
         
         guard let data = data else {
             print("Procuret API returned no data")
             return
         }
-        
+
         guard let rawString = String(data: data, encoding: .utf8) else {
             print("Unable to decode returned data as a UTF-8 string")
             return
         }
         
-        print("--- Begin raw data returned by Procuret API ---")
+        print("-@- Begin raw data returned by Procuret API -@-")
         print(rawString)
-        print("--- End raw data returned by Procuret API ---")
+        print("-@- End raw data returned by Procuret API -@-")
         
         return
 
