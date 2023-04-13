@@ -11,7 +11,7 @@ public struct Currency: Codable, Identifiable, Hashable, CaseIterable {
     
     public let indexid: Int
     public let name: String
-    public let iso_4217: String
+    public let iso4217: String
     public let exponent: Int
     public let symbol: String
     
@@ -30,7 +30,7 @@ public struct Currency: Codable, Identifiable, Hashable, CaseIterable {
     public static var AUD: Self { get { return Currency(
         indexid: 1,
         name: "Australian Dollar",
-        iso_4217: "AUD",
+        iso4217: "AUD",
         exponent: 2,
         symbol: "$"
     )}}
@@ -38,7 +38,7 @@ public struct Currency: Codable, Identifiable, Hashable, CaseIterable {
     public static var NZD: Self { get { return Currency(
         indexid: 2,
         name: "New Zealand Dollar",
-        iso_4217: "NZD",
+        iso4217: "NZD",
         exponent: 2,
         symbol: "$"
     )}}
@@ -46,6 +46,22 @@ public struct Currency: Codable, Identifiable, Hashable, CaseIterable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.indexid)
         return
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case indexid
+        case name
+        case iso4217 = "iso_4217"
+        case exponent
+        case symbol
+    }
+    
+    public static func with(indexid: Int) -> Self? {
+        for currency in Self.allCases {
+            if currency.indexid == indexid { return currency }
+        }
+        
+        return nil
     }
 
 }

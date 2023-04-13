@@ -98,7 +98,7 @@ public struct Amount: Codable {
     public func asDenominatedDecimalString(
         showFractionalUnits: Bool = true
     ) -> String {
-        return self.denomination.iso_4217 + " " + self.asDecimalString(
+        return self.denomination.iso4217 + " " + self.asDecimalString(
             showFractionalUnits: showFractionalUnits
         )
     }

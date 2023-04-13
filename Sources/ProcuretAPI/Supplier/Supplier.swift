@@ -176,5 +176,57 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
         hasher.combine(self.entity.publicId)
         return
     }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: Self.CodingKeys)
+        let c = container
+        
+        self.entity = try c.decode(Entity.self, forKey: .entity)
+        self.authorised = try c.decode(Bool.self, forKey: .authorised)
+        self.brand = try c.decode(Brand?.self, forKey: .brand)
+        self.disposition = try c.decode(Disposition.self, forKey: .disposition)
+        self.partnershipManager = try c.decode(
+            HumanHeadline?.self,
+            forKey: .partnershipManager
+        )
+        self.offersPayNow = try c.decode(Bool.self, forKey: .offersPayNow)
+        self.payNowFeeMode = try c.decode(
+            PayNowFeeMode.self,
+            forKey: .payNowFeeMode
+        )
+        self.maxTransactionSize = try c.decode(
+            Array<Amount>.self,
+            forKey: .maxTransactionSize
+        )
+        self.termRates = try c.decode(Array<TermRate>.self, forKey: .termRates)
+        
+        
+        /* The denomination might be an integer ID, or a decodable object*/
+        let denomination: Currency
+        
+        do {
+            let denominationId = try container.decode(
+                Int.self,
+                forKey: .defaultDenomination
+            )
+            guard let candidate = Currency.with(indexid: denominationId) else {
+                throw ProcuretAPIError.init(.inconsistentState)
+            }
+            denomination = candidate
+        } catch {
+            
+            denomination = try container.decode(
+                Currency.self,
+                forKey: .defaultDenomination
+            )
+            
+        }
+        
+        self.defaultDenomination = denomination
+        
+        return
+
+    }
 
 }
