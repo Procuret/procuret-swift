@@ -21,6 +21,7 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
     public let payNowFeeMode: PayNowFeeMode
     public let maxTransactionSize: Array<Amount>
     public let termRates: Array<TermRate>
+    public let defaultDenomination: Currency
     
     public var id: Int { return self.entity.publicId }
 
@@ -38,6 +39,7 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
         case payNowFeeMode = "pay_now_fee_mode"
         case maxTransactionSize = "max_transaction_size"
         case termRates = "term_rates"
+        case defaultDenomination = "default_denomination"
     }
     
     public static func create(
