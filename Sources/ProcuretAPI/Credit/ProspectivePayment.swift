@@ -11,42 +11,53 @@ public struct ProspectivePayment: Codable {
     
     internal static let path = "/credit/prospective-payment"
     
+    public let rawPayment: String
+    public let periods: Int
+    
+    public var payment: Decimal { get {
+        return Decimal(string: self.rawPayment) ?? -1
+    } }
+    
+    private enum CodingKeys: String, CodingKey {
+        case rawPayment = "payment"
+        case periods
+    }
+    
     public static func retrieve(
-        principle: Float,
+        principal: Decimal,
         cycle: Cycle,
-        supplierId: Int,
+        supplier: Supplier,
         periods: Int,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, ProspectivePayment?) -> Void
     ) {
+        
         Request.make(
             path: self.path,
-            payload: retrieveParameters(
-                principle: principle,
-                cycle: cycle,
-                supplierId: supplierId,
-                periods: periods
-            ),
+            data: nil,
             session: nil,
-            query: nil,
+            query: QueryString([
+                UrlParameter(1, key: "cycle"),
+                UrlParameter(supplier.entity.publicId, key: "supplier_id"),
+                // amusing spelling error in the API...
+                UrlParameter(String(describing: principal), key: "principle"),
+                UrlParameter(periods, key: "periods")
+            ]),
             method: .GET,
             endpoint: endpoint
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
         }
+    
     }
     
-    private struct retrieveParameters: Codable {
-        let principle: Float
-        let cycle: Cycle
-        let supplierId: Int
-        let periods: Int
-        
-        private enum CodingKeys: String, CodingKey {
-            case principle
-            case cycle
-            case supplierId = "supplier_id"
-            case periods
-        }
+    public func amountGiven(
+        denomination: Currency
+    ) -> Amount {
+        return Amount(
+            magnitude: self.payment,
+            denomination: denomination
+        )
     }
+
 }
