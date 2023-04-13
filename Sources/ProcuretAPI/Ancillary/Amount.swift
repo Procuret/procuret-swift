@@ -150,6 +150,27 @@ public struct Amount: Codable {
         )
     }
     
+    static public func * (lhs: Self, rhs: Int) -> Self {
+        return Amount(
+            magnitude: lhs.magnitude * Decimal(rhs),
+            denomination: lhs.denomination
+        )
+    }
+    
+    static public func * (lhs: Self, rhs: Decimal) -> Self {
+        return Amount(
+            magnitude: lhs.magnitude * rhs,
+            denomination: lhs.denomination
+        )
+    }
+    
+    static public func * (lhs: Self, rhs: Double) -> Self {
+        return Amount(
+            magnitude: lhs.magnitude * Decimal(rhs),
+            denomination: lhs.denomination
+        )
+    }
+    
     public static func < (lhs: Self, rhs: Self) -> Bool {
         if (!Self.areComparable(lhs, rhs)) { return false }
         return lhs.magnitude < rhs.magnitude
