@@ -12,11 +12,15 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
     internal static let path = "/supplier"
     internal static let listPath = Supplier.path + "/list"
     
-    let entity: Entity
-    let authorised: Bool
-    let brand: Brand?
-    let disposition: Disposition
-    let partnershipManager: HumanHeadline?
+    public let entity: Entity
+    public let authorised: Bool
+    public let brand: Brand?
+    public let disposition: Disposition
+    public let partnershipManager: HumanHeadline?
+    public let offersPayNow: Bool
+    public let payNowFeeMode: PayNowFeeMode
+    public let maxTransactionSize: Array<Amount>
+    public let termRates: Array<TermRate>
     
     public var id: Int { return self.entity.publicId }
 
@@ -30,6 +34,10 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
         case brand
         case disposition
         case partnershipManager = "partnership_manager"
+        case offersPayNow = "offers_pay_now"
+        case payNowFeeMode = "pay_now_fee_mode"
+        case maxTransactionSize = "max_transaction_size"
+        case termRates = "term_rates"
     }
     
     public static func create(
