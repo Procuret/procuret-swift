@@ -7,13 +7,15 @@
 
 import Foundation
 
-public struct Currency: Codable {
+public struct Currency: Codable, Identifiable, Hashable, CaseIterable {
     
     public let indexid: Int
     public let name: String
     public let iso_4217: String
     public let exponent: Int
     public let symbol: String
+    
+    public var id: Int { get { return self.indexid } }
     
     public static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.indexid == rhs.indexid
@@ -23,6 +25,8 @@ public struct Currency: Codable {
         return lhs.indexid != rhs.indexid
     }
     
+    public static let allCases: Array<Currency> = [.AUD, .NZD]
+
     public static var AUD: Self { get { return Currency(
         indexid: 1,
         name: "Australian Dollar",
@@ -38,5 +42,10 @@ public struct Currency: Codable {
         exponent: 2,
         symbol: "$"
     )}}
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexid)
+        return
+    }
 
 }
