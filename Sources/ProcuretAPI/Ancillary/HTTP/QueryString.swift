@@ -15,6 +15,28 @@ internal struct QueryString: CustomStringConvertible {
     var description: String {
         return paramString
     }
+    
+    init(_ parameters: Array<UrlParameter>) {
+    
+        if parameters.count < 1 {
+            paramString = ""
+            targets = [UrlParameter]()
+            return
+        }
+        
+        self.targets = parameters
+
+        var workingString = "?" + String(describing: parameters[0])
+
+        for parameter in targets.dropFirst() {
+            workingString += "&" + String(describing: parameter)
+        }
+
+        self.paramString = workingString
+    
+        return
+
+    }
 
     init(targetsOnly: [UrlParameter]) {
         

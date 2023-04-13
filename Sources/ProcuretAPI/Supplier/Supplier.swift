@@ -79,6 +79,71 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
         }
     }
     
+    public enum OrderBy: String {
+        
+        case created = "created"
+        case modified = "modified"
+        case legalName = "legal_name"
+        case brandName = "brand_name"
+        case transactionCount = "transaction_count"
+        case lastTransactiontime = "last_transaction_time"
+        
+    }
+    
+    public func retrieveMany(
+        authenticatedBy session: SessionRepresentative,
+        limit: Int = 20,
+        offset: Int = 0,
+        order: Order = .descending,
+        orderBy: Self.OrderBy = .legalName,
+        withAnyNameIncludingCharacters anyNameFragment: String? = nil,
+        accessibleToAgentWithId: Int? = nil,
+        withLegalNameIncludingCharacters legalNameFragment: String? = nil,
+        withBrandNameIncludingCharacters brandNameFragment: String? = nil,
+        authorisedToTransact authorised: Bool? = nil,
+        havingBrand withBrand: Bool? = nil,
+        havingTransacted hasTransacted: Bool? = nil,
+        withDefaultDenomination defaultDenomination: Currency? = nil,
+        active: Bool? = nil,
+        at endpoint: ApiEndpoint = .live,
+        then callback: @escaping (Error?, Array<Self>?) -> Void
+    ) {
+        
+        typealias UP = UrlParameter
+        
+        Request.make(
+            path: Self.listPath,
+            data: nil,
+            session: session,
+            query: QueryString([
+                UP(limit, key: "limit"),
+                UP(offset, key: "offset"),
+                UP(order.rawValue, key: "order"),
+                UP(orderBy.rawValue, key: "order_by"),
+                UP.optionally(anyNameFragment, key: "any_name"),
+                UP.optionally(accessibleToAgentWithId, key: "accessible_to"),
+                UP.optionally(legalNameFragment, key: "legal_name"),
+                UP.optionally(brandNameFragment, key: "brand_name"),
+                UP.optionally(authorised, key: "authorised_to_transact"),
+                UP.optionally(withBrand, key: "has_brand"),
+                UP.optionally(hasTransacted, key: "has_transacted"),
+                UP.optionally(
+                    defaultDenomination?.indexid,
+                    key: "default_denomination"
+                ),
+                UP.optionally(active, key: "active")
+            ].compactMap { $0 }),
+            method: .GET,
+            endpoint: endpoint
+        ) { error, data in
+            Request.decodeResponse(error, data, Array<Self>.self, callback)
+            return
+        }
+        
+        return
+        
+    }
+    
     private struct CreatePayload: Codable {
         let legalName: String
         let tradingName: String?

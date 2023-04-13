@@ -11,5 +11,3 @@ public enum Order: String {
     case ascending = "ascending"
     case descending = "descending"
 }
-
-
