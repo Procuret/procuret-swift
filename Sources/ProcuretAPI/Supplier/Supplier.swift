@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Supplier: Codable {
+public struct Supplier: Codable, Identifiable, Equatable, Hashable {
     
     internal static let path = "/supplier"
     internal static let listPath = Supplier.path + "/list"
@@ -18,6 +18,12 @@ public struct Supplier: Codable {
     let disposition: Disposition
     let partnershipManager: HumanHeadline?
     
+    public var id: Int { return self.entity.publicId }
+
+    public var friendlyName: String {
+        return self.brand?.name ?? self.entity.legalEntityName
+    }
+
     private enum CodingKeys: String, CodingKey {
         case entity
         case authorised
@@ -86,4 +92,14 @@ public struct Supplier: Codable {
             case address
         }
     }
+    
+    public static func == (lhs: Supplier, rhs: Supplier) -> Bool {
+        return lhs.entity.publicId == rhs.entity.publicId
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.entity.publicId)
+        return
+    }
+
 }
