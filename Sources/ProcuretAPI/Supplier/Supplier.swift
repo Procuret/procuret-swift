@@ -90,7 +90,7 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
         
     }
     
-    public func retrieveMany(
+    public static func retrieveMany(
         authenticatedBy session: SessionRepresentative,
         limit: Int = 20,
         offset: Int = 0,
