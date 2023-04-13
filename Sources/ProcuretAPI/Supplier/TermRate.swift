@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct TermRate: Codable {
+public struct TermRate: Codable, Hashable, Identifiable, Equatable {
     
     internal static let path = "/term-rate"
     internal static let listPath = "/term-rate/list"
@@ -27,4 +27,13 @@ public struct TermRate: Codable {
         case rawPeriodsPerYear = "periods_in_year"
     }
     
+    public var id: String { get {
+        return "\(self.supplierId)_\(self.periods)"
+    } }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+        return
+    }
+
 }
