@@ -3,6 +3,7 @@
 //  
 //
 //  Created by Kayla Hoyet on 4/13/23.
+//  Modified by HJ on 14 Apr 2023
 //
 
 import Foundation
@@ -18,14 +19,12 @@ public struct InstalmentPaymentAttempt: Codable {
         due24hrsStarting: Date,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, AttemptOutcome?) -> Void
+        callback: @escaping (Error?, Outcome?) -> Void
     ) {
-        
-        typealias AO = AttemptOutcome
         
         Request.make(
             path: self.path,
-            payload: CreatePayload(
+            payload: Self.CreatePayload(
                 methodId: methodId,
                 seriesId: seriesId,
                 amount: amount,
@@ -36,9 +35,11 @@ public struct InstalmentPaymentAttempt: Codable {
             method: .POST,
             endpoint: endpoint
         ) { e, d in
-            fatalError("Not implemented.")
-            //Request.decodeResponse(e, d, callback, AO)
+            Request.decodeResponse(e, d, Outcome.self, callback)
+            return
         }
+        
+        return
 
     }
     
@@ -58,4 +59,65 @@ public struct InstalmentPaymentAttempt: Codable {
         }
         
     }
+    
+    public enum Outcome: Decodable {
+        
+        case failedPayment(FailedPayment)
+        case payment(TreasuryPayment)
+        case prolongedPayment(ProlongedPayment)
+        
+        private enum RecordType: Int, Decodable {
+            case payment = 1
+            case failed = 2
+            case prolonged = 3
+        }
+        
+        private enum CodingProbe: String, CodingKey {
+            case expectedCompletion = "expected_completion"
+            case failureMode = "failure_mode"
+        }
+        
+        public init(from decoder: Decoder) throws {
+    
+            let probeContainer = try decoder.container(
+                keyedBy: CodingProbe.self
+            )
+            
+            func deriveType() -> RecordType {
+                
+                if probeContainer.contains(.expectedCompletion) {
+                    return .prolonged
+                }
+                
+                if probeContainer.contains(.failureMode) {
+                    return .failed
+                }
+                
+                return .payment
+                
+            }
+          
+            let type = deriveType()
+          
+            switch type {
+                
+            case .failed:
+                self = Self.failedPayment(
+                    try FailedPayment(from: decoder)
+                )
+            case .prolonged:
+                self = Self.prolongedPayment(
+                    try ProlongedPayment(from: decoder)
+                )
+            case .payment:
+                self = Self.payment(
+                    try TreasuryPayment(from: decoder)
+                )
+            }
+    
+        }
+        
+    }
+
+    
 }
