@@ -30,6 +30,8 @@ public struct DealLedgerLine: Codable, Identifiable {
     public let rawClosingBalance: String
     public let commitmentPublicId: String
     public let payment: Payment?
+    public let isBespoke: Bool
+    public let unresolvedProlongedPayment: ProlongedPayment?
     public let denomination: Currency
     
     public var id: String { get {
@@ -74,6 +76,8 @@ public struct DealLedgerLine: Codable, Identifiable {
         case rawClosingBalance = "closing_balance"
         case commitmentPublicId = "commitment_public_id"
         case payment
+        case isBespoke = "is_bespoke"
+        case unresolvedProlongedPayment = "unresolved_prolonged_payment"
         case denomination
     }
     

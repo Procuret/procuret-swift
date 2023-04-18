@@ -27,22 +27,28 @@ class InstalmentAttemptTest: XCTestCase {
             return
         }
         
-        Utility.provideTestSeries(
+        Utility.provideTestSchedule(
             expectation: expectation
-        ) { series in
-            InstalmentPaymentAttempt.make(
-                methodId: series.paymentMethod.paymentMethodId,
-                seriesId: series.id,
-                amount: Amount(
-                    magnitude: 5.0,
-                    denomination: Currency.AUD
-                ),
-                due24hrsStarting: Date.now,
-                session: Session.forceFromEnvironmentVariables(),
-                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-                callback: receiveInstalmentAttemptResults
-            )
+        ) { schedule in
+            
+            Utility.provideTestSeries(
+                expectation: expectation
+            ) { series in
+                
+                let position: Int = 0
+                
+                InstalmentPaymentAttempt.make(
+                    methodId: series.paymentMethod.paymentMethodId,
+                    seriesId: schedule.seriesId,
+                    amount: schedule.lines[position].nominalPayment,
+                    due24hrsStarting: schedule.lines[position].due24hrsStarting,
+                    session: Session.forceFromEnvironmentVariables(),
+                    endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                    callback: receiveInstalmentAttemptResults
+                )
+            }
         }
+
         
         wait(for: [expectation], timeout: 5.0)
         
