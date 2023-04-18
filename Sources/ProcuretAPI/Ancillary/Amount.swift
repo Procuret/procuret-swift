@@ -187,9 +187,7 @@ public struct Amount: Codable {
             denomination: Currency.AUD
         )
     }
-
 }
-
 
 extension Amount {
     public func encode(to encoder: Encoder) throws {
