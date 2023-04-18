@@ -189,3 +189,20 @@ public struct Amount: Codable {
     }
 
 }
+
+
+extension Amount {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(
+            keyedBy: CodingKeys.self
+        )
+        try container.encode(
+            magnitude,
+            forKey: .magnitude
+        )
+        try container.encode(
+            denomination.id,
+            forKey: .denomination
+        )
+    }
+}
