@@ -13,7 +13,7 @@ public struct PrincipalInvitation: Codable {
     
     let amount: Amount
     let invoiceId: String
-    let identifier: EntityIdentifier
+    let identifier: EntityIdentifierRecord
     let entityAddress: Address
     let inviteeEmail: String
     

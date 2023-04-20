@@ -15,7 +15,7 @@ public struct Entity: Codable, Hashable, Identifiable {
     
     public let publicId: Int
     public let publicIdShort: String
-    public let entityIdentifiers: Array<EntityIdentifier>
+    public let identifierRecords: Array<EntityIdentifierRecord>
     public let legalEntityName: String
     public let tradingName: String?
     public let phoneNumber: PhoneNumber?
@@ -34,10 +34,14 @@ public struct Entity: Codable, Hashable, Identifiable {
         return self.hasSupplierRecord ?? false
     } }
     
+    public var identifiers: Array<EntityIdentifier> { get {
+        return self.identifierRecords.map { $0.asIdentifier }
+    } }
+
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
         case publicIdShort = "public_id_short" 
-        case entityIdentifiers = "entity_identifiers"
+        case identifierRecords = "entity_identifiers"
         case legalEntityName = "legal_entity_name"
         case tradingName = "trading_name"
         case phoneNumber = "phone_number"
