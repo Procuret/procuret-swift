@@ -48,14 +48,14 @@ public struct Region: Codable, Identifiable, Hashable {
     }
     
     public static let australianRegions = [
-        Region(.NSW, "New South Wales", "NSW", .Australia),
-        Region(.VIC, "Victoria", "VIC", .Australia),
-        Region(.QLD, "Queensland", "QLD", .Australia),
-        Region(.SA, "South Australia", "SA", .Australia),
-        Region(.WA, "Western Australia", "WA", .Australia),
-        Region(.TAS, "Tasmania", "TAS", .Australia),
-        Region(.NT, "Northern Territory", "NT", .Australia),
-        Region(.ACT, "Australian Capital Territory", "ACT", .Australia)
+        Region(.NSW, "New South Wales", "NSW", .australia),
+        Region(.VIC, "Victoria", "VIC", .australia),
+        Region(.QLD, "Queensland", "QLD", .australia),
+        Region(.SA, "South Australia", "SA", .australia),
+        Region(.WA, "Western Australia", "WA", .australia),
+        Region(.TAS, "Tasmania", "TAS", .australia),
+        Region(.NT, "Northern Territory", "NT", .australia),
+        Region(.ACT, "Australian Capital Territory", "ACT", .australia)
     ]
     
     public func hash(into hasher: inout Hasher) {
@@ -63,10 +63,10 @@ public struct Region: Codable, Identifiable, Hashable {
     }
     
     public static func regionsIn(country: Country) -> Array<Region> {
-        switch country.enumeratedId {
-        case .Australia:
+        switch country.id {
+        case .australia:
             return Self.australianRegions
-        case .NewZealand:
+        case .newZealand:
             return []
         }
     }
