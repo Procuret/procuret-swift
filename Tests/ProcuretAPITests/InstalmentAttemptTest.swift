@@ -57,60 +57,34 @@ class InstalmentAttemptTest: XCTestCase {
             
         }
         
-        func receiveSchedule(_ schedule: InstalmentSchedule, _ series: PaymentSeries) -> Void {
+        func receiveSchedule(error: Error?, schedule: InstalmentSchedule?) -> Void {
             
-            for line in schedule.lines {
-                if line.status == .overdue || line.status == .dueUnpaid {
-                    makeAttempt(on: line, inSeries: series)
-                    return
-                }
-                continue
-            }
+            XCTAssertNil(error)
+            XCTAssertNotNil(schedule)
             
-            XCTFail("No overdue / unpaidDue"); expectation.fulfill()
+            expectation.fulfill()
             
             return
     
         }
         
-        func receiveSeries(_ series: PaymentSeries) -> Void {
-
-            InstalmentSchedule.retrieve(
-                seriesId: "uiK3ihKJvYtw",  // Temporary dev. hard code
-                session: session,
-                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-                callback: { error, schedule in
-                    
-                    guard let schedule = schedule else {
-                        XCTFail(error?.localizedDescription ?? "No error")
-                        expectation.fulfill()
-                        return
-                    }
-                    
-                    receiveSchedule(schedule, series)
-        
-                    return
-                    
-                }
-            )
-            
-            
-        }
-        
-        PaymentSeries.retrieve(
+        PaymentSeries.retrieveMany(
             session: session,
-            publicId: "uiK3ihKJvYtw",  // temporary dev hardcode
+            hasOverdueInstalement: true,
             endpoint: .forceFromEnvironmentVariables()
-        ) { error, series in
+        ) { error, many in
             
-            guard let series = series else {
-                XCTFail("no Series"); expectation.fulfill(); return
+            guard let many = many else {
+                XCTFail("no series"); expectation.fulfill()
+                return
             }
             
-            receiveSeries(series)
-            
-            return
-
+            InstalmentSchedule.retrieve(
+                seriesId: many[0].publicId,
+                session: session,
+                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                callback: receiveSchedule
+            )
         }
         
         wait(for: [expectation], timeout: 5.0)

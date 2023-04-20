@@ -67,7 +67,7 @@ class UnknownSupplierFinanceRequestTests: XCTestCase {
             return
         }
         
-        self.wait(for: [expectation])
+        self.wait(for: [expectation], timeout: 5.0)
         
         return
 

@@ -27,6 +27,10 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
     public let amount: Amount
     public let totalPayable: Amount
     public let sumPayments: Amount
+    public let completed: Bool
+    public let commitmentId: String
+    public let mechanism: PaymentMechanism?
+    public let oldestUnpaidInstalmentDue24hrsStarting: Date?
     public let disposition: Disposition
     
     public var outstanding: Amount { get {
@@ -47,6 +51,11 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
         case amount
         case totalPayable = "total_payable"
         case sumPayments = "sum_payments"
+        case completed
+        case commitmentId = "commitment_id"
+        case mechanism
+        case oldestUnpaidInstalmentDue24hrsStarting =
+                "oldest_unpaid_instalment_due_24hrs_starting"
         case disposition
     }
     
@@ -82,8 +91,18 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
         order: Order = .descending,
         orderBy: Self.OrderBy = .created,
         textFragment: String? = nil,
-        business: Entity? = nil,
-        method: PaymentMethod? = nil,
+        businessId: String? = nil,
+        methodId: String? = nil,
+        completed: Bool? = nil,
+        paymentMechanism: PaymentMechanism? = nil,
+        hasOverdueInstalement: Bool? = nil,
+        instrument: Instrument? = nil,
+        instalmentDueBefore: Date? = nil,
+        instalmentDueAtOrAfter: Date? = nil,
+        minOverdueDays: Int? = nil,
+        maxOverdueDays: Int? = nil,
+        collectionsUpToDate: Bool? = nil,
+        withModifiedInvoice: Bool? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Array<Self>?) -> Void
     ) {
@@ -101,8 +120,33 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
                     UP(order, key: "order"),
                     UP(orderBy, key: "order_by"),
                     UP.optionally(textFragment, key: "fragment"),
-                    UP.optionally(business?.publicId, key: "business_id"),
-                    UP.optionally(method?.publicId, key: "method_id")
+                    UP.optionally(businessId, key: "business_id"),
+                    UP.optionally(methodId, key: "method_id"),
+                    UP.optionally(completed, key: "completed"),
+                    UP.optionally(paymentMechanism, key: "payment_mechanism"),
+                    UP.optionally(
+                        hasOverdueInstalement,
+                        key: "has_overdue_instalment"
+                    ),
+                    UP.optionally(instrument, key: "active_instrument"),
+                   /* UP.optionally(
+                        instalmentDueBefore,
+                        key: "instalment_due_before"
+                    ),
+                    UP.optionally(
+                        instalmentDueAtOrAfter,
+                        key: "instalment_due_at_or_after"
+                    ),*/
+                    UP.optionally(minOverdueDays, key: "min_overdue_days"),
+                    UP.optionally(maxOverdueDays, key: "max_overdue_days"),
+                    UP.optionally(
+                        collectionsUpToDate,
+                        key: "collections_up_to_date"
+                    ),
+                    UP.optionally(
+                        withModifiedInvoice,
+                        key: "with_modified_invoice"
+                    )
                 ].compactMap { $0 }
             ),
             method: .GET,
