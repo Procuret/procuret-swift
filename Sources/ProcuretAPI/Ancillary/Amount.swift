@@ -26,8 +26,12 @@ public struct Amount: Codable {
         }
     }
     
-    public let magnitude: Decimal
+    public let rawMagnitude: String
     public let denomination: Currency
+    
+    public var magnitude: Decimal { get {
+        return Decimal(string: self.rawMagnitude) ?? -1
+    } }
     
     public enum CodingKeys: String, CodingKey {
         case magnitude
@@ -36,7 +40,7 @@ public struct Amount: Codable {
     
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(magnitude, forKey: .magnitude)
+        try container.encode(self.rawMagnitude, forKey: .magnitude)
         try container.encode(denomination.id, forKey: .denomination)
         return
     }
@@ -46,7 +50,7 @@ public struct Amount: Codable {
         denomination: Currency
     ) {
         
-        self.magnitude = magnitude
+        self.rawMagnitude = String(describing: magnitude)
         self.denomination = denomination
         
         return
@@ -61,19 +65,8 @@ public struct Amount: Codable {
             Currency.self,
             forKey: .denomination
         )
-        
-        let rawMagnitude = try values.decode(String.self, forKey: .magnitude)
-        guard let decimalMagnitude = (
-            Self.decodeFormatter.number(from: rawMagnitude) as? Decimal
-        ) else {
-            throw ProcuretAPIError(
-                .jsonParseFailed,
-                message: "Failed to decode \(rawMagnitude) to Decimal"
-            )
-        }
-        
-        self.magnitude = decimalMagnitude
-        
+        self.rawMagnitude = try values.decode(String.self, forKey: .magnitude)
+
         return
     
     }

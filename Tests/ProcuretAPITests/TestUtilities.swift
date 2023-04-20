@@ -275,35 +275,6 @@ internal struct Utility {
 
     }
     
-    static func provideTestSchedule(
-        expectation: XCTestExpectation,
-        callback: @escaping (InstalmentSchedule) -> Void
-    ) -> Void {
-        
-        let session = Utility.provideTestSession()
-        
-        InstalmentSchedule.retrieve(
-            seriesId: "uiK3ihKJvYtw",
-            session: session,
-            endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: { error, schedule in
-                
-                XCTAssertNil(error)
-                XCTAssertNotNil(schedule)
-                
-                guard let schedule = schedule else {
-                    expectation.fulfill()
-                    return
-                }
-                
-                callback(schedule)
-                return
-                
-            }
-        )
-        
-    }
-    
     static func provideTestSupplierFromEntity(
         expectation: XCTestExpectation,
         callback: @escaping (Supplier) -> Void
