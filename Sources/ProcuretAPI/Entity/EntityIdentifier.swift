@@ -75,5 +75,11 @@ public struct EntityIdentifier: Codable {
         case identifierType = "identifier_type"
         
     }
+    
+    public init(identifier: String, identifierType: EntityIdentifierType) {
+        self.identifier = identifier
+        self.identifierType = identifierType
+        return
+    }
 
 }
