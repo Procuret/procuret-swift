@@ -29,6 +29,19 @@ public enum EntityIdType: Int, Codable, CaseIterable, Identifiable {
         }
     } }
     
+    public var abbreviation: String { get {
+        switch self {
+        case .abn:
+            return "ABN"
+        case .acn:
+            return "ACN"
+        case .nzbn:
+            return "NZBN"
+        case .nzcn:
+            return "NZCN"
+        }
+    } }
+    
     public var id: Int { get { return self.rawValue } }
 
 }
