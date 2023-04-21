@@ -91,8 +91,8 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
         order: Order = .descending,
         orderBy: Self.OrderBy = .created,
         textFragment: String? = nil,
-        businessId: String? = nil,
-        methodId: String? = nil,
+        business: Entity? = nil,
+        method: PaymentMethod? = nil,
         completed: Bool? = nil,
         paymentMechanism: PaymentMechanism? = nil,
         hasOverdueInstalement: Bool? = nil,
@@ -120,8 +120,8 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
                     UP(order, key: "order"),
                     UP(orderBy, key: "order_by"),
                     UP.optionally(textFragment, key: "fragment"),
-                    UP.optionally(businessId, key: "business_id"),
-                    UP.optionally(methodId, key: "method_id"),
+                    UP.optionally(business?.publicId, key: "business_id"),
+                    UP.optionally(method?.publicId, key: "method_id"),
                     UP.optionally(completed, key: "completed"),
                     UP.optionally(paymentMechanism, key: "payment_mechanism"),
                     UP.optionally(
@@ -129,14 +129,14 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
                         key: "has_overdue_instalment"
                     ),
                     UP.optionally(instrument, key: "active_instrument"),
-                   /* UP.optionally(
+                    UP.optionally(
                         instalmentDueBefore,
                         key: "instalment_due_before"
                     ),
                     UP.optionally(
                         instalmentDueAtOrAfter,
                         key: "instalment_due_at_or_after"
-                    ),*/
+                    ),
                     UP.optionally(minOverdueDays, key: "min_overdue_days"),
                     UP.optionally(maxOverdueDays, key: "max_overdue_days"),
                     UP.optionally(

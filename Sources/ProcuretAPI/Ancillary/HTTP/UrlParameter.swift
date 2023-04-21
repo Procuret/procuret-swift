@@ -97,6 +97,11 @@ internal struct UrlParameter {
         return Self(value, key: key)
     }
     
+    internal static func optionally(_ value: Date?, key: String) -> Self? {
+        guard let value = value else { return nil }
+        return Self(value, key: key)
+    }
+    
     internal static func optionally<E: RawRepresentable>(
         _ value: E?,
         key: String
