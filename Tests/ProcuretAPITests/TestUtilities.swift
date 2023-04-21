@@ -126,8 +126,10 @@ internal struct Utility {
         let session = Utility.provideTestSession()
         
         Entity.create(
-            identifier: "77630036789",
-            identifierType: .abn,
+            identifier: EntityIdentifier(
+                identifier: "77630036789",
+                identifierType: .australianBusinessNumber
+            ),
             address: Address.CreationData(
                 line1: "44 Bridge Street",
                 line2: nil,
@@ -198,8 +200,10 @@ internal struct Utility {
     ) -> Void {
         
         Business.create(
-            identifier: "77630036789",
-            idType: .abn,
+            identifier: EntityIdentifier(
+                identifier: "77630036789",
+                identifierType: .australianBusinessNumber
+            ),
             address: Address.CreationData(
                 line1: "47 Brighton Rd",
                 line2: nil,

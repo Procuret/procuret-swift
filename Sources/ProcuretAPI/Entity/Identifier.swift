@@ -11,7 +11,7 @@ public struct EntityIdentifierRecord: Codable, Identifiable {
     
     public static let path = "/"
     
-    public let idType: EntityIdType
+    public let idType: EntityIdentifierType
     public let idString: String
     
     public var id: String { get { return self.idString } }

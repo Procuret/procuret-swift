@@ -60,8 +60,7 @@ public struct Entity: Codable, Hashable, Identifiable {
     }
     
     public static func create(
-        identifier: String,
-        identifierType: EntityIdType,
+        identifier: EntityIdentifier,
         address: Address.CreationData,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
@@ -70,8 +69,8 @@ public struct Entity: Codable, Hashable, Identifiable {
         Request.make(
             path: self.path,
             payload: CreatePayload(
-                identifier: identifier,
-                identifierType: identifierType,
+                identifier: identifier.identifier,
+                identifierType: identifier.identifierType,
                 address: address
             ),
             session: session,
@@ -114,7 +113,7 @@ public struct Entity: Codable, Hashable, Identifiable {
     
     private struct CreatePayload: Codable {
         let identifier: String
-        let identifierType: EntityIdType
+        let identifierType: EntityIdentifierType
         let address: Address.CreationData
         
         private enum CodingKeys: String, CodingKey {

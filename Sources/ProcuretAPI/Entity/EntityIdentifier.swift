@@ -8,11 +8,48 @@
 import Foundation
 
 
-public enum EntityIdentifierType: Int, Codable {
+public enum EntityIdentifierType: Int, Codable, CaseIterable, Identifiable {
     
     case australianBusinessNumber = 1
     case australianCompanyNumber = 2
     case newZealandBusinessNumber = 3
+    
+    public var name: String { get {
+        switch self {
+        case .australianBusinessNumber:
+            return "Australian Business Number"
+        case .australianCompanyNumber:
+            return "Australian Company Number"
+        case .newZealandBusinessNumber:
+            return "New Zealand Business Number"
+        }
+    } }
+    
+    public var abbreviation: String { get {
+        switch self {
+        case .australianBusinessNumber:
+            return "ABN"
+        case .australianCompanyNumber:
+            return "ACN"
+        case .newZealandBusinessNumber:
+            return "NZBN"
+        }
+    } }
+    
+    public var requiredLength: Int { get {
+        
+        switch self {
+        case .australianBusinessNumber:
+            return 11
+        case .australianCompanyNumber:
+            return 9
+        case .newZealandBusinessNumber:
+            return 13
+        }
+        
+    } }
+
+    public var id: Int { get { return self.rawValue } }
 
 }
 

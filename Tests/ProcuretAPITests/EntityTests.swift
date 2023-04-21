@@ -50,8 +50,10 @@ class EntityTests: XCTestCase {
         }
         
         Entity.create(
-            identifier: "77630036789",
-            identifierType: .abn,
+            identifier: EntityIdentifier(
+                identifier: "77630036789",
+                identifierType: .australianBusinessNumber
+            ),
             address: Address.CreationData(
                 line1: "44 Bridge Street",
                 line2: nil,
