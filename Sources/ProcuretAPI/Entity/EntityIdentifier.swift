@@ -48,6 +48,17 @@ public enum EntityIdentifierType: Int, Codable, CaseIterable, Identifiable {
         }
         
     } }
+    
+    public var country: Country { get {
+        
+        switch self {
+        case .australianBusinessNumber, .australianCompanyNumber:
+            return .australia
+        case .newZealandBusinessNumber:
+            return .newZealand
+        }
+
+    } }
 
     public var id: Int { get { return self.rawValue } }
 
