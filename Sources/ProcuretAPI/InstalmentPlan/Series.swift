@@ -91,7 +91,7 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
         order: Order = .descending,
         orderBy: Self.OrderBy = .created,
         textFragment: String? = nil,
-        business: Entity? = nil,
+        business: Business? = nil,
         method: PaymentMethod? = nil,
         completed: Bool? = nil,
         paymentMechanism: PaymentMechanism? = nil,
@@ -120,7 +120,10 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
                     UP(order, key: "order"),
                     UP(orderBy, key: "order_by"),
                     UP.optionally(textFragment, key: "fragment"),
-                    UP.optionally(business?.publicId, key: "business_id"),
+                    UP.optionally(
+                        business?.entity.publicId,
+                        key: "business_id"
+                    ),
                     UP.optionally(method?.publicId, key: "method_id"),
                     UP.optionally(completed, key: "completed"),
                     UP.optionally(paymentMechanism, key: "payment_mechanism"),

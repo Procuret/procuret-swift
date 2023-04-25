@@ -33,6 +33,34 @@ public struct PendingSeries: Codable, Identifiable {
         authenticatedBy session: SessionRepresentative,
         limit: Int = 20,
         offset: Int = 0,
+        supplier: Supplier? = nil,
+        business: Business? = nil,
+        associatedWithHuman human: Human? = nil,
+        awaitingIdentity: Bool? = nil,
+        awaitingCredit: Bool? = nil,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
+        callback: @escaping (Error?, Array<PendingSeries>?) -> Void
+    ) {
+        
+        return Self.retrieveMany(
+            authenticatedBy: session,
+            limit: limit,
+            offset: offset,
+            supplierId: supplier?.entity.publicId,
+            businessId: business?.entity.publicId,
+            humanId: human?.agentId,
+            awaitingIdentity: awaitingIdentity,
+            awaitingCredit: awaitingCredit,
+            endpoint: endpoint,
+            callback: callback
+        )
+    
+    }
+    
+    public static func retrieveMany(
+        authenticatedBy session: SessionRepresentative,
+        limit: Int = 20,
+        offset: Int = 0,
         supplierId: Int? = nil,
         businessId: Int? = nil,
         humanId: Int? = nil,

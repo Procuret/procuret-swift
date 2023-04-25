@@ -196,8 +196,10 @@ internal struct Utility {
     
     static func provideTestBusiness(
         expectation: XCTestExpectation,
-        callback: @escaping (Business) -> Void
+        callback: @escaping (Business, Session) -> Void
     ) -> Void {
+        
+        let session = Utility.provideTestSession()
         
         Business.create(
             identifier: EntityIdentifier(
@@ -214,7 +216,7 @@ internal struct Utility {
                 regionId: 1,
                 countryId: 1
             ),
-            session: Utility.provideTestSession(),
+            session: session,
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { error, business in
                 
@@ -226,7 +228,7 @@ internal struct Utility {
                     return
                 }
                 
-                callback(business)
+                callback(business, session)
                 return
             }
         )

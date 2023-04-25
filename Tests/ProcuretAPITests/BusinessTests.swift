@@ -13,12 +13,12 @@ class BusinessTests: XCTestCase {
     func testCreateBusiness() {
         
         let expectation = XCTestExpectation(
-            description: "create Business"
+            description: "Create Business"
         )
         
         Utility.provideTestBusiness(
             expectation: expectation
-        ) { business in
+        ) { _, _ in
             
             expectation.fulfill()
             
@@ -63,6 +63,37 @@ class BusinessTests: XCTestCase {
         
         return
 
+    }
+    
+    func testRetrieveBusiness() -> Void {
+        
+        let expectation = XCTestExpectation(description: "Retrieve a Business")
+        
+        Utility.provideTestBusiness(
+            expectation: expectation,
+            callback: { createdBusiness, session in
+                
+                Business.retrieve(
+                    authenticatedBy: session,
+                    for: createdBusiness.entity
+                ) { error, retrievedBusiness in
+                    
+                    XCTAssertNil(error)
+                    XCTAssertNotNil(retrievedBusiness)
+                    XCTAssert(
+                        retrievedBusiness?.entity.publicId
+                            == createdBusiness.entity.publicId
+                    )
+                    expectation.fulfill()
+                    return
+    
+                }
+                
+            }
+        )
+        
+        wait(for: [expectation], timeout: 5.0)
+        
     }
     
     

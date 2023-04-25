@@ -29,7 +29,7 @@ class BusinessPaymentsTest: XCTestCase {
         
         Utility.provideTestBusiness(
             expectation: expectation
-        ) { business in
+        ) { business, session in
             
             BusinessPayment.retrieveMany(
                 limit: 5,
@@ -39,7 +39,7 @@ class BusinessPaymentsTest: XCTestCase {
                 textFragment: nil,
                 businessId: business.entity.id,
                 methodId: nil,
-                session: Utility.provideTestSession(),
+                session: session,
                 endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: receiveResponse
             )

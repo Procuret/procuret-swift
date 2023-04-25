@@ -70,6 +70,42 @@ public struct Business: Codable {
 
     }
     
+    public static func retrieve(
+        authenticatedBy session: SessionRepresentative,
+        for entity: Entity,
+        at endpoint: ApiEndpoint = .live,
+        then callback: @escaping (Error?, Self?) -> Void
+    ) {
+        
+        return Self.retrieve(
+            authenticatedBy: session,
+            publicId: entity.publicId,
+            then: callback
+        )
+        
+    }
+    
+    public static func retrieve(
+        authenticatedBy session: SessionRepresentative,
+        publicId: Int,
+        at endpoint: ApiEndpoint = .live,
+        then callback: @escaping (Error?, Self?) -> Void
+    ) {
+        
+        Request.make(
+            path: Self.path,
+            data: nil,
+            session: session,
+            query: QueryString([UrlParameter(publicId, key: "business_id")]),
+            method: .GET,
+            endpoint: endpoint
+        ) { e, d in
+            Request.decodeResponse(e, d, Self.self, callback)
+            return
+        }
+        
+    }
+    
     public static func retrieveMany(
         authenticatedBy session: SessionRepresentative,
         limit: Int = 20,
