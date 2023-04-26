@@ -72,4 +72,37 @@ class EntityTests: XCTestCase {
         wait(for: [expectation], timeout: 5.0)
         return
     }
+    
+    func testRetrieveEntity() {
+        
+        let expectation = XCTestExpectation(description: "Retrieve Entity")
+        
+        Utility.provideTestEntity(
+            expectation: expectation
+        ) { createdEntity, session in
+            
+            Entity.retrieve(
+                authenticatedBy: session,
+                withPublicId: createdEntity.publicId,
+                at: .forceFromEnvironmentVariables()
+            ) { error, entity in
+                
+                XCTAssertNil(error)
+                XCTAssertNotNil(entity)
+                XCTAssertTrue(entity?.publicId ?? -1 == createdEntity.publicId)
+                
+                expectation.fulfill()
+                
+                return
+
+            }
+            
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+        
+        return
+        
+    }
+    
 }

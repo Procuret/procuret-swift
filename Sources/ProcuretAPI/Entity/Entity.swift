@@ -59,6 +59,27 @@ public struct Entity: Codable, Hashable, Identifiable {
         case modified = "modified"
     }
     
+    public static func retrieve(
+        authenticatedBy session: SessionRepresentative,
+        withPublicId publicId: Int,
+        at endpoint: ApiEndpoint = .live,
+        then callback: @escaping (Error?, Entity?) -> Void
+    ) {
+        
+        Request.make(
+            path: Self.path,
+            data: nil,
+            session: session,
+            query: QueryString([UrlParameter(publicId, key: "entity_id")]),
+            method: .GET,
+            endpoint: endpoint,
+            then: { e, d in Request.decodeResponse(e, d, Self.self, callback) }
+        )
+        
+        return
+    
+    }
+    
     public static func create(
         identifier: EntityIdentifier,
         address: Address.CreationData,
