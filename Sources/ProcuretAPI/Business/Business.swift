@@ -80,6 +80,7 @@ public struct Business: Codable {
         return Self.retrieve(
             authenticatedBy: session,
             publicId: entity.publicId,
+            at: endpoint,
             then: callback
         )
         
