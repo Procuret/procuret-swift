@@ -12,7 +12,7 @@ public struct InstalmentPlanApplication {
     
     internal static let path = "/magic-invoice"
     
-    static func create(
+    public static func create(
         authenticatedBy session: Session,
         supplier: Supplier,
         business: Business,
