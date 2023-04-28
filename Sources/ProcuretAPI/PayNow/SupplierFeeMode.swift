@@ -23,7 +23,7 @@ public struct SupplierPayNowFeeMode: Codable, Identifiable {
     
     public static func retrieve(
         supplierId: String,
-        session: SessionRepresentative,
+        session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void 
     ) {
@@ -38,7 +38,39 @@ public struct SupplierPayNowFeeMode: Codable, Identifiable {
             method: .GET,
             endpoint: endpoint
         ) { error, data in
-            fatalError("Not implemented.")
+            Request.decodeResponse(error, data, Self.self, callback)
+        }
+    }
+    
+    public static func create(
+        supplierId: String,
+        mode: PayNowFeeMode,
+        session: SessionRepresentative?,
+        endpoint: ApiEndpoint = ApiEndpoint.live,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            payload: CreatePayload(
+                supplierId: supplierId,
+                mode: mode
+            ),
+            session: session,
+            query: nil,
+            method: .POST,
+            endpoint: endpoint
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+        }
+    }
+    
+    private struct CreatePayload: Codable {
+        let supplierId: String
+        let mode: PayNowFeeMode
+        
+        private enum CodingKeys: String, CodingKey {
+            case supplierId = "supplier_id"
+            case mode
         }
     }
 }
