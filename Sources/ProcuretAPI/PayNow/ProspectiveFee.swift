@@ -58,6 +58,28 @@ public struct ProspectiveFee: Decodable {
         
     }
     
+    public static func retrieve(
+        authenticatedBy session: SessionRepresentative,
+        supplierId: String,
+        amount: Amount,
+        divisions: ProspectiveDivision,
+        at endpoint: ApiEndpoint = .live,
+        then callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            data: nil,
+            session: session,
+            query: QueryString([
+                UrlParameter(supplierId, key: "supplier_id")
+            ]),
+            method: .GET,
+            endpoint: endpoint
+        ) { error, data in
+            fatalError("Not implemented.")
+        }
+    }
+    
     private struct Division: Encodable {
         let method_id: String
         let magnitude: String
