@@ -30,7 +30,7 @@ public struct InstalmentPlanApplication {
             payload: CreatePayload(
                 supplier_id: supplier.entity.publicId,
                 business_id: business.entity.publicId,
-                invoice_identifier: invoiceIdentifier,
+                invoice_id: invoiceIdentifier,
                 invoice_amount: invoiceAmount,
                 periods: months,
                 link_id: linkId
@@ -50,7 +50,7 @@ public struct InstalmentPlanApplication {
 
         let supplier_id: Int
         let business_id: Int
-        let invoice_identifier: String
+        let invoice_id: String
         let invoice_amount: Amount
         let periods: Int
         let link_id: String?
