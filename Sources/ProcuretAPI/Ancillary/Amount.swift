@@ -11,8 +11,9 @@ public struct Amount: Codable {
     
     private static var prettyFormatter: NumberFormatter {
         get {
+            
             let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
+            formatter.numberStyle = .currency
             return formatter
         }
     }
@@ -68,7 +69,7 @@ public struct Amount: Codable {
         self.rawMagnitude = try values.decode(String.self, forKey: .magnitude)
 
         return
-    
+            
     }
     
     public func asDecimalString(showFractionalUnits: Bool = true) -> String {
@@ -77,8 +78,8 @@ public struct Amount: Codable {
             Self.prettyFormatter.minimumFractionDigits = digits
             Self.prettyFormatter.maximumFractionDigits = digits
         } else {
-            Self.prettyFormatter.minimumFractionDigits = 2
-            Self.prettyFormatter.maximumFractionDigits = 2
+            Self.prettyFormatter.minimumFractionDigits = 0
+            Self.prettyFormatter.maximumFractionDigits = 0
         }
         return Self.prettyFormatter.string(
             from: self.magnitude as NSDecimalNumber
