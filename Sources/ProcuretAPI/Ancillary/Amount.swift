@@ -77,8 +77,8 @@ public struct Amount: Codable {
             Self.prettyFormatter.minimumFractionDigits = digits
             Self.prettyFormatter.maximumFractionDigits = digits
         } else {
-            Self.prettyFormatter.minimumFractionDigits = 0
-            Self.prettyFormatter.maximumFractionDigits = 0
+            Self.prettyFormatter.minimumFractionDigits = 2
+            Self.prettyFormatter.maximumFractionDigits = 2
         }
         return Self.prettyFormatter.string(
             from: self.magnitude as NSDecimalNumber
