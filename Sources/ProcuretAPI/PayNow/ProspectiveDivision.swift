@@ -19,3 +19,13 @@ public struct ProspectiveDivision: Codable, Identifiable {
         case magnitude
     }
 }
+
+public struct GenericProspectiveDivision: Codable {
+    
+    let methodId: String
+    
+    public enum CodingKeys: String, CodingKey {
+      case methodId = "method_id"
+        
+    }
+}
