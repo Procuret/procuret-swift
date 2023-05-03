@@ -37,6 +37,7 @@ public struct PayNowTransaction: Codable {
     
     public static func create(
         methodId: String,
+        amount: Amount,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, PayNowTransaction?) -> Void
@@ -44,7 +45,8 @@ public struct PayNowTransaction: Codable {
         Request.make(
             path: self.path,
             payload: CreatePayloadWithMethod(
-                methodId: methodId
+                methodId: methodId,
+                amount: amount
             ),
             session: session,
             query: nil,
@@ -103,9 +105,11 @@ public struct PayNowTransaction: Codable {
     
     private struct CreatePayloadWithMethod: Codable {
         let methodId: String
+        let amount: Amount
         
         private enum CodingKeys: String, CodingKey {
             case methodId = "method_id"
+            case amount 
         }
     }
 }
