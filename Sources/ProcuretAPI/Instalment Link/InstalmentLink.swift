@@ -38,7 +38,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
         case disposition
     }
     
-    public enum Nomenclature: Int, Codable, CaseIterable {
+    public enum Nomenclature: Int, Codable, CaseIterable, Identifiable {
         
         case invoice = 1
         case order = 2
@@ -56,6 +56,8 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
             }
 
         } }
+        
+        public var id: Int { get { return self.rawValue } }
         
     }
     
