@@ -14,7 +14,7 @@ public struct InstalmentLink: Codable {
     
     public let publicId: String
     public let supplier: EntityHeadline
-    public let created: String
+    public let created: Date
     public let inviteeEmail: String
     public let invoiceAmount: String
     public let invoiceIdentifier: String
