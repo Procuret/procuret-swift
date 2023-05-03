@@ -11,10 +11,11 @@ public struct Brand: Codable {
     
     internal static let path = "/entity/brand"
     
-    let entityId: Int
-    let name: String
-    let saleMessage: String
-    let created: String
+    public let entityId: Int
+    public let name: String
+    public let saleMessage: String
+    public let created: String
+    public let media: Array<Self.Media>
 
     
     public enum CodingKeys: String, CodingKey {
@@ -22,6 +23,7 @@ public struct Brand: Codable {
         case name
         case saleMessage = "sale_message"
         case created
+        case media
     }
     
     public static func create(
@@ -64,5 +66,43 @@ public struct Brand: Codable {
             case entityId = "entity_id"
         }
     }
-}
 
+    public struct Colour {
+        
+        public let hex: String
+        
+        public var prefixedHex: String { get { return "#\(self.hex)"} }
+
+    }
+    
+    public struct Media: Codable {
+        
+        public enum Scheme: Int, Codable, CaseIterable, Identifiable {
+            case dark = 2
+            case light = 1
+            
+            public var id: Int { get { return self.rawValue } }
+        }
+        
+        private enum CodingKeys: String, CodingKey {
+            case scheme
+            case rawPrimaryColour = "primary_colour_hex"
+            case rawAccentColour = "accent_colour_hex"
+            case logoUrl = "logo_url"
+        }
+        
+        public let scheme: Self.Scheme
+        public let rawPrimaryColour: String
+        public let rawAccentColour: String
+        public let logoUrl: String
+
+        public var primaryColour: Brand.Colour { get {
+            return Brand.Colour(hex: self.rawPrimaryColour)
+        } }
+        public var accentColour: Brand.Colour { get {
+            return Brand.Colour(hex: self.rawAccentColour)
+        } }
+    
+    }
+
+}
