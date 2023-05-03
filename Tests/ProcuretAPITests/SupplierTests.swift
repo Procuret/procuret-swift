@@ -29,9 +29,9 @@ class SupplierTests: XCTestCase {
         ) { supplier in
             Supplier.retrieve(
                 supplierId: supplier.entity.publicId,
-                session: Utility.provideTestSession(),
-                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-                callback: recieveSupplier
+                authenticatedBy: Utility.provideTestSession(),
+                at: ApiEndpoint.forceFromEnvironmentVariables(),
+                then: recieveSupplier
             )
             
             return
@@ -42,4 +42,36 @@ class SupplierTests: XCTestCase {
         
         return
     }
+    
+    func testCreateSupplier() {
+        
+        let expectation = XCTestExpectation(description: "create Supplier")
+        
+        Utility.provideTestEntity(
+            expectation: expectation
+        ) { entity, session in
+         
+            Supplier.create(
+                authenticatedBy: session,
+                entity: entity,
+                at: .forceFromEnvironmentVariables()
+            ) { error, supplier in
+                
+                XCTAssertNil(error)
+                XCTAssertNotNil(supplier)
+                
+                expectation.fulfill()
+                
+                return
+
+            }
+            
+        }
+        
+        wait(for: [expectation], timeout: 5.0)
+
+        return
+        
+    }
+
 }

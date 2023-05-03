@@ -11,6 +11,7 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
     
     internal static let path = "/supplier"
     internal static let listPath = Supplier.path + "/list"
+    internal static let entityPath = Supplier.path + "/from-entity"
     
     public let entity: Entity
     public let authorised: Bool
@@ -68,11 +69,55 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
         }
     }
     
+    public static func create(
+        authenticatedBy session: SessionRepresentative,
+        entity: Entity,
+        at endpoint: ApiEndpoint,
+        callback: @escaping (Error?, Supplier?) -> Void
+    ) {
+        
+        Request.make(
+            path: Self.entityPath,
+            payload: CreateFromEntityPayload(entity_id: entity.publicId),
+            session: session,
+            query: nil,
+            method: .POST,
+            endpoint: endpoint,
+            then: { error, data in
+                Request.decodeResponse(error, data, Self.self, callback)
+                return
+            }
+        )
+        
+        return
+
+    }
+    
+    private struct CreateFromEntityPayload: Encodable {
+        let entity_id: Int
+    }
+    
+    public static func retrieve(
+        forEntity entity: Entity,
+        authenticatedBy session: SessionRepresentative? = nil,
+        at endpoint: ApiEndpoint = ApiEndpoint.live,
+        then callback: @escaping (Error?, Self?) -> Void
+    ) {
+        
+        return Self.retrieve(
+            supplierId: entity.publicId,
+            authenticatedBy: session,
+            at: endpoint,
+            then: callback
+        )
+        
+    }
+    
     public static func retrieve(
         supplierId: Int,
-        session: SessionRepresentative?,
-        endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        authenticatedBy session: SessionRepresentative? = nil,
+        at endpoint: ApiEndpoint = ApiEndpoint.live,
+        then callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
