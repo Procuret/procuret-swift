@@ -12,14 +12,14 @@ public struct InstalmentLink: Codable {
     internal static let path = "/instalment-link"
     internal static let listPath = InstalmentLink.path + "/list"
     
-    let publicId: String
-    let supplier: EntityHeadline
-    let created: String
-    let inviteeEmail: String
-    let invoiceAmount: String
-    let invoiceIdentifier: String
-    let opens: Array<InstalmentLinkOpen>
-    let disposition: Disposition?
+    public let publicId: String
+    public let supplier: EntityHeadline
+    public let created: String
+    public let inviteeEmail: String
+    public let invoiceAmount: String
+    public let invoiceIdentifier: String
+    public let opens: Array<InstalmentLinkOpen>
+    public let disposition: Disposition?
     
     public enum OrderBy: String, Codable {
         case created = "created"
