@@ -34,32 +34,22 @@ class PayNowTest: XCTestCase {
             for line: DealLedgerLine,
             inSeries series: PaymentSeries
         ) {
+            
             PayNowTransaction.create(
+                methodId: series.paymentMethod.paymentMethodId,
                 amount: line.nominalPayment,
                 reference: "test pay now",
-                businessId: series.customer.entityId,
-                supplierId: series.supplier.entityId,
-                divisions: ProspectiveDivision(
-                    methodId: series.paymentMethod.publicId,
-                    magnitude: series.amount.rawMagnitude
-                ),
+                businessId: String(series.customer.entityId),
+                supplierId: String(series.supplier.entityId),
                 session: session,
-                endpoint: .forceFromEnvironmentVariables()
-            ) { error, payNow in
-                
-                if let error = error {
-                    XCTFail(error.localizedDescription)
-                }
-
-                expectation.fulfill()
-                return
-            }
+                callback: receivePayNowResults
+            )
         }
         
-        func receiveSchedule(error: Error?, schedule: InstalmentSchedule?) -> Void {
+        func receivePaymentSeries(error: Error?, series: PaymentSeries?) -> Void {
             
             XCTAssertNil(error)
-            XCTAssertNotNil(schedule)
+            XCTAssertNotNil(series)
             
             expectation.fulfill()
             
@@ -78,11 +68,11 @@ class PayNowTest: XCTestCase {
                 return
             }
             
-            InstalmentSchedule.retrieve(
-                seriesId: many[0].publicId,
+            PaymentSeries.retrieve(
                 session: session,
-                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-                callback: receiveSchedule
+                publicId: many[0].publicId,
+                endpoint: .forceFromEnvironmentVariables(),
+                callback: receivePaymentSeries
             )
         }
         

@@ -38,6 +38,9 @@ public struct PayNowTransaction: Codable {
     public static func create(
         methodId: String,
         amount: Amount,
+        reference: String,
+        businessId: String,
+        supplierId: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, PayNowTransaction?) -> Void
@@ -46,7 +49,10 @@ public struct PayNowTransaction: Codable {
             path: self.path,
             payload: CreatePayloadWithMethod(
                 methodId: methodId,
-                amount: amount
+                amount: amount,
+                reference: reference,
+                businessId: businessId,
+                supplierId: supplierId
             ),
             session: session,
             query: nil,
@@ -61,8 +67,8 @@ public struct PayNowTransaction: Codable {
     public static func create(
         amount: Amount,
         reference: String,
-        businessId: Int,
-        supplierId: Int,
+        businessId: String,
+        supplierId: String,
         divisions: ProspectiveDivision,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
@@ -90,8 +96,8 @@ public struct PayNowTransaction: Codable {
     private struct CreatePayload: Codable {
         let amount: Amount
         let reference: String
-        let businessId: Int
-        let supplierId: Int
+        let businessId: String
+        let supplierId: String
         let divisions: ProspectiveDivision
         
         private enum CodingKeys: String, CodingKey {
@@ -106,10 +112,16 @@ public struct PayNowTransaction: Codable {
     private struct CreatePayloadWithMethod: Codable {
         let methodId: String
         let amount: Amount
+        let reference: String
+        let businessId: String
+        let supplierId: String
         
         private enum CodingKeys: String, CodingKey {
             case methodId = "method_id"
-            case amount 
+            case amount
+            case reference
+            case businessId = "business_id"
+            case supplierId = "supplier_id"
         }
     }
 }
