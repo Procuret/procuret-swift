@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct InstalmentLink: Codable {
-    
+public struct InstalmentLink: Codable, Identifiable, Hashable {
+
     internal static let path = "/instalment-link"
     internal static let listPath = InstalmentLink.path + "/list"
     
@@ -20,6 +20,8 @@ public struct InstalmentLink: Codable {
     public let invoiceIdentifier: String
     public let opens: Array<InstalmentLinkOpen>
     public let disposition: Disposition?
+    
+    public var id: String { get { return self.publicId} }
     
     public enum OrderBy: String, Codable {
         case created = "created"
@@ -161,6 +163,15 @@ public struct InstalmentLink: Codable {
         let nomenclature: Int?
         let invitee_phone: String?
         
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.publicId)
+        return
+    }
+    
+    public static func == (lhs: InstalmentLink, rhs: InstalmentLink) -> Bool {
+        return lhs.publicId == rhs.publicId
     }
 
 }
