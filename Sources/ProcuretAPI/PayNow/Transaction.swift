@@ -103,7 +103,7 @@ public struct PayNowTransaction: Codable {
         private enum CodingKeys: String, CodingKey {
             case amount
             case reference
-            case businessId = "business_id"
+            case businessId = "customer_business_id"
             case supplierId = "supplier_id"
             case divisions
         }
@@ -120,7 +120,7 @@ public struct PayNowTransaction: Codable {
             case methodId = "method_id"
             case amount
             case reference
-            case businessId = "business_id"
+            case businessId = "customer_business_id"
             case supplierId = "supplier_id"
         }
     }
