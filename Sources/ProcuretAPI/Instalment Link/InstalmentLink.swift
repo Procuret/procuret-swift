@@ -21,6 +21,10 @@ public struct InstalmentLink: Codable {
     let opens: Array<InstalmentLinkOpen>
     let disposition: Disposition?
     
+    public enum OrderBy: String, Codable {
+        case created = "created"
+    }
+    
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
         case supplier
@@ -32,31 +36,56 @@ public struct InstalmentLink: Codable {
         case disposition
     }
     
+    public enum Nomenclature: Int, Codable, CaseIterable {
+        
+        case invoice = 1
+        case order = 2
+        case reference = 4
+
+        public var name: String { get {
+        
+            switch self {
+            case .invoice:
+                return "Invoice"
+            case .order:
+                return "Order"
+            case .reference:
+                return "Reference"
+            }
+
+        } }
+        
+    }
+    
     public static func create(
-        supplierId: Int,
-        amount: String,
+        authenticatedBy session: SessionRepresentative,
+        supplier: Supplier,
+        amount: Amount,
         identifier: String,
         inviteeEmail: String,
         communicate: Bool,
-        session: SessionRepresentative?,
-        endpoint: ApiEndpoint = ApiEndpoint.live,
+        inviteePhone: String? = nil,
+        at endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, InstalmentLink?) -> Void
     ) {
         Request.make(
             path: self.path,
             payload: CreatePayload(
-                supplierId: supplierId,
-                amount: amount,
-                identifier: identifier,
-                inviteeEmail: inviteeEmail,
-                communicate: communicate
+                supplier_id: supplier.entity.publicId,
+                invoice_amount: amount.rawMagnitude,
+                denomination: amount.denomination.indexid,
+                invoice_identifier: identifier,
+                invitee_email: inviteeEmail,
+                communicate: communicate,
+                nomenclature: nil,
+                invitee_phone: inviteePhone
             ),
             session: session,
             query: nil,
             method: .POST,
             endpoint: endpoint
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
         }
     }
     
@@ -68,37 +97,70 @@ public struct InstalmentLink: Codable {
     ) {
         Request.make(
             path: self.path,
-            payload: RetrieveParameters(publicId: publicId),
+            data: nil,
             session: session,
-            query: nil,
+            query: QueryString([UrlParameter(publicId, key: "public_id")]),
             method: .GET,
             endpoint: endpoint
         ) { error, data in
-            fatalError("Not implemented")
+            Request.decodeResponse(error, data, Self.self, callback)
         }
+    }
+    
+    public static func retrieveMany(
+        authenticatedBy session: SessionRepresentative,
+        limit: Int = 20,
+        offset: Int = 0,
+        order: Order = Order.descending,
+        orderBy: Self.OrderBy = .created,
+        opened: Bool? = nil,
+        supplier: Supplier? = nil,
+        publicId: String? = nil,
+        accessibleTo: Agent? = nil,
+        createdBy: Agent? = nil,
+        at endpoint: ApiEndpoint = .live,
+        then callback: @escaping (Error?, Array<Self>?) -> Void
+    ) {
+       
+        typealias UP = UrlParameter
+        
+        Request.make(
+            path: Self.listPath,
+            data: nil,
+            session: session,
+            query: QueryString([
+                UP(limit, key: "limit"),
+                UP(offset, key: "offset"),
+                UP(order.rawValue, key: "order"),
+                UP(orderBy.rawValue, key: "order_by"),
+                UP.optionally(opened, key: "opened"),
+                UP.optionally(supplier?.entity.publicId, key: "supplier_id"),
+                UP.optionally(publicId, key: "public_id"),
+                UP.optionally(accessibleTo?.agentId, key: "accessible_to"),
+                UP.optionally(createdBy?.agentId, key: "created_by")
+            ].compactMap { $0 }),
+            method: .GET,
+            endpoint: endpoint
+        ) { error, data in
+            Request.decodeResponse(error, data, Array<Self>.self, callback)
+            return
+        }
+
+        return
+
     }
     
     private struct CreatePayload: Codable {
-        let supplierId: Int
-        let amount: String
-        let identifier: String
-        let inviteeEmail: String
-        let communicate: Bool
-        
-        private enum CodingKeys: String, CodingKey {
-            case supplierId = "supplier_id"
-            case amount
-            case identifier = "invoice_identifier"
-            case inviteeEmail = "invitee_email"
-            case communicate
-        }
-    }
     
-    private struct RetrieveParameters: Codable {
-        let publicId: String
+        let supplier_id: Int
+        let invoice_amount: String
+        let denomination: Int
+        let invoice_identifier: String
+        let invitee_email: String
+        let communicate: Bool
+        let nomenclature: Int?
+        let invitee_phone: String?
         
-        private enum CodingKeys: String, CodingKey {
-            case publicId = "public_id"
-        }
     }
+
 }

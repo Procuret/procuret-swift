@@ -310,11 +310,23 @@ internal struct Utility {
          
          */
     }
-    
+
     static func provideTestSupplier(
         expectation: XCTestExpectation,
         callback: @escaping (Supplier) -> Void
     ) -> Void {
+        Self.provideTestSupplier(
+            expectation: expectation
+        ) { supplier, _ in callback(supplier); return }
+    }
+        
+    static func provideTestSupplier(
+        expectation: XCTestExpectation,
+        callback: @escaping (Supplier, Session) -> Void
+    ) -> Void {
+        
+        let session = Utility.provideTestSession()
+        
         Supplier.create(
             legalName: "Test Supplier",
             tradingName: nil,
@@ -329,7 +341,7 @@ internal struct Utility {
                 regionId: 1,
                 countryId: 1
             ),
-            session: Utility.provideTestSession(),
+            session: session,
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { error, supplier in
                 
@@ -341,7 +353,7 @@ internal struct Utility {
                     return
                 }
                 
-                callback(supplier)
+                callback(supplier, session)
                 return
                 
             }
