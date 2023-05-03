@@ -36,7 +36,7 @@ public struct PayNowTransaction: Codable {
     }
     
     public static func create(
-        divisions: GenericProspectiveDivision,
+        methodId: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, PayNowTransaction?) -> Void
@@ -44,7 +44,7 @@ public struct PayNowTransaction: Codable {
         Request.make(
             path: self.path,
             payload: CreatePayloadWithMethod(
-                divisions: divisions
+                methodId: methodId
             ),
             session: session,
             query: nil,
@@ -59,8 +59,8 @@ public struct PayNowTransaction: Codable {
     public static func create(
         amount: Amount,
         reference: String,
-        businessId: String,
-        supplierId: String,
+        businessId: Int,
+        supplierId: Int,
         divisions: ProspectiveDivision,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
@@ -88,8 +88,8 @@ public struct PayNowTransaction: Codable {
     private struct CreatePayload: Codable {
         let amount: Amount
         let reference: String
-        let businessId: String
-        let supplierId: String
+        let businessId: Int
+        let supplierId: Int
         let divisions: ProspectiveDivision
         
         private enum CodingKeys: String, CodingKey {
@@ -102,10 +102,10 @@ public struct PayNowTransaction: Codable {
     }
     
     private struct CreatePayloadWithMethod: Codable {
-        let divisions: GenericProspectiveDivision
+        let methodId: String
         
         private enum CodingKeys: String, CodingKey {
-            case divisions
+            case methodId = "method_id"
         }
     }
 }
