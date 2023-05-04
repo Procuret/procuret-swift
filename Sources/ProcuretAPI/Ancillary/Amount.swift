@@ -9,24 +9,6 @@ import Foundation
 
 public struct Amount: Codable {
     
-    private static var prettyFormatter: NumberFormatter {
-        get {
-            
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            return formatter
-        }
-    }
-    
-    private static var decodeFormatter: NumberFormatter {
-        get {
-            let formatter = NumberFormatter()
-            formatter.generatesDecimalNumbers = true
-            formatter.numberStyle = .decimal
-            return formatter
-        }
-    }
-    
     public let rawMagnitude: String
     public let denomination: Currency
     
@@ -73,17 +55,23 @@ public struct Amount: Codable {
     }
     
     public func asDecimalString(showFractionalUnits: Bool = true) -> String {
+        
+        let formatter = NumberFormatter()
+        formatter.generatesDecimalNumbers = true
+        formatter.numberStyle = .decimal
+        
         if showFractionalUnits {
             let digits = self.denomination.exponent
-            Self.prettyFormatter.minimumFractionDigits = digits
-            Self.prettyFormatter.maximumFractionDigits = digits
+            formatter.minimumFractionDigits = digits
+            formatter.maximumFractionDigits = digits
         } else {
-            Self.prettyFormatter.minimumFractionDigits = 0
-            Self.prettyFormatter.maximumFractionDigits = 0
+            formatter.minimumFractionDigits = 0
+            formatter.maximumFractionDigits = 0
         }
-        return Self.prettyFormatter.string(
+        return formatter.string(
             from: self.magnitude as NSDecimalNumber
         ) ?? "FORMAT_FAILED"
+
     }
     
     public func asSymbolisedDecimalString(
