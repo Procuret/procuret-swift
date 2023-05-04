@@ -16,8 +16,6 @@ class PayNowTest: XCTestCase {
             description: "make pay now attempt"
         )
         
-        let session = Session.forceFromEnvironmentVariables()
-        
         func receivePayNowResults(
             error: Error?,
             payNow: PayNowTransaction?
@@ -30,50 +28,36 @@ class PayNowTest: XCTestCase {
             return
         }
         
-        func createPayNowAttempt(
-            for line: DealLedgerLine,
-            inSeries series: PaymentSeries
-        ) {
+        Utility.provideTestSupplier(
+            expectation: expectation
+        ) { supplier in
             
-            PayNowTransaction.create(
-                methodId: series.paymentMethod.paymentMethodId,
-                amount: line.nominalPayment,
-                reference: "test pay now",
-                businessId: String(series.customer.entityId),
-                supplierId: String(series.supplier.entityId),
-                session: session,
-                callback: receivePayNowResults
-            )
-        }
-        
-        func receivePaymentSeries(error: Error?, series: PaymentSeries?) -> Void {
-            
-            XCTAssertNil(error)
-            XCTAssertNotNil(series)
-            
-            expectation.fulfill()
-            
-            return
-    
-        }
-        
-        PaymentSeries.retrieveMany(
-            session: session,
-            hasOverdueInstalement: true,
-            endpoint: .forceFromEnvironmentVariables()
-        ) { error, many in
-            
-            guard let many = many else {
-                XCTFail("no series"); expectation.fulfill()
-                return
+            Utility.provideTestBusiness(
+                expectation: expectation
+            ) { business, session in
+                
+                Utility.provideTestBankAccount(
+                    expectation: expectation
+                ) { account in
+                    
+                    PayNowTransaction.create(
+                        authenticatedBy: session,
+                        amount: Amount(
+                            magnitude: Decimal(string: "100")!,
+                            denomination: .AUD
+                        ),
+                        reference: "pay now test",
+                        business: business,
+                        supplier: supplier,
+                        divisions: ProspectiveDivision(
+                            methodId: account.paymentMethodId,
+                            magnitude: "100"
+                        ),
+                        at: .forceFromEnvironmentVariables(),
+                        then: receivePayNowResults
+                    )
+                }
             }
-            
-            PaymentSeries.retrieve(
-                session: session,
-                publicId: many[0].publicId,
-                endpoint: .forceFromEnvironmentVariables(),
-                callback: receivePaymentSeries
-            )
         }
         
         wait(for: [expectation], timeout: 5.0)

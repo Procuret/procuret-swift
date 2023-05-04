@@ -48,7 +48,10 @@ public struct PayNowTransaction: Codable {
         Request.make(
             path: self.path,
             payload: CreatePayload(
-                amount: amount,
+                amount: Amount(
+                    magnitude: amount.magnitude,
+                    denomination: amount.denomination
+                ),
                 reference: reference,
                 customer_business_id: business.entity.publicId,
                 supplier_id: supplier.entity.publicId,
