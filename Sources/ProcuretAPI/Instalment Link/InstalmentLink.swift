@@ -16,6 +16,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
     public let supplier: EntityHeadline
     public let created: Date
     public let inviteeEmail: String
+    public let inviteePhone: String?
     public let invoiceIdentifier: String
     public let opens: Array<InstalmentLinkOpen>
     public let disposition: Disposition?
@@ -24,6 +25,10 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
     private let rawInvoiceAmount: String
     private let rawDenominationId: Int
     
+    public var linkUrl: String { get {
+        return "https://procuret.com/b?il=\(self.publicId)"
+    } }
+
     public var invoiceAmount: Amount { get {
         return Amount(
             magnitude: Decimal(string: self.rawInvoiceAmount) ?? -1,
@@ -44,6 +49,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
         case supplier
         case created
         case inviteeEmail = "invitee_email"
+        case inviteePhone = "invitee_phone_digits"
         case invoiceIdentifier = "invoice_identifier"
         case opens
         case disposition
