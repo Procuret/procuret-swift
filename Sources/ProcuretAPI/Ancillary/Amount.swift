@@ -13,7 +13,7 @@ public struct Amount: Codable {
         get {
             
             let formatter = NumberFormatter()
-            formatter.numberStyle = .currency
+            formatter.numberStyle = .decimal
             return formatter
         }
     }
