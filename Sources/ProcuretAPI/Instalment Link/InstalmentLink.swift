@@ -16,26 +16,38 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
     public let supplier: EntityHeadline
     public let created: Date
     public let inviteeEmail: String
-    public let invoiceAmount: String
     public let invoiceIdentifier: String
     public let opens: Array<InstalmentLinkOpen>
     public let disposition: Disposition?
+
+    private let rawInvoiceAmount: String
+    private let rawDenominationId: Int
     
+    public var invoiceAmount: Amount { get {
+        return Amount(
+            magnitude: Decimal(string: self.rawInvoiceAmount) ?? -1,
+            denomination: Currency.with(
+                indexid: self.rawDenominationId
+            ) ?? .AUD
+        )
+    }}
+
     public var id: String { get { return self.publicId} }
     
     public enum OrderBy: String, Codable {
         case created = "created"
     }
-    
+
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
         case supplier
         case created
         case inviteeEmail = "invitee_email"
-        case invoiceAmount = "invoice_amount"
         case invoiceIdentifier = "invoice_identifier"
         case opens
         case disposition
+        case rawInvoiceAmount = "invoice_amount"
+        case rawDenominationId = "denomination_id"
     }
     
     public enum Nomenclature: Int, Codable, CaseIterable, Identifiable {
