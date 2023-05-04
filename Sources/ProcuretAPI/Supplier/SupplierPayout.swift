@@ -9,7 +9,7 @@ import Foundation
 
 public struct SupplierPayout: Codable, Hashable, Identifiable {
     
-    static let path: String = "/supplier/payout'"
+    static let path: String = "/supplier/payout"
     static let listPath: String = SupplierPayout.path + "/list"
     
     public let publicId: String
