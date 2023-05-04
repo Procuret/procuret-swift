@@ -19,6 +19,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
     public let invoiceIdentifier: String
     public let opens: Array<InstalmentLinkOpen>
     public let disposition: Disposition?
+    public let nomenclature: Nomenclature
 
     private let rawInvoiceAmount: String
     private let rawDenominationId: Int
@@ -48,6 +49,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
         case disposition
         case rawInvoiceAmount = "invoice_amount"
         case rawDenominationId = "denomination_id"
+        case nomenclature = "sale_name"
     }
     
     public enum Nomenclature: Int, Codable, CaseIterable, Identifiable {
