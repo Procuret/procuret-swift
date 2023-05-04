@@ -36,52 +36,26 @@ public struct PayNowTransaction: Codable {
     }
     
     public static func create(
-        methodId: String,
+        authenticatedBy session: SessionRepresentative,
         amount: Amount,
         reference: String,
-        businessId: String,
-        supplierId: String,
-        session: SessionRepresentative,
-        endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, PayNowTransaction?) -> Void
-    ) {
-        Request.make(
-            path: self.path,
-            payload: CreatePayloadWithMethod(
-                methodId: methodId,
-                amount: amount,
-                reference: reference,
-                businessId: businessId,
-                supplierId: supplierId
-            ),
-            session: session,
-            query: nil,
-            method: .POST,
-            endpoint: endpoint
-        ) { e, d in
-            Request.decodeResponse(e, d, Self.self, callback)
-            return
-        }
-    }
-    
-    public static func create(
-        amount: Amount,
-        reference: String,
-        businessId: String,
-        supplierId: String,
+        business: Business,
+        supplier: Supplier,
         divisions: ProspectiveDivision,
-        session: SessionRepresentative,
-        endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, PayNowTransaction?) -> Void
+        at endpoint: ApiEndpoint = ApiEndpoint.live,
+        then callback: @escaping (Error?, PayNowTransaction?) -> Void
     ) {
         Request.make(
             path: self.path,
             payload: CreatePayload(
                 amount: amount,
                 reference: reference,
-                businessId: businessId,
-                supplierId: supplierId,
-                divisions: divisions
+                customer_business_id: business.entity.publicId,
+                supplier_id: supplier.entity.publicId,
+                divisions: [ProspectiveDivision(
+                    methodId: divisions.methodId,
+                    magnitude: amount.asDecimalString()
+                )]
             ),
             session: session,
             query: nil,
@@ -93,35 +67,12 @@ public struct PayNowTransaction: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Encodable {
         let amount: Amount
         let reference: String
-        let businessId: String
-        let supplierId: String
-        let divisions: ProspectiveDivision
+        let customer_business_id: Int
+        let supplier_id: Int
+        let divisions: Array<ProspectiveDivision>
         
-        private enum CodingKeys: String, CodingKey {
-            case amount
-            case reference
-            case businessId = "customer_business_id"
-            case supplierId = "supplier_id"
-            case divisions
-        }
-    }
-    
-    private struct CreatePayloadWithMethod: Codable {
-        let methodId: String
-        let amount: Amount
-        let reference: String
-        let businessId: String
-        let supplierId: String
-        
-        private enum CodingKeys: String, CodingKey {
-            case methodId = "method_id"
-            case amount
-            case reference
-            case businessId = "customer_business_id"
-            case supplierId = "supplier_id"
-        }
     }
 }
