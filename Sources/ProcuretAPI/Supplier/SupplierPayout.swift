@@ -43,7 +43,7 @@ public struct SupplierPayout: Codable, Hashable, Identifiable {
         case created = "created"
     }
     
-    public func retrieveMany(
+    public static func retrieveMany(
         authenticatedBy session: SessionRepresentative,
         limit: Int = 20,
         offset: Int = 0,
