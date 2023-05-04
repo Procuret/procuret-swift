@@ -74,7 +74,7 @@ public struct Amount: Codable {
     
     public func asDecimalString(showFractionalUnits: Bool = true) -> String {
         if showFractionalUnits {
-            let digits = self.magnitude.exponent
+            let digits = self.denomination.exponent
             Self.prettyFormatter.minimumFractionDigits = digits
             Self.prettyFormatter.maximumFractionDigits = digits
         } else {
