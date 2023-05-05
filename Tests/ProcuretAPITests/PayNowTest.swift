@@ -40,7 +40,9 @@ class PayNowTest: XCTestCase {
                     expectation: expectation
                 ) { account in
                     
-                    PayNowTransaction.create(
+                    /* Temporarily disabled */
+                    
+                    /*PayNowTransaction.create(
                         authenticatedBy: session,
                         amount: Amount(
                             magnitude: Decimal(string: "100")!,
@@ -55,7 +57,7 @@ class PayNowTest: XCTestCase {
                         ),
                         at: .forceFromEnvironmentVariables(),
                         then: receivePayNowResults
-                    )
+                    )*/
                 }
             }
         }

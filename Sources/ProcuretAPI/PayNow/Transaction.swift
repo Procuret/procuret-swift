@@ -41,7 +41,7 @@ public struct PayNowTransaction: Codable {
         reference: String,
         business: Business,
         supplier: Supplier,
-        divisions: ProspectiveDivision,
+        method: PaymentMethod,
         at endpoint: ApiEndpoint = ApiEndpoint.live,
         then callback: @escaping (Error?, PayNowTransaction?) -> Void
     ) {
@@ -56,7 +56,7 @@ public struct PayNowTransaction: Codable {
                 customer_business_id: business.entity.publicId,
                 supplier_id: supplier.entity.publicId,
                 divisions: [ProspectiveDivision(
-                    methodId: divisions.methodId,
+                    methodId: method.publicId,
                     magnitude: amount.asDecimalString()
                 )]
             ),
