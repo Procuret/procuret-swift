@@ -26,11 +26,11 @@ public struct ProspectiveFee: Decodable {
         
     }
     
-    public static func create(
+    public static func calculate(
         authenticatedBy session: SessionRepresentative,
-        supplierId: Int,
+        supplier: Supplier,
         amount: Amount,
-        usingMethodWithId methodId: String,
+        method: PaymentMethod,
         at endpoint: ApiEndpoint = .live,
         then callback: @escaping (Error?, Self?) -> Void
     ) {
@@ -38,10 +38,10 @@ public struct ProspectiveFee: Decodable {
         Request.make(
             path: Self.path,
             payload: Self.CreatePayload(
-                supplier_id: supplierId,
+                supplier_id: supplier.entity.publicId,
                 amount: amount,
                 divisions: [Self.Division(
-                    method_id: methodId,
+                    method_id: method.publicId,
                     magnitude: amount.asDecimalString()
                 )]
             ),
@@ -56,28 +56,6 @@ public struct ProspectiveFee: Decodable {
         
         return
         
-    }
-    
-    public static func retrieve(
-        authenticatedBy session: SessionRepresentative,
-        supplierId: String,
-        amount: Amount,
-        divisions: ProspectiveDivision,
-        at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Self?) -> Void
-    ) {
-        Request.make(
-            path: self.path,
-            data: nil,
-            session: session,
-            query: QueryString([
-                UrlParameter(supplierId, key: "supplier_id")
-            ]),
-            method: .GET,
-            endpoint: endpoint
-        ) { error, data in
-            fatalError("Not implemented.")
-        }
     }
     
     private struct Division: Encodable {
