@@ -41,7 +41,7 @@ public struct ProspectiveFee: Decodable {
                 supplier_id: supplier.entity.publicId,
                 amount: amount,
                 divisions: [Self.Division(
-                    method_id: method.publicId,
+                    instrument: method.instrument,
                     magnitude: amount.asDecimalString()
                 )]
             ),
@@ -59,7 +59,7 @@ public struct ProspectiveFee: Decodable {
     }
     
     private struct Division: Encodable {
-        let method_id: String
+        let instrument: Instrument
         let magnitude: String
     }
     
