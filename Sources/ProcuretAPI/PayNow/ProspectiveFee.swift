@@ -42,7 +42,7 @@ public struct ProspectiveFee: Decodable {
                 amount: amount,
                 divisions: [Self.Division(
                     instrument: method.instrument,
-                    magnitude: amount.asDecimalString()
+                    magnitude: amount.rawMagnitude
                 )]
             ),
             session: session,
@@ -68,6 +68,5 @@ public struct ProspectiveFee: Decodable {
         let amount: Amount
         let divisions: Array<ProspectiveFee.Division>
     }
-    
     
 }
