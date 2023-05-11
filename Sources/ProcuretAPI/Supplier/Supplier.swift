@@ -23,6 +23,7 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
     public let maxTransactionSize: Array<Amount>
     public let termRates: Array<TermRate>
     public let defaultDenomination: Currency
+    public let country: Country
     
     public var id: Int { return self.entity.publicId }
 
@@ -41,6 +42,7 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
         case maxTransactionSize = "max_transaction_size"
         case termRates = "term_rates"
         case defaultDenomination = "default_denomination"
+        case country
     }
     
     public static func create(
@@ -245,7 +247,8 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
             forKey: .maxTransactionSize
         )
         self.termRates = try c.decode(Array<TermRate>.self, forKey: .termRates)
-        
+
+        self.country = try c.decode(Country.self, forKey: .country)
         
         /* The denomination might be an integer ID, or a decodable object*/
         let denomination: Currency
