@@ -66,8 +66,8 @@ public enum EntityIdentifierType: Int, Codable, CaseIterable, Identifiable {
 
 public struct EntityIdentifier: Codable {
     
-    let identifier: String
-    let identifierType: EntityIdentifierType
+    public let identifier: String
+    public let identifierType: EntityIdentifierType
     
     private enum CodingKeys: String, CodingKey {
         
