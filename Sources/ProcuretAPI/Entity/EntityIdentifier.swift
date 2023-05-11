@@ -64,11 +64,15 @@ public enum EntityIdentifierType: Int, Codable, CaseIterable, Identifiable {
 
 }
 
-public struct EntityIdentifier: Codable {
+public struct EntityIdentifier: Codable, Identifiable {
     
     public let identifier: String
     public let identifierType: EntityIdentifierType
     
+    public var id: String { get { return
+        self.identifierType.abbreviation + " " + self.identifier
+    } }
+
     private enum CodingKeys: String, CodingKey {
         
         case identifier
