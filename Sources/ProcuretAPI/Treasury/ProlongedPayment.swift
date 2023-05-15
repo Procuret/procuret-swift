@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ProlongedPayment: Codable, Identifiable {
+public struct ProlongedPayment: Codable, Identifiable, Equatable {
     
     internal static let path = "/prolonged-payment"
     internal static let listPath = "/prolonged-payment/list"
@@ -78,4 +78,13 @@ public struct ProlongedPayment: Codable, Identifiable {
         }
         
     }
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return (
+            lhs.publicId == rhs.publicId
+            && lhs.completed == rhs.completed
+            && lhs.failed == rhs.failed
+        )
+    }
+    
 }

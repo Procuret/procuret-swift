@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RelatedTransaction: Codable {
+public struct RelatedTransaction: Codable, Equatable {
     
     public let transactionType: TransactionType
     public let transactionId: String
@@ -16,6 +16,7 @@ public struct RelatedTransaction: Codable {
         case transactionType = "transaction_type"
         case transactionId = "transaction_id"
     }
+
 }
 
 

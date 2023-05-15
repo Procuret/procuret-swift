@@ -7,7 +7,8 @@
 
 import Foundation
 
-public enum PaymentMechanism: Int, Codable, CaseIterable, Identifiable {
+public enum PaymentMechanism: Int, Codable, CaseIterable, Identifiable,
+                              Equatable {
     
     case onPlatform = 1
     case offPlatform = 2

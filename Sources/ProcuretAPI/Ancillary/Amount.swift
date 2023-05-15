@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Amount: Codable {
+public struct Amount: Codable, Equatable {
     
     public let rawMagnitude: String
     public let denomination: Currency

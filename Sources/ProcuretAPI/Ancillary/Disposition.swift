@@ -8,6 +8,7 @@
 import Foundation
 
 public struct Disposition: Codable {
+    
     let count: Int
     let limit: Int
     let offset: Int

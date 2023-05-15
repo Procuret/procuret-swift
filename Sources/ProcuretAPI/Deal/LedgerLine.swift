@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DealLedgerLine: Codable, Identifiable {
+public struct DealLedgerLine: Codable, Identifiable, Equatable {
     
     public enum PaymentStatus {
         case notDue
@@ -17,8 +17,6 @@ public struct DealLedgerLine: Codable, Identifiable {
         case paid
         case prolongedPaymentInProgress
     }
-    
-    // TO DO: Add Prolonged Payment
     
     public let sequence: Int
     public let date: String

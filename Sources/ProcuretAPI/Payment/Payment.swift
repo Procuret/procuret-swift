@@ -7,15 +7,18 @@
 
 import Foundation
 
-public struct Payment: Codable {
+public struct Payment: Codable, Equatable {
     
-    internal static let path = "/payment"
+    let publicId: String
+    let created: Date
+    let executed: Date
+    let active: Bool
     
-    internal static let insufficient_funds: String =
-    """
-    Your financial institution reports that
-    your card has insufficient funds available. You could try adding
-    funds, or try using a different card.
-    """
-
+    private enum CodingKeys: String, CodingKey {
+        case publicId = "public_id"
+        case created
+        case executed
+        case active
+    }
+    
 }

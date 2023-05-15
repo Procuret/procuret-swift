@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EntityHeadline: Codable {
+public struct EntityHeadline: Codable, Equatable {
     
     public let entityId: Int
     public let legalEntityName: String
@@ -16,4 +16,9 @@ public struct EntityHeadline: Codable {
         case entityId = "entity_id"
         case legalEntityName = "legal_entity_name"
     }
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.entityId == rhs.entityId
+    }
+
 }

@@ -8,7 +8,7 @@
 import Foundation
 import PDFKit
 
-public struct InstalmentSchedule: Codable {
+public struct InstalmentSchedule: Codable, Equatable {
     
     internal static let path = "/instalment-schedule"
     internal static let pdfPath = Self.path + "/pdf"

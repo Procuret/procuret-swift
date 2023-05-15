@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct ScheduleTotalRow: Codable {
+public struct ScheduleTotalRow: Codable, Equatable {
+
     let totalPayments: String
     let totalPrincipal: String
     let totalInterest: String
@@ -19,4 +20,5 @@ public struct ScheduleTotalRow: Codable {
         case totalInterest = "total_interest"
         case denomination
     }
+
 }

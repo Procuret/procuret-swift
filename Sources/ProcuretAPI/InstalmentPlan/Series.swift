@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PaymentSeries: Codable, Identifiable, Hashable {
+public struct PaymentSeries: Codable, Identifiable, Equatable {
     
     internal static let path = "/payment/series"
     internal static let listPath = PaymentSeries.path + "/list"
@@ -160,13 +160,16 @@ public struct PaymentSeries: Codable, Identifiable, Hashable {
         }
     }
     
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.publicId)
-        return
-    }
-    
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.publicId == rhs.publicId
+        return (
+            lhs.publicId == rhs.publicId
+            && lhs.totalPayable == rhs.totalPayable
+            && lhs.sumPayments == rhs.sumPayments
+            && lhs.completed == rhs.completed
+            && lhs.mechanism == rhs.mechanism
+            && lhs.oldestUnpaidInstalmentDue24hrsStarting
+                == rhs.oldestUnpaidInstalmentDue24hrsStarting
+        )
     }
 
 }
