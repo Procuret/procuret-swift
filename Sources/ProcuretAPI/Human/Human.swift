@@ -23,7 +23,7 @@ public struct Human: Codable, Agent {
     public let identity: HumanIdentity?
     public let created: String
     public let disposition: Disposition
-    public let documents: Array<HumanIdentityDocument>?
+    public let documents: Array<IdentityDocumentHeadline>?
     
     public var agentId: Int { get { return self.humanId } }
     
@@ -40,7 +40,7 @@ public struct Human: Codable, Agent {
         case identity
         case created
         case disposition
-        case documents = "document_type_id"
+        case documents
     }
     
     var fullName: String {
