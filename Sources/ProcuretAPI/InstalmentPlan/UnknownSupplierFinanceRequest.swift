@@ -12,7 +12,7 @@ public struct UnknownSupplierFinanceRequest {
     
     internal static let path = "/unknown-supplier-finance-request"
     
-    static func create(
+    public static func create(
         authenticatedBy session: SessionRepresentative,
         forCustomer business: Business,
         supplierIdentifier: EntityIdentifier,
