@@ -41,6 +41,7 @@ public struct Country: Codable, Identifiable, Hashable {
         return
     }
     
+    
     public enum Id: Int, Codable {
     
         case australia = 1

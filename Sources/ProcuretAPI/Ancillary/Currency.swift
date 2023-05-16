@@ -63,5 +63,16 @@ public struct Currency: Codable, Identifiable, Hashable, CaseIterable {
         
         return nil
     }
+    
+    public static func associatedWith(country: Country) -> Self? {
+        switch country {
+        case .australia:
+            return .AUD
+        case .newZealand:
+            return .NZD
+        default:
+            return nil
+        }
+    }
 
 }
