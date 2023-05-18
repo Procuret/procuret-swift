@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Address: Codable, Equatable, Identifiable {
+public struct Address: Codable, Equatable, Identifiable, Hashable {
     
     public let publicId: String
     public let line1: String
@@ -102,4 +102,16 @@ public struct Address: Codable, Equatable, Identifiable {
             case countryId = "country"
         }
     }
+    
+    // Address records are immutable, therefore we only need to compare IDs
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.publicId == rhs.publicId
+    }
+    
+    // Address records are immutable, therefore we only need to hash the ID
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.publicId)
+        return
+    }
+    
 }

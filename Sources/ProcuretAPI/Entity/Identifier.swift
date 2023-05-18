@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct EntityIdentifierRecord: Codable, Identifiable, Equatable {
+public struct EntityIdentifierRecord: Codable, Identifiable, Equatable,
+                                        Hashable {
     
     public static let path = "/"
     
@@ -62,4 +63,5 @@ public struct EntityIdentifierRecord: Codable, Identifiable, Equatable {
             case identifier
         }
     }
+    
 }

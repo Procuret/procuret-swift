@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Entity: Codable, Identifiable, Equatable {
+public struct Entity: Codable, Identifiable, Equatable, Hashable {
     
     internal static let path = "/entity"
     internal static let listPath = "/entity/list"
@@ -196,6 +196,16 @@ public struct Entity: Codable, Identifiable, Equatable {
         
             return
 
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.publicId)
+        hasher.combine(self.hasBusinessRecord)
+        hasher.combine(self.hasSupplierRecord)
+        hasher.combine(self.address)
+        hasher.combine(self.entityType)
+        hasher.combine(self.identifierRecords)
+        hasher.combine(self.legalEntityName)
     }
 
 }
