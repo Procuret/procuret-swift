@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum EntityType: Int, Codable, CaseIterable {
+public enum EntityType: Int, Codable, CaseIterable, Equatable {
     
     case company = 1
     case soleTrader = 2

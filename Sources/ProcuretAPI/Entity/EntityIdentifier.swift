@@ -8,7 +8,8 @@
 import Foundation
 
 
-public enum EntityIdentifierType: Int, Codable, CaseIterable, Identifiable {
+public enum EntityIdentifierType: Int, Codable, CaseIterable, Identifiable,
+                                  Equatable {
     
     case australianBusinessNumber = 1
     case australianCompanyNumber = 2

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PhoneNumber: Codable {
+public struct PhoneNumber: Codable, Equatable {
     
     internal static let path = "/phone-number"
     

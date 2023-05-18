@@ -7,8 +7,9 @@
 
 import Foundation
 
-public struct Address: Codable {
+public struct Address: Codable, Equatable, Identifiable {
     
+    public let publicId: String
     public let line1: String
     public let line2: String?
     public let line3: String?
@@ -18,7 +19,10 @@ public struct Address: Codable {
     public let region: Region?
     public let country: Country?
     
+    public var id: String { get { return self.publicId } }
+
     private enum CodingKeys: String, CodingKey {
+        case publicId = "public_id"
         case line1 = "line_1"
         case line2 = "line_2"
         case line3 = "line_3"

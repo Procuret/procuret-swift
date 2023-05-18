@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EntityIdentifierRecord: Codable, Identifiable {
+public struct EntityIdentifierRecord: Codable, Identifiable, Equatable {
     
     public static let path = "/"
     

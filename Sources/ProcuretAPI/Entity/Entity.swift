@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Entity: Codable, Hashable, Identifiable {
+public struct Entity: Codable, Identifiable, Equatable {
     
     internal static let path = "/entity"
     internal static let listPath = "/entity/list"
@@ -159,16 +159,7 @@ public struct Entity: Codable, Hashable, Identifiable {
             case manage
         }
     }
-    
-    public func hash(into hasher: inout Hasher) -> Void {
-        hasher.combine(self.publicId)
-        return
-    }
-    
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.publicId == rhs.publicId
-    }
-    
+
     public static func retrieveMany(
         session: SessionRepresentative,
         accessibleTo: Agent? = nil,
