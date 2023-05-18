@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Business: Codable {
+public struct Business: Codable, Equatable {
     
     internal static let path = "/business"
     internal static let listPath = Business.path + "/list"

@@ -30,10 +30,5 @@ public struct TermRate: Codable, Hashable, Identifiable, Equatable {
     public var id: String { get {
         return "\(self.supplierId)_\(self.periods)"
     } }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.id)
-        return
-    }
 
 }

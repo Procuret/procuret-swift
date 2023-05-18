@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Supplier: Codable, Identifiable, Equatable, Hashable {
+public struct Supplier: Codable, Identifiable, Equatable {
     
     internal static let path = "/supplier"
     internal static let listPath = Supplier.path + "/list"
@@ -213,15 +213,6 @@ public struct Supplier: Codable, Identifiable, Equatable, Hashable {
             case phoneNumber = "phone_number"
             case address
         }
-    }
-    
-    public static func == (lhs: Supplier, rhs: Supplier) -> Bool {
-        return lhs.entity.publicId == rhs.entity.publicId
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.entity.publicId)
-        return
     }
     
     public init(from decoder: Decoder) throws {

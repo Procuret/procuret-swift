@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum PayNowFeeMode: Int, Codable, Hashable {
+public enum PayNowFeeMode: Int, Codable, Hashable, Equatable, CaseIterable {
     
     case customerPays = 1
     case supplierPays = 2

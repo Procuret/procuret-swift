@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Brand: Codable {
+public struct Brand: Codable, Equatable, Hashable {
     
     internal static let path = "/entity/brand"
     
@@ -75,7 +75,7 @@ public struct Brand: Codable {
 
     }
     
-    public struct Media: Codable {
+    public struct Media: Codable, Equatable, Hashable {
         
         public enum Scheme: Int, Codable, CaseIterable, Identifiable {
             case dark = 2

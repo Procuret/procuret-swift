@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Disposition: Codable {
+public struct Disposition: Codable, Equatable {
     
     let count: Int
     let limit: Int
