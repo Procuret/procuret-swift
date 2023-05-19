@@ -136,6 +136,27 @@ public struct Supplier: Codable, Identifiable, Equatable {
         }
     }
     
+    public static func retrieve(
+        shortPublicId: String,
+        authenticatedBy session: SessionRepresentative? = nil,
+        at endpoint: ApiEndpoint = ApiEndpoint.live,
+        then callback: @escaping (Error?, Self?) -> Void
+    ) {
+        Request.make(
+            path: self.path,
+            data: nil,
+            session: session,
+            query: QueryString([
+                UrlParameter(shortPublicId, key: "public_id")
+            ]),
+            method: .GET,
+            endpoint: endpoint
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+            return
+        }
+    }
+
     public enum OrderBy: String {
         
         case created = "created"
