@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct Session: Codable, Agent, SessionRepresentative {
+public struct Session: Codable, Agent, SessionRepresentative, Equatable {
     
     private static let path = "/session"
 
@@ -279,4 +279,12 @@ public struct Session: Codable, Agent, SessionRepresentative {
             case perspective
         }
     }
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return (
+            lhs.sessionId == rhs.sessionId
+            && lhs.genericAgent == rhs.genericAgent
+        )
+    }
+    
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct HumanIdentity: Codable {
+public struct HumanIdentity: Codable, Equatable {
     
     internal static let path = "/human/identity"
     

@@ -9,7 +9,7 @@ import Foundation
 
 
 
-public enum GenericAgent: Codable {
+public enum GenericAgent: Codable, Equatable {
     
     case human(Human)
     case standaloneAgent(StandaloneAgent)

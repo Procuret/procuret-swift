@@ -83,9 +83,12 @@ public struct PhoneNumber: Codable, Equatable, Identifiable, Hashable {
         let new_number: String
     }
     
-    // Phone numbers are immutable, so we can compare IDs
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.phoneId == rhs.phoneId
+        return (
+            lhs.phoneId == rhs.phoneId
+            && lhs.confirmed == rhs.confirmed
+            && lhs.confirmationRequired == rhs.confirmationRequired
+        )
     }
 
 }

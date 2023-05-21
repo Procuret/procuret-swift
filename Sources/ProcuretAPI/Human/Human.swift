@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Human: Codable, Agent {
+public struct Human: Codable, Agent, Equatable {
     
     public static let maxNameLength: Int = 64
     public static let minNameLength: Int = 1
@@ -147,9 +147,6 @@ public struct Human: Codable, Agent {
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Human?) -> Void
     ) -> Void {
-        
-        print("create human")
-        print(endpoint)
 
         Request.make(
             path: self.path,
