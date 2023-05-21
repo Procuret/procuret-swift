@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PhoneNumber: Codable, Equatable {
+public struct PhoneNumber: Codable, Equatable, Identifiable, Hashable {
     
     internal static let path = "/phone-number"
     
@@ -16,6 +16,8 @@ public struct PhoneNumber: Codable, Equatable {
     public let confirmed: Bool?
     public let confirmationRequired: Bool?
     
+    public var id: Int { return self.phoneId }
+
     private enum CodingKeys: String, CodingKey {
         case phoneId = "indexid"
         case digits
@@ -79,6 +81,11 @@ public struct PhoneNumber: Codable, Equatable {
     private struct UpdateForHumanPayload: Codable {
         let phone_id: Int
         let new_number: String
+    }
+    
+    // Phone numbers are immutable, so we can compare IDs
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.phoneId == rhs.phoneId
     }
 
 }
