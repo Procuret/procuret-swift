@@ -23,6 +23,29 @@ public struct PhoneNumber: Codable, Equatable {
         case confirmationRequired = "confirmation_required"
     }
     
+    public func replaceForAssociatedHuman(
+        authenticatedBy session: SessionRepresentative,
+        withNewDigits newDigits: String,
+        at endpoint: ApiEndpoint = .live,
+        callback: @escaping (Error?, Self?) -> Void
+    ) {
+        
+        Request.make(
+            path: Self.path,
+            payload: UpdateForHumanPayload(
+                phone_id: self.phoneId
+            ), session: session,
+            query: nil,
+            method: .PUT,
+            endpoint: endpoint
+        ) { error, data in
+            Request.decodeResponse(error, data, Self.self, callback)
+        }
+        
+        return
+        
+    }
+    
     public static func create (
         digits: String,
         session: SessionRepresentative?,
@@ -51,4 +74,9 @@ public struct PhoneNumber: Codable, Equatable {
             case debugEmail = "debug_email"
         }
     }
+    
+    private struct UpdateForHumanPayload: Codable {
+        let phone_id: Int
+    }
+
 }
