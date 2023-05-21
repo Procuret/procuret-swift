@@ -33,7 +33,8 @@ public struct PhoneNumber: Codable, Equatable {
         Request.make(
             path: Self.path,
             payload: UpdateForHumanPayload(
-                phone_id: self.phoneId
+                phone_id: self.phoneId,
+                new_number: newDigits
             ), session: session,
             query: nil,
             method: .PUT,
@@ -64,7 +65,7 @@ public struct PhoneNumber: Codable, Equatable {
             fatalError("Not implemented")
         }
     }
-    
+
     private struct CreatePayload: Codable {
         let digits: String
         let debugEmail: String?
@@ -77,6 +78,7 @@ public struct PhoneNumber: Codable, Equatable {
     
     private struct UpdateForHumanPayload: Codable {
         let phone_id: Int
+        let new_number: String
     }
 
 }
