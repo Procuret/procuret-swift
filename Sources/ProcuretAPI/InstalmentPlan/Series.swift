@@ -30,6 +30,7 @@ public struct PaymentSeries: Codable, Identifiable, Equatable {
     public let completed: Bool
     public let commitmentId: String
     public let mechanism: PaymentMechanism?
+    public let allowsSelfServePayments: Bool
     public let oldestUnpaidInstalmentDue24hrsStarting: Date?
     public let disposition: Disposition
     
@@ -54,6 +55,7 @@ public struct PaymentSeries: Codable, Identifiable, Equatable {
         case completed
         case commitmentId = "commitment_id"
         case mechanism
+        case allowsSelfServePayments = "allows_self_serve_payments"
         case oldestUnpaidInstalmentDue24hrsStarting =
                 "oldest_unpaid_instalment_due_24hrs_starting"
         case disposition
@@ -167,6 +169,7 @@ public struct PaymentSeries: Codable, Identifiable, Equatable {
             && lhs.sumPayments == rhs.sumPayments
             && lhs.completed == rhs.completed
             && lhs.mechanism == rhs.mechanism
+            && lhs.allowsSelfServePayments == rhs.allowsSelfServePayments
             && lhs.oldestUnpaidInstalmentDue24hrsStarting
                 == rhs.oldestUnpaidInstalmentDue24hrsStarting
         )
