@@ -68,7 +68,29 @@ public struct Address: Codable, Equatable, Identifiable, Hashable {
         public let locality: String
         public let regionId: Int?
         public let countryId: Int
-
+        
+        public init(
+            line1: String,
+            line2: String?,
+            line3: String?,
+            line4: String?,
+            postalCode: String,
+            locality: String,
+            regionId: Int?,
+            countryId: Int
+        ) {
+            self.line1 = line1
+            self.line2 = line2
+            self.line3 = line3
+            self.line4 = line4
+            self.postalCode = postalCode
+            self.locality = locality
+            self.regionId = regionId
+            self.countryId = countryId
+                
+            return
+        }
+        
         private enum CodingKeys: String, CodingKey {
             case line1 = "line_1"
             case line2 = "line_2"
