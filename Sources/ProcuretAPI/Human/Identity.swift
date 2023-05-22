@@ -19,20 +19,29 @@ public struct HumanIdentity: Codable, Equatable {
         case address
     }
     
+    
+    /// Creates a `HumanIdentity`
+    ///
+    /// Note that it is the responsibility of the call site to provide a date
+    /// of birth as a string. The callsite is given this responsibility because Swift lacks a "date-sans-time"
+    /// type, and it would be unclear whether a provided `Date` is providing the date of birth in UTC
+    /// time or system time zone. The `dateOfBirth` parameter should be a string in the form
+    /// `YYYY-MM-DD`, for example, `"2022-07-01"` for the first of July, 2022.
     public static func create(
-        humanId: Int,
+        authenticatedBy session: SessionRepresentative,
+        forHuman human: Human,
         dateOfBirth: String,
         address: Address.CreationData,
-        session: SessionRepresentative,
-        endpoint: ApiEndpoint = ApiEndpoint.live,
+        at endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
             payload: CreatePayload(
-                humanId: humanId,
+                humanId: human.agentId,
                 dateOfBirth: dateOfBirth,
-                address: address),
+                address: address
+            ),
             session: session,
             query: nil,
             method: .POST,

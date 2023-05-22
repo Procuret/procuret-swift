@@ -82,7 +82,8 @@ final class HumanTests: XCTestCase {
         ) { human, secret, code in
             
             HumanIdentity.create(
-                humanId: human.humanId,
+                authenticatedBy: Utility.provideTestSession(),
+                forHuman: human,
                 dateOfBirth: "1987-10-13",
                 address: Address.CreationData(
                     line1: "44 Bridge Street",
@@ -94,9 +95,13 @@ final class HumanTests: XCTestCase {
                     regionId: 1,
                     countryId: 1
                 ),
-                session: Utility.provideTestSession(),
-                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-                callback: receiveHumanIdentity
+                at: ApiEndpoint.forceFromEnvironmentVariables(),
+                callback: { error, identity in
+                    receiveHumanIdentity(
+                        error: error,
+                        identity: identity
+                    )
+                }
             )
             
             return
@@ -117,7 +122,8 @@ final class HumanTests: XCTestCase {
         ) { human, secret, code in
             
             HumanIdentity.create(
-                humanId: human.humanId,
+                authenticatedBy: Utility.provideTestSession(),
+                forHuman: human,
                 dateOfBirth: "1987-10-13",
                 address: Address.CreationData(
                     line1: "44 Bridge Street",
@@ -127,9 +133,9 @@ final class HumanTests: XCTestCase {
                     postalCode: "2000",
                     locality: "NSW",
                     regionId: 1,
-                    countryId: 1),
-                session: Utility.provideTestSession(),
-                endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
+                    countryId: 1
+                ),
+                at: ApiEndpoint.forceFromEnvironmentVariables(),
                 callback: { error, identity in
                     receiveHumanIdentity(
                         error: error,
