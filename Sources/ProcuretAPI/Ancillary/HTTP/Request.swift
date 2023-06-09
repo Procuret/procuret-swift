@@ -11,7 +11,7 @@ import Foundation
 internal class Request {
     
     private static let debugDataPrintEnvironmentKey = "PROCURET_DEBUG_DATA"
-    private static let agent = "Procuret API Swift 0.0.1"
+    private static let agent = "Procuret Swift 1.1.0"
     private static let apiSession = URLSession(
         configuration: URLSessionConfiguration.ephemeral
     )
@@ -171,7 +171,10 @@ internal class Request {
         var request = URLRequest(url: targetURL)
         request.httpMethod = method.rawValue
         request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringCacheData
-        request.setValue(agent, forHTTPHeaderField: "User-Agent")
+        request.setValue(
+            Self.deriveUserAgent(session),
+            forHTTPHeaderField: "User-Agent"
+        )
         request.httpShouldHandleCookies = false
         if data != nil {
             request.setValue(
@@ -314,6 +317,17 @@ internal class Request {
         print("Making request to \(endpoint): \(path)|\(method.rawValue)")
         print("Raw response data (if any) will be printed below.")
         
+    }
+    
+    private static func deriveUserAgent(
+        _ session: SessionRepresentative?
+    ) -> String {
+        
+        if let prefix = session?.userAgentPrefix {
+            return "\(prefix);\(Self.agent)"
+        }
+        return Self.agent
+
     }
     
 }

@@ -183,6 +183,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         havingTransacted hasTransacted: Bool? = nil,
         withDefaultDenomination defaultDenomination: Currency? = nil,
         active: Bool? = nil,
+        searchable: Bool? = nil,
         at endpoint: ApiEndpoint = .live,
         then callback: @escaping (Error?, Array<Self>?) -> Void
     ) {
@@ -209,6 +210,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
                     defaultDenomination?.indexid,
                     key: "default_denomination"
                 ),
+                UP.optionally(searchable, key: "searchable"),
                 UP.optionally(active, key: "active")
             ].compactMap { $0 }),
             method: .GET,

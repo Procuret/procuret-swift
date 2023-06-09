@@ -21,6 +21,8 @@ public struct Session: Codable, Agent, SessionRepresentative, Equatable {
     public let apiKey: String
     public let perspective: Perspective
     
+    public var userAgentPrefix: String? { get { return nil } }
+    
     private let genericAgent: GenericAgent
     
     public var agent: StandaloneAgent { get {

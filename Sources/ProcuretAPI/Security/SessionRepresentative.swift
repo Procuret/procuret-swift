@@ -18,4 +18,6 @@ public protocol SessionRepresentative {
     var human: Human? { get }
     var agentId: Int { get }
     
+    var userAgentPrefix: String? { get }
+
 }
