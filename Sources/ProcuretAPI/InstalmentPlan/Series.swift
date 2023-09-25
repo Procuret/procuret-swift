@@ -19,7 +19,7 @@ public struct PaymentSeries: Codable, Identifiable, Equatable {
     public let created: Date
     public let publicId: String
     public let creatingAgent: Int
-    public let paymentMethod: PaymentMethodHeadline
+    public let paymentMethod: PaymentMethodHeadline?
     public let customer: EntityHeadline
     public let supplier: EntityHeadline
     public let exchangeId: String

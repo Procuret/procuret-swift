@@ -75,7 +75,8 @@ class BusinessTests: XCTestCase {
                 
                 Business.retrieve(
                     authenticatedBy: session,
-                    for: createdBusiness.entity
+                    for: createdBusiness.entity,
+                    at: ApiEndpoint.forceFromEnvironmentVariables()
                 ) { error, retrievedBusiness in
                     
                     XCTAssertNil(error)

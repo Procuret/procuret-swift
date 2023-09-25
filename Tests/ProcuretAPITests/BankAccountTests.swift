@@ -16,14 +16,26 @@ class BankAccountTests: XCTestCase {
             description: "create Bank Account"
         )
         
-        Utility.provideTestBankAccount(
+        Utility.provideTestEntity(
             expectation: expectation
-        ) { bankAccount in
+        ) { entity in
             
-            expectation.fulfill()
+            Utility.provideTestBankAccount(
+                expectation: expectation,
+                entity: entity
+            ) { account in
+                
+                XCTAssertNotNil(account)
+                expectation.fulfill()
+                
+                return
+                
+            }
+            
             return
+            
         }
-        
+
         wait(for: [expectation], timeout: 5.0)
         
         return

@@ -31,7 +31,7 @@ public struct BankAccount: UnderpinnedByMethodKernel {
         bsbCode: String,
         accountNumber: String,
         accountName: String,
-        entityId: String,
+        entity: Entity,
         authorityId: String?,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
@@ -43,7 +43,7 @@ public struct BankAccount: UnderpinnedByMethodKernel {
                 bsbCode: bsbCode,
                 accountNumber: accountNumber,
                 accountName: accountName,
-                entityId: entityId,
+                entityId: entity.publicId,
                 authorityId: authorityId
             ),
             session: session,
@@ -60,7 +60,7 @@ public struct BankAccount: UnderpinnedByMethodKernel {
         let bsbCode: String
         let accountNumber: String
         let accountName: String
-        let entityId: String
+        let entityId: Int
         let authorityId: String?
         
         private enum CodingKeys: String, CodingKey {

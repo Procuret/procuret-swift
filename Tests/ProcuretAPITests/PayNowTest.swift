@@ -36,13 +36,14 @@ class PayNowTest: XCTestCase {
                 expectation: expectation
             ) { business, session in
                 
-                Utility.provideTestBankAccount(
-                    expectation: expectation
-                ) { account in
+                Utility.provideTestCard(
+                    expectation: expectation,
+                    entity: business.entity,
+                    authority: session,
+                    session: session
+                ) { card in
                     
-                    /* Temporarily disabled */
-                    
-                    /*PayNowTransaction.create(
+                    PayNowTransaction.create(
                         authenticatedBy: session,
                         amount: Amount(
                             magnitude: Decimal(string: "100")!,
@@ -51,13 +52,11 @@ class PayNowTest: XCTestCase {
                         reference: "pay now test",
                         business: business,
                         supplier: supplier,
-                        divisions: ProspectiveDivision(
-                            methodId: account.paymentMethodId,
-                            magnitude: "100"
-                        ),
+                        method: card,
                         at: .forceFromEnvironmentVariables(),
                         then: receivePayNowResults
-                    )*/
+                    )
+                
                 }
             }
         }

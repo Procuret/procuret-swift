@@ -163,15 +163,56 @@ internal struct Utility {
 
     }
     
+    static func provideTestCard(
+        expectation: XCTestExpectation,
+        entity: Entity,
+        authority: Agent,
+        session: Session,
+        callback: @escaping (Card) -> Void
+    ) {
+            
+        Card.createFromPlainDetails(
+            entityId: nil,
+            authorityAgentId: session.agentId,
+            cardNumber: "4242424242424242",
+            expiryMonth: "12",
+            expiryYear: "25",
+            cvc: "424",
+            postalCode: "42424",
+            session: session,
+            endpoint: ApiEndpoint.forceFromEnvironmentVariables()
+        ) { error, card in
+            
+            XCTAssertNil(error)
+            XCTAssertNotNil(card)
+            
+            guard let card = card else {
+                expectation.fulfill()
+                XCTFail("Failed to create test card")
+                return
+            }
+            
+            callback(card)
+            
+            return
+            
+        }
+        
+        return
+
+    }
+    
     static func provideTestBankAccount(
         expectation: XCTestExpectation,
+        entity: Entity,
         callback: @escaping (BankAccount) -> Void
     ) -> Void {
+
         BankAccount.create(
             bsbCode: "000000",
             accountNumber: "000123456",
             accountName: "SwiftTest BankAccount",
-            entityId: "13991055489669749",
+            entity: entity,
             authorityId: nil,
             session: Utility.provideTestSession(),
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
@@ -190,7 +231,7 @@ internal struct Utility {
                 
             }
         )
-        
+    
         return
     }
     

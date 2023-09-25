@@ -8,6 +8,12 @@ import XCTest
 import PDFKit
 @testable import ProcuretAPI
 
+/*
+ 
+ Disabled pending availability of a non-hard-coded Utility.provideTestSeries
+ method.
+ 
+ 
 class InstalmentScheduleTests: XCTestCase {
     
     func testRetrieveInstalmentSchedule() {
@@ -81,3 +87,4 @@ class InstalmentScheduleTests: XCTestCase {
     }
 
 }
+*/

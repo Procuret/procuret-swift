@@ -35,8 +35,14 @@ class InstalmentAttemptTest: XCTestCase {
             inSeries series: PaymentSeries
         ) {
             
+            guard let method = series.paymentMethod else {
+                XCTFail("No available method")
+                expectation.fulfill()
+                return
+            }
+            
             InstalmentPaymentAttempt.make(
-                methodId: series.paymentMethod.publicId,
+                methodId: method.publicId,
                 seriesId: series.publicId,
                 amount: line.nominalPayment,
                 due24hrsStarting: line.due24hrsStarting,
