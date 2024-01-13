@@ -18,4 +18,42 @@ guaranteed.
 
 # Available Types
 
-struct ProspectivePayment
+## `struct ProspectivePayment`
+
+A theoretical payment amount, and the number of months over which that payment
+would be made, if an applicant successfully applied for a Procuret Instalment
+Plan.
+
+### Properties
+
+- `periods` - // Number (Integer) - The number of months over which payment would be made
+- `rawPayment` - // string - The monthly payment amount
+-
+
+### Static Methods
+
+#### retrieve
+
+Retrieve a single `ProspectivePayment` for given parameters. To use this
+method, you must know a valid `periods` value in advance.
+
+##### Parameters
+
+// @hugh, please note, the spelling error in `principal` vs `principle` -> i assume it doesnt matter...
+
+1. `principal` - `String` - A string-encoded number representing the principal
+   value of the prospective loan. For example, a total invoice value. Minimum
+   value `500` currency units.
+2. `cycle` - `integer` - by default, set to 1, determines whether the payment is in advance or in arrears.
+
+// up to here
+
+3. `supplier` - `String` - Your Supplier ID. Consult your Procuret
+   partnership manager if you are unsure of this value.
+4. `periods` - `integer` - The integer number of months over which the instalment
+   plan would be paid.
+5. `endpoint` - `Optional<String>` - Optionally override the API endpoint.
+   Useful in testing a demonstration environments.
+6. `callback` - `(Error?, ProspectivePayment?)` - A function taking
+   optional error and result parameters, in which you can handle the API response.
+7. [undocumented, do not use, do not provide a value]
