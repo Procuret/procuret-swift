@@ -13,3 +13,9 @@ PS follows [Semantic Versioning](https://semver.org) conventions. At any time,
 the repository may included an undocumented type in the `source` directory.
 These types should be considered unavailable and their function is not
 guaranteed.
+
+// push to github above this
+
+# Available Types
+
+struct ProspectivePayment
