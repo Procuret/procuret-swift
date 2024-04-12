@@ -12,7 +12,7 @@ public struct SupplierAuthorisation: Codable {
     internal static let path = "/supplier/authorisation"
     
     public static func create(
-        supplierId: String,
+        supplierId: Int,
         authorise: Bool,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
@@ -28,13 +28,13 @@ public struct SupplierAuthorisation: Codable {
             query: nil,
             method: .POST,
             endpoint: endpoint
-        ) { error, data in
-            fatalError("Not implemented")
+        ) { error, _ in
+            callback(error)
         }
     }
     
     private struct CreatePayload: Codable {
-        let supplierId: String
+        let supplierId: Int
         let authorise: Bool
         
         private enum CodingKeys: String, CodingKey {

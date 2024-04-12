@@ -45,7 +45,7 @@ Unable to process invoice file data as UTF-8 bytes
                 supplier_entity_identifier: supplierIdentifier,
                 invoice_amount: invoiceAmount,
                 invoice_identifier: invoiceIdentifier,
-                invoice_file: String(data: invoiceBodyBase64Encoded, encoding: .utf8)!,
+                invoice_file: fileString,
                 file_extension: .pdf
             ),
             session: session,

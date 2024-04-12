@@ -32,33 +32,43 @@ class PayNowTest: XCTestCase {
             expectation: expectation
         ) { supplier in
             
-            Utility.provideTestBusiness(
-                expectation: expectation
-            ) { business, session in
+            SupplierAuthorisation.create(
+                supplierId: supplier.entity.publicId,
+                authorise: true,
+                session: Utility.provideTestSession(),
+                endpoint: .forceFromEnvironmentVariables()
+            ) { _ in
                 
-                Utility.provideTestCard(
-                    expectation: expectation,
-                    entity: business.entity,
-                    authority: session,
-                    session: session
-                ) { card in
+                Utility.provideTestBusiness(
+                    expectation: expectation
+                ) { business, session in
                     
-                    PayNowTransaction.create(
-                        authenticatedBy: session,
-                        amount: Amount(
-                            magnitude: Decimal(string: "100")!,
-                            denomination: .AUD
-                        ),
-                        reference: "pay now test",
-                        business: business,
-                        supplier: supplier,
-                        method: card,
-                        at: .forceFromEnvironmentVariables(),
-                        then: receivePayNowResults
-                    )
-                
+                    Utility.provideTestCard(
+                        expectation: expectation,
+                        entity: business.entity,
+                        authority: session,
+                        session: session
+                    ) { card in
+                        
+                        PayNowTransaction.create(
+                            authenticatedBy: session,
+                            amount: Amount(
+                                magnitude: Decimal(string: "100")!,
+                                denomination: .AUD
+                            ),
+                            reference: "pay now test",
+                            business: business,
+                            supplier: supplier,
+                            method: card,
+                            at: .forceFromEnvironmentVariables(),
+                            then: receivePayNowResults
+                        )
+                    
+                    }
                 }
+    
             }
+           
         }
         
         wait(for: [expectation], timeout: 5.0)
