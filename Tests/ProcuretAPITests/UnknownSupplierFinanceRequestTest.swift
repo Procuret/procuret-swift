@@ -16,7 +16,8 @@ class UnknownSupplierFinanceRequestTests: XCTestCase {
         
         func createUSFR(
             _ session: SessionRepresentative,
-            _ business: Business
+            _ business: Business,
+            _ owner: Human
         ) {
             
             guard let placeboData = "placebo".data(using: .utf8) else {
@@ -25,6 +26,7 @@ class UnknownSupplierFinanceRequestTests: XCTestCase {
             
             UnknownSupplierFinanceRequest.create(
                 authenticatedBy: session,
+                applicantHuman: owner,
                 forCustomer: business,
                 supplierIdentifier: EntityIdentifier(
                     identifier: "77630036789",
@@ -35,7 +37,7 @@ class UnknownSupplierFinanceRequestTests: XCTestCase {
                     magnitude: 420,
                     denomination: .AUD
                 ),
-                invoiceBody: placeboData,
+                invoiceBodyBase64Encoded: ExamplePDF.data,
                 at: ApiEndpoint.forceFromEnvironmentVariables()
             ) { error in
 
@@ -50,21 +52,14 @@ class UnknownSupplierFinanceRequestTests: XCTestCase {
             }
         }
         
-        Utility.provideTestEntity(expectation: expectation) { e, s in
-            Business.create(
-                entity: e,
-                session: s,
-                endpoint: .forceFromEnvironmentVariables()
-            ) { e, b in
-                guard let b = b else {
-                    XCTFail(e?.localizedDescription ?? "No error")
-                    expectation.fulfill()
-                    return
-                }
-                createUSFR(s, b)
-                return
-            }
+        Utility.provideTestBusinessWithOwner(
+            expectation: expectation
+        ) { business, session, owner in
+            
+            createUSFR(session, business, owner)
+ 
             return
+            
         }
         
         self.wait(for: [expectation], timeout: 5.0)

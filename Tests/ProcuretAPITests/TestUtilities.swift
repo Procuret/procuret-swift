@@ -118,12 +118,37 @@ internal struct Utility {
 
     }
     
+    static func provideTestEntityWithOwner(
+        expectation: XCTestExpectation,
+        callback: @escaping (Entity, Session, Human) -> Void
+    ) -> Void {
+        
+        Utility.provideTestHumanWithSession(
+            expectation: expectation
+        ) { human, session in
+            
+            Self.provideTestEntity(
+                expectation: expectation,
+                session: session
+            ) { entity, session in
+                
+                callback(entity, session, human)
+                
+                return
+                
+            }
+            
+        }
+        
+    }
+    
     static func provideTestEntity(
         expectation: XCTestExpectation,
+        session: Session? = nil,
         callback: @escaping (Entity, Session) -> Void
     ) -> Void {
         
-        let session = Utility.provideTestSession()
+        let session = session ?? Utility.provideTestSession()
         
         Entity.create(
             identifier: EntityIdentifier(
@@ -235,12 +260,38 @@ internal struct Utility {
         return
     }
     
+    static func provideTestBusinessWithOwner(
+        expectation: XCTestExpectation,
+        session: Session? = nil,
+        callback: @escaping (Business, Session, Human) -> Void
+    ) -> Void {
+        
+        Self.provideTestHumanWithSession(
+            expectation: expectation
+        ) { human, session in
+            
+            Self.provideTestBusiness(
+                expectation: expectation,
+                session: session
+            ) { business, session in
+            
+                callback(business, session, human)
+    
+                return
+                
+            }
+            
+        }
+        
+    }
+    
     static func provideTestBusiness(
         expectation: XCTestExpectation,
+        session: Session? = nil,
         callback: @escaping (Business, Session) -> Void
     ) -> Void {
         
-        let session = Utility.provideTestSession()
+        let session = session ?? Utility.provideTestSession()
         
         Business.create(
             identifier: EntityIdentifier(

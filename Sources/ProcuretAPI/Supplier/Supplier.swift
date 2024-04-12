@@ -240,7 +240,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
     
     public init(from decoder: Decoder) throws {
         
-        let container = try decoder.container(keyedBy: Self.CodingKeys)
+        let container = try decoder.container(keyedBy: Self.CodingKeys.self)
         let c = container
         
         self.entity = try c.decode(Entity.self, forKey: .entity)

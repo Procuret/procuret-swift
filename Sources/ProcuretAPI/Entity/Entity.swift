@@ -24,6 +24,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
     public let created: Date?
     public let hasBusinessRecord: Bool?
     public let hasSupplierRecord: Bool?
+    public let principalConfirmed: Bool?
     public let disposition: Disposition
     
     public var id: Int { get { return self.publicId } }
@@ -50,6 +51,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         case created
         case hasBusinessRecord = "has_business_record"
         case hasSupplierRecord = "has_supplier_record"
+        case principalConfirmed = "principal_confirmed"
         case disposition
     }
     
