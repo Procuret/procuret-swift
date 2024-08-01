@@ -32,6 +32,9 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable {
     public let unresolvedProlongedPayment: ProlongedPayment?
     public let denomination: Currency
     
+    /* New-Gen Algorithm Properties */
+    let rawPaid: String
+    
     public var id: String { get {
         return "\(self.commitmentPublicId)_\(self.sequence)"
     } }
@@ -61,6 +64,26 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable {
         denomination: self.denomination
     ) } }
     
+    var paid: Amount {
+        return Amount(
+            magnitude: Decimal(string: self.rawPaid) ?? -1,
+            denomination: self.denomination
+        )
+    }
+    
+    var balanceOutstanding: Amount {
+        return self.nominalPayment - self.paid
+    }
+    var balanceDueAndOutstanding: Amount {
+        guard self.due24hrsStarting < Date.now else {
+            return Amount(
+                magnitude: 0,
+                denomination: self.denomination
+            )
+        }
+        return self.balanceOutstanding
+    }
+    
     public var status: PaymentStatus { get { return self.deriveStatus() } }
 
     public enum CodingKeys: String, CodingKey {
@@ -72,6 +95,7 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable {
         case rawInterestPaid = "interest_paid"
         case rawPrincipalPaid = "principal_paid"
         case rawClosingBalance = "closing_balance"
+        case rawPaid = "paid"
         case commitmentPublicId = "commitment_public_id"
         case payment
         case isBespoke = "is_bespoke"
