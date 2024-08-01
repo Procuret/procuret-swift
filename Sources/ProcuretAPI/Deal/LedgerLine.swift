@@ -64,17 +64,17 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable {
         denomination: self.denomination
     ) } }
     
-    var paid: Amount {
+    public var paid: Amount {
         return Amount(
             magnitude: Decimal(string: self.rawPaid) ?? -1,
             denomination: self.denomination
         )
     }
     
-    var balanceOutstanding: Amount {
+    public var balanceOutstanding: Amount {
         return self.nominalPayment - self.paid
     }
-    var balanceDueAndOutstanding: Amount {
+    public var balanceDueAndOutstanding: Amount {
         guard self.due24hrsStarting < Date.now else {
             return Amount(
                 magnitude: 0,
