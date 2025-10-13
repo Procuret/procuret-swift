@@ -21,7 +21,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
     public let offersPayNow: Bool
     public let payNowFeeMode: PayNowFeeMode
     public let maxTransactionSize: Array<Amount>
-    public let termRates: Array<TermRate>
+    public let termRates: Array<TermRate>?
     public let defaultDenomination: Currency
     public let country: Country
     
@@ -245,10 +245,10 @@ public struct Supplier: Codable, Identifiable, Equatable {
         
         self.entity = try c.decode(Entity.self, forKey: .entity)
         self.authorised = try c.decode(Bool.self, forKey: .authorised)
-        self.brand = try c.decode(Brand?.self, forKey: .brand)
+        self.brand = try c.decodeIfPresent(Brand.self, forKey: .brand)
         self.disposition = try c.decode(Disposition.self, forKey: .disposition)
-        self.partnershipManager = try c.decode(
-            HumanHeadline?.self,
+        self.partnershipManager = try c.decodeIfPresent(
+            HumanHeadline.self,
             forKey: .partnershipManager
         )
         self.offersPayNow = try c.decode(Bool.self, forKey: .offersPayNow)
@@ -260,7 +260,9 @@ public struct Supplier: Codable, Identifiable, Equatable {
             Array<Amount>.self,
             forKey: .maxTransactionSize
         )
-        self.termRates = try c.decode(Array<TermRate>.self, forKey: .termRates)
+        self.termRates = try c.decodeIfPresent(
+            Array<TermRate>.self, forKey: .termRates
+        )
 
         self.country = try c.decode(Country.self, forKey: .country)
         
