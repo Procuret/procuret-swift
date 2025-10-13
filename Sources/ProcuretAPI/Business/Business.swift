@@ -28,6 +28,7 @@ public struct Business: Codable, Equatable {
     public static func create(
         identifier: EntityIdentifier,
         address: Address.CreationData,
+        legalEntityName: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Business?) -> Void
@@ -37,7 +38,8 @@ public struct Business: Codable, Equatable {
             payload: CreatePayload(
                 identifier: identifier.identifier,
                 idType: identifier.identifierType,
-                address: address
+                address: address,
+                legalEntityName: legalEntityName
             ),
             session: session,
             query: nil,
@@ -158,11 +160,13 @@ public struct Business: Codable, Equatable {
         let identifier: String
         let idType: EntityIdentifierType
         let address: Address.CreationData
+        let legalEntityName: String
         
         private enum CodingKeys: String, CodingKey {
             case identifier
             case idType = "identifier_type"
             case address
+            case legalEntityName = "legal_entity_name"
         }
     }
     

@@ -231,7 +231,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         let address: Address.CreationData
         
         private enum CodingKeys: String, CodingKey {
-            case legalName = "legal_name"
+            case legalName = "legal_entity_name"
             case tradingName = "trading_name"
             case phoneNumber = "phone_number"
             case address

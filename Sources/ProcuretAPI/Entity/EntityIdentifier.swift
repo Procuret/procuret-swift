@@ -65,7 +65,7 @@ public enum EntityIdentifierType: Int, Codable, CaseIterable, Identifiable,
 
 }
 
-public struct EntityIdentifier: Codable, Identifiable {
+public struct EntityIdentifier: Codable, Identifiable, Equatable, Hashable {
     
     public let identifier: String
     public let identifierType: EntityIdentifierType

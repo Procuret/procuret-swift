@@ -165,6 +165,7 @@ internal struct Utility {
                 regionId: 1,
                 countryId: 1
             ),
+            legalEntityName: "PROCURET OPERATING PTY LIMITED",
             session: Utility.provideTestSession(),
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { error, entity in
@@ -308,10 +309,10 @@ internal struct Utility {
                 regionId: 1,
                 countryId: 1
             ),
+            legalEntityName: "PROCURET OPERATING PTY LIMITED",
             session: session,
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { error, business in
-                
                 XCTAssertNil(error)
                 XCTAssertNotNil(business)
                 

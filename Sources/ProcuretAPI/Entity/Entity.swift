@@ -15,7 +15,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
     
     public let publicId: Int
     public let publicIdShort: String
-    public let identifierRecords: Array<EntityIdentifierRecord>
+    public let identification: Array<EntityIdentifier>?
     public let legalEntityName: String
     public let tradingName: String?
     public let phoneNumber: PhoneNumber?
@@ -35,14 +35,18 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         return self.hasSupplierRecord ?? false
     } }
     
-    public var identifiers: Array<EntityIdentifier> { get {
-        return self.identifierRecords.map { $0.asIdentifier }
+    var identifiers: Array<EntityIdentifier> { get {
+        return self.identification ?? []
+    } }
+    
+    var identifierRecords: Array<EntityIdentifier> { get {
+        return self.identification ?? []
     } }
 
     public enum CodingKeys: String, CodingKey {
         case publicId = "public_id"
         case publicIdShort = "public_id_short" 
-        case identifierRecords = "entity_identifiers"
+        case identification = "entity_identifiers"
         case legalEntityName = "legal_entity_name"
         case tradingName = "trading_name"
         case phoneNumber = "phone_number"
@@ -85,6 +89,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
     public static func create(
         identifier: EntityIdentifier,
         address: Address.CreationData,
+        legalEntityName: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @escaping (Error?, Entity?) -> Void
@@ -94,7 +99,8 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
             payload: CreatePayload(
                 identifier: identifier.identifier,
                 identifierType: identifier.identifierType,
-                address: address
+                address: address,
+                legalEntityName: legalEntityName
             ),
             session: session,
             query: nil,
@@ -138,11 +144,13 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         let identifier: String
         let identifierType: EntityIdentifierType
         let address: Address.CreationData
+        let legalEntityName: String
         
         private enum CodingKeys: String, CodingKey {
             case identifier
             case identifierType = "identifier_type"
             case address
+            case legalEntityName = "legal_entity_name"
         }
     }
         
@@ -206,7 +214,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         hasher.combine(self.hasSupplierRecord)
         hasher.combine(self.address)
         hasher.combine(self.entityType)
-        hasher.combine(self.identifierRecords)
+        hasher.combine(self.identification)
         hasher.combine(self.legalEntityName)
     }
 
