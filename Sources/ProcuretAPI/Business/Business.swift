@@ -11,6 +11,7 @@ public struct Business: Codable, Equatable {
     
     internal static let path = "/business"
     internal static let listPath = Business.path + "/list"
+    internal static let atSignupPath = Business.path + "/business-at-signup"
 
     public let entity: Entity
     
@@ -34,7 +35,7 @@ public struct Business: Codable, Equatable {
         callback: @escaping (Error?, Business?) -> Void
     ) {
         Request.make(
-            path: self.path,
+            path: self.atSignupPath,
             payload: CreatePayload(
                 identifier: identifier.identifier,
                 idType: identifier.identifierType,
@@ -172,6 +173,7 @@ public struct Business: Codable, Equatable {
     
     private struct CreateWithEntityPayload: Codable {
         let entity_id: Int
+        
     }
     
 }
