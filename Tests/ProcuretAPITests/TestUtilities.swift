@@ -296,7 +296,7 @@ internal struct Utility {
         
         Business.create(
             identifier: EntityIdentifier(
-                identifier: "77630036789",
+                identifier: "76628022640",
                 identifierType: .australianBusinessNumber
             ),
             address: Address.CreationData(
@@ -304,12 +304,12 @@ internal struct Utility {
                 line2: nil,
                 line3: nil,
                 line4: nil,
-                postalCode: "4101",
-                locality: "QLD",
+                postalCode: "2000",
+                locality: "Sydney",
                 regionId: 1,
                 countryId: 1
             ),
-            legalEntityName: "PROCURET OPERATING PTY LIMITED",
+            legalEntityName: "EL UNICORN PTY LTD",
             session: session,
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: { error, business in
