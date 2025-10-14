@@ -35,11 +35,11 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         return self.hasSupplierRecord ?? false
     } }
     
-    var identifiers: Array<EntityIdentifier> { get {
+    public var identifiers: Array<EntityIdentifier> { get {
         return self.identification ?? []
     } }
     
-    var identifierRecords: Array<EntityIdentifier> { get {
+    public var identifierRecords: Array<EntityIdentifier> { get {
         return self.identification ?? []
     } }
 
