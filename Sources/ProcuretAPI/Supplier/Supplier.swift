@@ -21,10 +21,13 @@ public struct Supplier: Codable, Identifiable, Equatable {
     public let offersPayNow: Bool
     public let payNowFeeMode: PayNowFeeMode
     public let maxTransactionSize: Array<Amount>
-    public let termRates: Array<TermRate>?
+    private let _termRates: Array<TermRate>?
     public let defaultDenomination: Currency
     public let country: Country
     
+    public var termRates: Array<TermRate> {
+        self._termRates ?? []
+    }
     public var id: Int { return self.entity.publicId }
 
     public var friendlyName: String {
@@ -40,7 +43,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         case offersPayNow = "offers_pay_now"
         case payNowFeeMode = "pay_now_fee_mode"
         case maxTransactionSize = "max_transaction_size"
-        case termRates = "term_rates"
+        case _termRates = "term_rates"
         case defaultDenomination = "default_denomination"
         case country
     }
@@ -260,8 +263,8 @@ public struct Supplier: Codable, Identifiable, Equatable {
             Array<Amount>.self,
             forKey: .maxTransactionSize
         )
-        self.termRates = try c.decodeIfPresent(
-            Array<TermRate>.self, forKey: .termRates
+        self._termRates = try c.decodeIfPresent(
+            Array<TermRate>.self, forKey: ._termRates
         )
 
         self.country = try c.decode(Country.self, forKey: .country)
