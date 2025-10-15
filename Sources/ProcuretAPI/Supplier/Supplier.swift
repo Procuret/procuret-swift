@@ -49,29 +49,44 @@ public struct Supplier: Codable, Identifiable, Equatable {
     }
     
     public static func create(
-        legalName: String,
+        entityIdentifier: EntityIdentifier,
+        legalEntityName: String,
         tradingName: String?,
         phoneNumber: String,
         address: Address.CreationData,
-        session: SessionRepresentative?,
+        session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Supplier?) -> Void
+        then callback: @escaping (Error?, Self?) -> Void
     ) {
-        Request.make(
-            path: "/supplier/raw",
-            payload: CreatePayload(
-                legalName: legalName,
-                tradingName: tradingName,
-                phoneNumber: phoneNumber,
-                address: address
-            ),
+        
+        Entity.create(
+            identifier: entityIdentifier,
+            address: address,
+            legalEntityName: legalEntityName,
             session: session,
-            query: nil,
-            method: .POST,
             endpoint: endpoint
-        ) { error, data in
-            Request.decodeResponse(error, data, Self.self, callback)
+        ) { entityError, entity in
+
+            if let entityError = entityError {
+                callback(entityError, nil)
+                return
+            }
+            guard let entity = entity else {
+                callback(ProcuretAPIError.init(
+                    .unprocessable, message: "Entity creation returned nil"
+                ), nil)
+                return
+            }
+
+            Self.create(
+                authenticatedBy: session,
+                entity: entity,
+                at: endpoint
+            ) { supplierError, supplier in
+                callback(supplierError, supplier)
+            }
         }
+        
     }
     
     public static func create(
@@ -82,7 +97,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
     ) {
         
         Request.make(
-            path: Self.entityPath,
+            path: Self.path,
             payload: CreateFromEntityPayload(entity_id: entity.publicId),
             session: session,
             query: nil,

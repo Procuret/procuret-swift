@@ -421,22 +421,26 @@ internal struct Utility {
         let session = Utility.provideTestSession()
         
         Supplier.create(
-            legalName: "Test Supplier",
+            entityIdentifier: EntityIdentifier(
+                identifier: "76628022640",
+                identifierType: .australianBusinessNumber
+            ),
+            legalEntityName: "EL UNICORN PTY LTD",
             tradingName: nil,
             phoneNumber: "+61400010001",
             address: Address.CreationData(
-                line1: "44 Bridge Street",
+                line1: "47 Brighton Rd",
                 line2: nil,
                 line3: nil,
                 line4: nil,
                 postalCode: "2000",
-                locality: "NSW",
+                locality: "Sydney",
                 regionId: 1,
                 countryId: 1
             ),
             session: session,
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
-            callback: { error, supplier in
+            then: { error, supplier in
                 
                 XCTAssertNil(error)
                 XCTAssertNotNil(supplier)
