@@ -8,7 +8,7 @@
 import Foundation
 
 
-public protocol SessionRepresentative {
+public protocol SessionRepresentative: Sendable {
     
     var apiKey: String { get }
     var sessionId: Int { get }

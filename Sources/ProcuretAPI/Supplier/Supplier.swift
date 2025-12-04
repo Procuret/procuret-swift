@@ -21,10 +21,13 @@ public struct Supplier: Codable, Identifiable, Equatable {
     public let offersPayNow: Bool
     public let payNowFeeMode: PayNowFeeMode
     public let maxTransactionSize: Array<Amount>
-    public let termRates: Array<TermRate>
+    private let _termRates: Array<TermRate>?
     public let defaultDenomination: Currency
     public let country: Country
     
+    public var termRates: Array<TermRate> {
+        self._termRates ?? []
+    }
     public var id: Int { return self.entity.publicId }
 
     public var friendlyName: String {
@@ -40,35 +43,50 @@ public struct Supplier: Codable, Identifiable, Equatable {
         case offersPayNow = "offers_pay_now"
         case payNowFeeMode = "pay_now_fee_mode"
         case maxTransactionSize = "max_transaction_size"
-        case termRates = "term_rates"
+        case _termRates = "term_rates"
         case defaultDenomination = "default_denomination"
         case country
     }
     
-    public static func create(
-        legalName: String,
+    public static func create<S: SessionRepresentative>(
+        entityIdentifier: EntityIdentifier,
+        legalEntityName: String,
         tradingName: String?,
         phoneNumber: String,
         address: Address.CreationData,
-        session: SessionRepresentative?,
+        session: S,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @Sendable @escaping (Error?, Supplier?) -> Void
     ) {
-        Request.make(
-            path: "/supplier/raw",
-            payload: CreatePayload(
-                legalName: legalName,
-                tradingName: tradingName,
-                phoneNumber: phoneNumber,
-                address: address
-            ),
+        
+        Entity.create(
+            identifier: entityIdentifier,
+            address: address,
+            legalEntityName: legalEntityName,
             session: session,
-            query: nil,
-            method: .POST,
             endpoint: endpoint
-        ) { error, data in
-            Request.decodeResponse(error, data, Self.self, callback)
+        ) { entityError, entity in
+
+            if let entityError = entityError {
+                callback(entityError, nil)
+                return
+            }
+            guard let entity = entity else {
+                callback(ProcuretError.init(
+                    .unprocessable, message: "Entity creation returned nil"
+                ), nil)
+                return
+            }
+
+            Self.create(
+                authenticatedBy: session,
+                entity: entity,
+                at: endpoint
+            ) { supplierError, supplier in
+                callback(supplierError, supplier)
+            }
         }
+        
     }
     
     public static func create(
@@ -79,7 +97,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
     ) {
         
         Request.make(
-            path: Self.entityPath,
+            path: Self.path,
             payload: CreateFromEntityPayload(entity_id: entity.publicId),
             session: session,
             query: nil,
@@ -231,7 +249,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         let address: Address.CreationData
         
         private enum CodingKeys: String, CodingKey {
-            case legalName = "legal_name"
+            case legalName = "legal_entity_name"
             case tradingName = "trading_name"
             case phoneNumber = "phone_number"
             case address
@@ -245,10 +263,10 @@ public struct Supplier: Codable, Identifiable, Equatable {
         
         self.entity = try c.decode(Entity.self, forKey: .entity)
         self.authorised = try c.decode(Bool.self, forKey: .authorised)
-        self.brand = try c.decode(Brand?.self, forKey: .brand)
+        self.brand = try c.decodeIfPresent(Brand.self, forKey: .brand)
         self.disposition = try c.decode(Disposition.self, forKey: .disposition)
-        self.partnershipManager = try c.decode(
-            HumanHeadline?.self,
+        self.partnershipManager = try c.decodeIfPresent(
+            HumanHeadline.self,
             forKey: .partnershipManager
         )
         self.offersPayNow = try c.decode(Bool.self, forKey: .offersPayNow)
@@ -260,7 +278,9 @@ public struct Supplier: Codable, Identifiable, Equatable {
             Array<Amount>.self,
             forKey: .maxTransactionSize
         )
-        self.termRates = try c.decode(Array<TermRate>.self, forKey: .termRates)
+        self._termRates = try c.decodeIfPresent(
+            Array<TermRate>.self, forKey: ._termRates
+        )
 
         self.country = try c.decode(Country.self, forKey: .country)
         

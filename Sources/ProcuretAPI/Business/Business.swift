@@ -11,6 +11,7 @@ public struct Business: Codable, Equatable, Sendable {
     
     internal static let path = "/business"
     internal static let listPath = Business.path + "/list"
+    internal static let atSignupPath = Business.path + "/business-at-signup"
 
     public let entity: Entity
     
@@ -28,16 +29,18 @@ public struct Business: Codable, Equatable, Sendable {
     public static func create(
         identifier: EntityIdentifier,
         address: Address.CreationData,
+        legalEntityName: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
         callback: @Sendable @escaping (Error?, Business?) -> Void
     ) {
         Request.make(
-            path: self.path,
+            path: self.atSignupPath,
             payload: CreatePayload(
                 identifier: identifier.identifier,
                 idType: identifier.identifierType,
-                address: address
+                address: address,
+                legalEntityName: legalEntityName
             ),
             session: session,
             query: nil,
@@ -158,16 +161,19 @@ public struct Business: Codable, Equatable, Sendable {
         let identifier: String
         let idType: EntityIdentifierType
         let address: Address.CreationData
+        let legalEntityName: String
         
         private enum CodingKeys: String, CodingKey {
             case identifier
             case idType = "identifier_type"
             case address
+            case legalEntityName = "legal_entity_name"
         }
     }
     
     private struct CreateWithEntityPayload: Codable, Sendable {
         let entity_id: Int
+        
     }
     
 }

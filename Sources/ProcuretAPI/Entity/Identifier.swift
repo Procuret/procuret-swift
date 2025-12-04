@@ -25,8 +25,8 @@ public struct EntityIdentifierRecord: Codable, Identifiable, Equatable,
     } }
     
     public enum CodingKeys: String, CodingKey {
-        case idType = "id_type"
-        case idString = "id"
+        case idType = "identifier_type"
+        case idString = "identifier"
     }
     
     public static func create(

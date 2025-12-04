@@ -64,6 +64,7 @@ class EntityTests: XCTestCase {
                 regionId: 1,
                 countryId: 1
             ),
+            legalEntityName: "PROCURET OPERATING PTY LIMITED",
             session: Utility.provideTestSession(),
             endpoint: ApiEndpoint.forceFromEnvironmentVariables(),
             callback: receiveCreateEntityResult

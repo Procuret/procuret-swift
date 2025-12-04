@@ -32,6 +32,9 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable, Sendable {
     public let unresolvedProlongedPayment: ProlongedPayment?
     public let denomination: Currency
     
+    /* New-Gen Algorithm Properties */
+    let rawPaid: String
+    
     public var id: String { get {
         return "\(self.commitmentPublicId)_\(self.sequence)"
     } }
@@ -61,18 +64,36 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable, Sendable {
         denomination: self.denomination
     ) } }
     
+<<<<<<< HEAD
     public var paid: Amount { get { return Amount(
         magnitude: Decimal(string: self.rawPaid) ?? -1,
         denomination: self.denomination
     ) } }
+=======
+    public var paid: Amount {
+        return Amount(
+            magnitude: Decimal(string: self.rawPaid) ?? -1,
+            denomination: self.denomination
+        )
+    }
+>>>>>>> 5bf0cc605a5dcd5d81d2398ddbf486eec66f2864
     
     public var balanceOutstanding: Amount {
         return self.nominalPayment - self.paid
     }
+<<<<<<< HEAD
     
     public var balanceDueAndOutstanding: Amount {
         guard self.due24hrsStarting < Date.now else {
             return .zero(in: self.denomination)
+=======
+    public var balanceDueAndOutstanding: Amount {
+        guard self.due24hrsStarting < Date.now else {
+            return Amount(
+                magnitude: 0,
+                denomination: self.denomination
+            )
+>>>>>>> 5bf0cc605a5dcd5d81d2398ddbf486eec66f2864
         }
         return self.balanceOutstanding
     }

@@ -89,13 +89,29 @@ public struct Brand: Codable, Equatable, Hashable, Sendable {
             case scheme
             case rawPrimaryColour = "primary_colour_hex"
             case rawAccentColour = "accent_colour_hex"
-            case logoUrl = "logo_url"
+            case _logoUrl = "logo_url"
         }
         
         public let scheme: Self.Scheme
         public let rawPrimaryColour: String
         public let rawAccentColour: String
-        public let logoUrl: String
+        private let _logoUrl: String?
+        
+        public var logoUrl: String {
+            
+            if let lu = self._logoUrl { return lu }
+            
+            switch self.scheme {
+                
+            case .light: return """
+https://procuret.com/content/branding/20201104_PR_Procuret_Logo.svg
+"""
+            case .dark: return """
+https://procuret.com/content/branding/20201104_PR_Procuret_Logo_White.svg
+"""
+            }
+            
+        }
 
         public var primaryColour: Brand.Colour { get {
             return Brand.Colour(hex: self.rawPrimaryColour)
