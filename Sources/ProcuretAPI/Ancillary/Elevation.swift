@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct Elevation: Codable {
+public struct Elevation: Codable, Sendable {
     
 }

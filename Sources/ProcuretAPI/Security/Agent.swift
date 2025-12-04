@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Agent: Codable {
+public protocol Agent: Codable, Sendable {
 
     var agentId: Int { get }
 

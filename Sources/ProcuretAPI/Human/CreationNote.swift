@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CreationNote: Codable {
+public struct CreationNote: Codable, Sendable {
     
     internal static let path = "/creation-note"
     
@@ -23,7 +23,7 @@ public struct CreationNote: Codable {
         humanId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -37,7 +37,7 @@ public struct CreationNote: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let humanId: String
         
         private enum CodingKeys: String, CodingKey {

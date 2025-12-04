@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TreasuryPayment: Codable, Identifiable {
+public struct TreasuryPayment: Codable, Identifiable, Sendable {
     
     internal static let path = "/treasury/payment"
     internal static let listPath = TreasuryPayment.path + "/list"
@@ -56,7 +56,7 @@ public struct TreasuryPayment: Codable, Identifiable {
         existingToUpdate: Self?,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -85,7 +85,7 @@ public struct TreasuryPayment: Codable, Identifiable {
         publicId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -106,7 +106,7 @@ public struct TreasuryPayment: Codable, Identifiable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let amount: String
         let denomination: Currency
         let executorId: Int

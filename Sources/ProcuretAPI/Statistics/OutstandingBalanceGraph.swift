@@ -43,7 +43,7 @@ public struct OutstandingBalanceGraph: Decodable {
         authenticatedBy session: SessionRepresentative,
         describing business: Business,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Self?) -> Void
+        then callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         
         return Self.retrieve(
@@ -59,7 +59,7 @@ public struct OutstandingBalanceGraph: Decodable {
         authenticatedBy session: SessionRepresentative,
         describingBusinessWithId businessEntityId: Int,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Self?) -> Void
+        then callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         
         Request.make(

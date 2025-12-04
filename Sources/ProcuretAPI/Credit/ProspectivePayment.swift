@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ProspectivePayment: Codable {
+public struct ProspectivePayment: Codable, Sendable {
     
     internal static let path = "/credit/prospective-payment"
     
@@ -29,7 +29,7 @@ public struct ProspectivePayment: Codable {
         supplier: Supplier,
         periods: Int,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, ProspectivePayment?) -> Void
+        callback: @Sendable @escaping (Error?, ProspectivePayment?) -> Void
     ) {
         
         Request.make(

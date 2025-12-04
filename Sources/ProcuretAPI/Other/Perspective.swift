@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Perspective: Int, Codable {
+public enum Perspective: Int, Codable, Sendable {
     
     case supplier = 1
     case business = 2

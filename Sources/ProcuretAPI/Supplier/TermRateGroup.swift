@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct TermRateGroup: Codable {
+public struct TermRateGroup: Codable, Sendable {
     
 }

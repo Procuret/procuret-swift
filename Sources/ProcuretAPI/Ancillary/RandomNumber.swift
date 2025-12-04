@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct RandomNumber {
+public struct RandomNumber: Sendable {
     
     public let number: Decimal
     

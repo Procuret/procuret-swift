@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct PendingSeries: Codable, Identifiable {
+public struct PendingSeries: Codable, Identifiable, Sendable {
     
     internal static let path = "/payment-series/pending"
     internal static let listPath = PendingSeries.path + "/list"
@@ -39,7 +39,7 @@ public struct PendingSeries: Codable, Identifiable {
         awaitingIdentity: Bool? = nil,
         awaitingCredit: Bool? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<PendingSeries>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<PendingSeries>?) -> Void
     ) {
         
         return Self.retrieveMany(
@@ -67,7 +67,7 @@ public struct PendingSeries: Codable, Identifiable {
         awaitingIdentity: Bool? = nil,
         awaitingCredit: Bool? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<PendingSeries>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<PendingSeries>?) -> Void
     ) {
 
         typealias UP = UrlParameter

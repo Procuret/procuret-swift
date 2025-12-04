@@ -1,5 +1,4 @@
-// swift-tools-version:5.9
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -12,15 +11,18 @@ let package = Package(
     products: [
         .library(
             name: "ProcuretAPI",
-            targets: ["ProcuretAPI"]),
+            targets: ["ProcuretAPI"]
+        ),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "ProcuretAPI",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "ProcuretAPITests",
-            dependencies: ["ProcuretAPI"]),
+            dependencies: ["ProcuretAPI"]
+        ),
     ]
 )

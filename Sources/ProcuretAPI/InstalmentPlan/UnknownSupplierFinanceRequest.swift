@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct UnknownSupplierFinanceRequest {
+public struct UnknownSupplierFinanceRequest: Sendable {
     
     internal static let path = "/unknown-supplier-finance-request"
     
@@ -21,14 +21,14 @@ public struct UnknownSupplierFinanceRequest {
         invoiceAmount: Amount,
         invoiceBodyBase64Encoded: Data,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?) -> Void
+        then callback: @Sendable @escaping (Error?) -> Void
     ) {
         
         guard let fileString = String(
             data: invoiceBodyBase64Encoded,
             encoding: .utf8
         ) else {
-            callback(ProcuretAPIError(
+            callback(ProcuretError(
                 .unprocessable,
                 message: """
 Unable to process invoice file data as UTF-8 bytes
@@ -67,13 +67,13 @@ Unable to process invoice file data as UTF-8 bytes
         invoiceAmount: Amount,
         invoiceBody: Data,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?) -> Void
+        then callback: @Sendable @escaping (Error?) -> Void
     ) {
         
         guard let base64 = invoiceBody.base64EncodedString(
             options: [.lineLength76Characters]
         ).data(using: .utf8) else {
-            callback(ProcuretAPIError(.unprocessable, message: """
+            callback(ProcuretError(.unprocessable, message: """
 Unable to encode invoice body as UTF8 data
 """))
             return

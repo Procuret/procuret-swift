@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CardDetails: Codable {
+public struct CardDetails: Codable, Sendable {
     
     public let last4: String
     public let brand: String?

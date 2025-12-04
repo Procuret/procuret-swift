@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DealLedgerLine: Codable, Identifiable, Equatable {
+public struct DealLedgerLine: Codable, Identifiable, Equatable, Sendable {
     
     public enum PaymentStatus {
         case notDue
@@ -26,8 +26,8 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable {
     public let rawInterestPaid: String
     public let rawPrincipalPaid: String
     public let rawClosingBalance: String
+    public let rawPaid: String
     public let commitmentPublicId: String
-    public let payment: Payment?
     public let isBespoke: Bool
     public let unresolvedProlongedPayment: ProlongedPayment?
     public let denomination: Currency
@@ -61,6 +61,22 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable {
         denomination: self.denomination
     ) } }
     
+    public var paid: Amount { get { return Amount(
+        magnitude: Decimal(string: self.rawPaid) ?? -1,
+        denomination: self.denomination
+    ) } }
+    
+    public var balanceOutstanding: Amount {
+        return self.nominalPayment - self.paid
+    }
+    
+    public var balanceDueAndOutstanding: Amount {
+        guard self.due24hrsStarting < Date.now else {
+            return .zero(in: self.denomination)
+        }
+        return self.balanceOutstanding
+    }
+    
     public var status: PaymentStatus { get { return self.deriveStatus() } }
 
     public enum CodingKeys: String, CodingKey {
@@ -72,8 +88,8 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable {
         case rawInterestPaid = "interest_paid"
         case rawPrincipalPaid = "principal_paid"
         case rawClosingBalance = "closing_balance"
+        case rawPaid = "paid"
         case commitmentPublicId = "commitment_public_id"
-        case payment
         case isBespoke = "is_bespoke"
         case unresolvedProlongedPayment = "unresolved_prolonged_payment"
         case denomination
@@ -81,7 +97,8 @@ public struct DealLedgerLine: Codable, Identifiable, Equatable {
     
     private func deriveStatus() -> PaymentStatus {
         
-        if self.payment != nil { return .paid }
+        if self.balanceOutstanding.magnitude <= 0 { return .paid }
+        
         if self.due24hrsStarting > Date.now { return .notDue }
         if Date.now < self.due24hrsStarting.addingTimeInterval(60 * 60 * 24) {
             return .dueUnpaid

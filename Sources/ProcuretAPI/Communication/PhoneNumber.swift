@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct PhoneNumber: Codable, Equatable, Identifiable, Hashable {
+public struct PhoneNumber: Codable, Equatable, Identifiable, Hashable,
+                           Sendable{
     
     internal static let path = "/phone-number"
     
@@ -29,7 +30,7 @@ public struct PhoneNumber: Codable, Equatable, Identifiable, Hashable {
         authenticatedBy session: SessionRepresentative,
         withNewDigits newDigits: String,
         at endpoint: ApiEndpoint = .live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         
         Request.make(
@@ -52,7 +53,7 @@ public struct PhoneNumber: Codable, Equatable, Identifiable, Hashable {
     public static func create (
         digits: String,
         session: SessionRepresentative?,
-        callback: @escaping (Error?, PhoneNumber?) -> Void,
+        callback: @Sendable @escaping (Error?, PhoneNumber?) -> Void,
         debugEmail: String? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live
     ) {
@@ -68,7 +69,7 @@ public struct PhoneNumber: Codable, Equatable, Identifiable, Hashable {
         }
     }
 
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let digits: String
         let debugEmail: String?
         
@@ -78,7 +79,7 @@ public struct PhoneNumber: Codable, Equatable, Identifiable, Hashable {
         }
     }
     
-    private struct UpdateForHumanPayload: Codable {
+    private struct UpdateForHumanPayload: Codable, Sendable {
         let phone_id: Int
         let new_number: String
     }

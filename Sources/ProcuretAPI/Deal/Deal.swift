@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Deal: Codable, Identifiable {
+public struct Deal: Codable, Identifiable, Sendable {
     
     internal static let path = "/deal"
     internal static let listPath = Deal.path + "/list"
@@ -56,7 +56,7 @@ public struct Deal: Codable, Identifiable {
         commitmentId: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Deal?) -> Void
+        callback: @Sendable @escaping (Error?, Deal?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -81,7 +81,7 @@ public struct Deal: Codable, Identifiable {
         anyNameFragment: String?,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<Deal>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<Deal>?) -> Void
     ) {
         Request.make(
             path: Deal.listPath,

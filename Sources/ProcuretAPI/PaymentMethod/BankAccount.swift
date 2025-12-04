@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct BankAccount: UnderpinnedByMethodKernel {
+public struct BankAccount: UnderpinnedByMethodKernel, Sendable {
     
     internal static let path = "/payment/method/direct-debit"
     
@@ -35,7 +35,7 @@ public struct BankAccount: UnderpinnedByMethodKernel {
         authorityId: String?,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, BankAccount?) -> Void
+        callback: @Sendable @escaping (Error?, BankAccount?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -56,7 +56,7 @@ public struct BankAccount: UnderpinnedByMethodKernel {
         }
     }
 
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let bsbCode: String
         let accountNumber: String
         let accountName: String

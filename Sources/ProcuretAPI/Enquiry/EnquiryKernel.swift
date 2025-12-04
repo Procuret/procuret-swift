@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EnquiryKernel: Codable {
+public struct EnquiryKernel: Codable, Sendable {
     
     let enquiryId: Int
     let startTime: String

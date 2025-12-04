@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SigninToken: Codable {
+public struct SigninToken: Codable, Sendable {
     
     internal static let path = "/signin-token"
     
@@ -26,7 +26,7 @@ public struct SigninToken: Codable {
         afterSigninPath: String?,
         perspective: Perspective,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -42,7 +42,7 @@ public struct SigninToken: Codable {
         }
     }
 
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let emailAddress: String
         let afterSigninPath: String?
         let perspective: Perspective

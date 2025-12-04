@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Address: Codable, Equatable, Identifiable, Hashable {
+public struct Address: Codable, Equatable, Identifiable, Hashable, Sendable {
     
     public let publicId: String
     public let line1: String
@@ -60,7 +60,7 @@ public struct Address: Codable, Equatable, Identifiable, Hashable {
         }
     }
     
-    public struct CreationData: Codable {
+    public struct CreationData: Codable, Sendable {
         
         public let line1: String
         public let line2, line3, line4: String?

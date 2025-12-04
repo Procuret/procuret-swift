@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct IdentityAssessment: Codable {
+public struct IdentityAssessment: Codable, Sendable {
     
     internal static let path = "/assessment/identity"
     internal static let listPath = IdentityAssessment.path + "/list"

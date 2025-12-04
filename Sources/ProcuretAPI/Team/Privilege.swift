@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public struct Privilege: Codable {
+public struct Privilege: Codable, Sendable {
     
     let indexid: Int
     let name: String

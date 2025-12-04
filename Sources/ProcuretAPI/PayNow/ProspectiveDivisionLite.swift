@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ProspectiveDivisionLite: Codable {
+public struct ProspectiveDivisionLite: Codable, Sendable {
     
     public let instrument: Instrument
     public let magnitude: String

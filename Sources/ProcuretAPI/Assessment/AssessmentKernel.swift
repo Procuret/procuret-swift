@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct AssessmentKernel: Codable {
+public struct AssessmentKernel: Codable, Sendable {
     
     let indexid: Int
     let began: Date

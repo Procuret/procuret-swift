@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ProcuretDate: Codable {
+public struct ProcuretDate: Codable, Sendable {
     let year: Int
     let month: Int
     let day: Int

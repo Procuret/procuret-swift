@@ -7,7 +7,8 @@
 
 import Foundation
 
-public enum PhoneCountryCode: String, Identifiable, Hashable, CaseIterable {
+public enum PhoneCountryCode: String, Identifiable, Hashable, CaseIterable,
+                              Sendable{
     
     case Australia = "+61"
     case NewZealand = "+64"

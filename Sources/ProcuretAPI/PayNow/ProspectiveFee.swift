@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public struct ProspectiveFee: Decodable {
+public struct ProspectiveFee: Decodable, Sendable {
     
     internal static let path: String = "/pay-now-transaction/fee/prospective"
     
@@ -32,7 +32,7 @@ public struct ProspectiveFee: Decodable {
         amount: Amount,
         method: PaymentMethod,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Self?) -> Void
+        then callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         
         Request.make(

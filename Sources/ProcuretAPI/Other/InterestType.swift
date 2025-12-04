@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct InterestType: Codable {
+public struct InterestType: Codable, Sendable {
     
 }

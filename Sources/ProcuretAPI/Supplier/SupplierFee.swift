@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SupplierFee: Codable {
+public struct SupplierFee: Codable, Sendable {
     
     internal static let path = Supplier.path + "/fee"
     internal static let listPath = SupplierFee.path + "/list"
@@ -25,7 +25,7 @@ public struct SupplierFee: Codable {
         supplierId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -64,7 +64,7 @@ public struct SupplierFee: Codable {
         }
     }
         
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let feePercentage: String
         let supplierId: String
             
@@ -74,7 +74,7 @@ public struct SupplierFee: Codable {
         }
     }
     
-    private struct RetrieveParameters: Codable {
+    private struct RetrieveParameters: Codable, Sendable {
         let supplierId: String
         let termRateId: String
         

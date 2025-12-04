@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DocumentRevision: Codable {
+public struct DocumentRevision: Codable, Sendable {
     
     let created: Date
     let body: String

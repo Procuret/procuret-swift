@@ -8,7 +8,7 @@
 import Foundation
 
 
-public protocol Document: Codable {
+public protocol Document: Codable, Sendable {
     
     static var path: String { get }
 
@@ -21,7 +21,7 @@ public protocol Document: Codable {
         asHtml: Bool,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) -> Void
     
 }
@@ -33,7 +33,7 @@ extension Document {
         asHtml: Bool = false,
         session: SessionRepresentative? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable@escaping (Error?, Self?) -> Void
     ) -> Void {
         
         Request.make(

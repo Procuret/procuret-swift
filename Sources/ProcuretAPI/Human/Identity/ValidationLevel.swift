@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct ValidationLevel: Codable {
+public struct ValidationLevel: Codable, Sendable {
     
 }

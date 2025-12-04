@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ErrorAttribute: Codable {
+public struct ErrorAttribute: Codable, Sendable {
     
     let name: String
     let body: String

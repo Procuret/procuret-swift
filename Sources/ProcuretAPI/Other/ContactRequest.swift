@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ContactRequest: Codable {
+public struct ContactRequest: Codable, Sendable {
     
     internal static let path = "/contact-request"
     
@@ -32,7 +32,7 @@ public struct ContactRequest: Codable {
         lastName: String,
         message: String,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -48,7 +48,7 @@ public struct ContactRequest: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let emailAddress: String
         let phoneNumber: String
         let firstName: String

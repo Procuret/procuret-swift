@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Amount: Codable, Equatable {
+public struct Amount: Codable, Equatable, Sendable {
     
     public let rawMagnitude: String
     public let denomination: Currency
@@ -72,6 +72,10 @@ public struct Amount: Codable, Equatable {
             from: self.magnitude as NSDecimalNumber
         ) ?? "FORMAT_FAILED"
 
+    }
+    
+    public static func zero(in denomination: Currency) -> Self {
+        return Amount(magnitude: 0, denomination: denomination)
     }
     
     public func asSymbolisedDecimalString(

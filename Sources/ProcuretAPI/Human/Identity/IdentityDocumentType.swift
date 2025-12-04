@@ -7,7 +7,8 @@
 
 import Foundation
 
-public enum IdentityDocumentType: Int, Codable, Identifiable {
+public enum IdentityDocumentType: Int, Codable, Identifiable,
+                                  Sendable {
 
     case australianDriversLicense = 1
     case newZealandDriversLicense = 2

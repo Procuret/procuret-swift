@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PhoneChallenge {
+public struct PhoneChallenge: Sendable {
     
     private static let path = "/phone-number/challenge"
     
@@ -15,7 +15,7 @@ public struct PhoneChallenge {
         authenticatedBy session: SessionRepresentative,
         for number: PhoneNumber,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?) -> Void
+        then callback: @Sendable @escaping (Error?) -> Void
     ) {
         
         Request.make(

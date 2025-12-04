@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CreditAssessment: Codable {
+public struct CreditAssessment: Codable, Sendable {
     
     internal static let path = "/assessment/credit"
     internal static let listPath = CreditAssessment.path + "/list"
@@ -33,7 +33,7 @@ public struct CreditAssessment: Codable {
         forceFresh: Bool,
         forcePositive: Bool,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -57,7 +57,7 @@ public struct CreditAssessment: Codable {
         assessmentId: Int,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, CreditAssessment?) -> Void
+        callback: @Sendable @escaping (Error?, CreditAssessment?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -71,7 +71,7 @@ public struct CreditAssessment: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let setupCode: String
         let transactingHumanId: String
         let creditModel: CreditModel
@@ -87,7 +87,7 @@ public struct CreditAssessment: Codable {
         }
     }
     
-    private struct RetrieveParameters: Codable {
+    private struct RetrieveParameters: Codable, Sendable {
         let assessmentId: Int
         
         private enum CodingKeys: String, CodingKey {

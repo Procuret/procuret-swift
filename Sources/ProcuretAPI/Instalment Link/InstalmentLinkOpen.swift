@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct InstalmentLinkOpen: Codable {
+public struct InstalmentLinkOpen: Codable, Sendable {
     
     internal static let path = InstalmentLink.path + "/open"
     
@@ -23,7 +23,7 @@ public struct InstalmentLinkOpen: Codable {
         instalmentLinkId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -37,7 +37,7 @@ public struct InstalmentLinkOpen: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let instalmentLinkId: String
         
         private enum CodingKeys: String, CodingKey {

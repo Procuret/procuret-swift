@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Lifecycle: Codable {
+public struct Lifecycle: Codable, Sendable {
     
     let indexid: Int
     let name: String

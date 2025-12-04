@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Reconciliation: Codable, Identifiable, Hashable {
+public struct Reconciliation: Codable, Identifiable, Hashable, Sendable {
     
     public let indexId: Int
     public let name: String

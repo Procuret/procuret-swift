@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct BusinessAgreement: Codable {
+public struct BusinessAgreement: Codable, Sendable {
     
     internal static let path = "/business/agreement"
     
@@ -23,7 +23,7 @@ public struct BusinessAgreement: Codable {
         businessId: String,
         signaturePNG: String,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, String?) -> Void
+        callback: @Sendable @escaping (Error?, String?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -40,7 +40,7 @@ public struct BusinessAgreement: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let businessId: String
         let signaturePNG: String
         

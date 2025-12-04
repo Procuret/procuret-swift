@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Card: UnderpinnedByMethodKernel {
+public struct Card: UnderpinnedByMethodKernel, Sendable {
     
     internal static let path = "/payment/method/card"
     
@@ -37,7 +37,7 @@ public struct Card: UnderpinnedByMethodKernel {
         postalCode: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Card?) -> Void
+        callback: @Sendable @escaping (Error?, Card?) -> Void
     ) {
         Request.make(
             path: "/payment/method/card/plain",
@@ -60,7 +60,7 @@ public struct Card: UnderpinnedByMethodKernel {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let entityId: Int?
         let authorityAgentId: Int
         let cardNumber: String

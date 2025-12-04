@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Invoice: Codable {
+public struct Invoice: Codable, Sendable {
     
     internal static let path = "/invoice"
     
@@ -21,7 +21,7 @@ public struct Invoice: Codable {
         invoiceBase64: String,
         magnitudeValue: Decimal,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Invoice?) -> Void
+        callback: @Sendable @escaping (Error?, Invoice?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -44,7 +44,7 @@ public struct Invoice: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let supplierId: Int
         let invoiceFilename: String
         let invoiceIdentifier: String

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CreditModel: Codable {
+public struct CreditModel: Codable, Sendable {
     
     let indexid: Int
     let name: String

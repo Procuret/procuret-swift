@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Payment: Codable, Equatable {
+public struct Payment: Codable, Equatable, Sendable {
     
     let publicId: String
     let created: Date

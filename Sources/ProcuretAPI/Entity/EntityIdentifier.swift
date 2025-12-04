@@ -9,7 +9,7 @@ import Foundation
 
 
 public enum EntityIdentifierType: Int, Codable, CaseIterable, Identifiable,
-                                  Equatable, Hashable {
+                                  Equatable, Hashable, Sendable {
     
     case australianBusinessNumber = 1
     case australianCompanyNumber = 2

@@ -64,7 +64,7 @@ public struct SettlementAccount: Decodable {
         }
     }
             
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let supplierId: String
         let accountId: String
                 
@@ -74,7 +74,7 @@ public struct SettlementAccount: Decodable {
         }
     }
     
-    private struct RetrieveParameters: Codable {
+    private struct RetrieveParameters: Codable, Sendable {
         let supplierId: String
         
         private enum CodingKeys: String, CodingKey {

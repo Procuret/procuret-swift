@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum TransactionType: Int, Codable, CaseIterable, Equatable {
+public enum TransactionType: Int, Codable, CaseIterable, Equatable, Sendable {
         
     case payNow = 1
     case instalmentPlan = 2

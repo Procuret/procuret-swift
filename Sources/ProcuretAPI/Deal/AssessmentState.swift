@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum AssessmentState: Int, Codable {
+public enum AssessmentState: Int, Codable, Sendable {
     
     case passed = 1
     case failed = 2

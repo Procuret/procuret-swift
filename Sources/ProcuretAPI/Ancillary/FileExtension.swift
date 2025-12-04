@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum FileExtension: Int, Codable {
+public enum FileExtension: Int, Codable, Sendable {
     
     case png = 1
     case svg = 2

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct InstalmentLink: Codable, Identifiable, Hashable {
+public struct InstalmentLink: Codable, Identifiable, Hashable, Sendable {
 
     internal static let path = "/instalment-link"
     internal static let listPath = InstalmentLink.path + "/list"
@@ -58,7 +58,8 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
         case nomenclature = "sale_name"
     }
     
-    public enum Nomenclature: Int, Codable, CaseIterable, Identifiable {
+    public enum Nomenclature: Int, Codable, CaseIterable, Identifiable,
+                              Sendable {
         
         case invoice = 1
         case order = 2
@@ -90,7 +91,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
         communicate: Bool,
         inviteePhone: String? = nil,
         at endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, InstalmentLink?) -> Void
+        callback: @Sendable @escaping (Error?, InstalmentLink?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -117,7 +118,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
         publicId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, InstalmentLink?) -> Void
+        callback: @Sendable @escaping (Error?, InstalmentLink?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -143,7 +144,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
         accessibleTo: Agent? = nil,
         createdBy: Agent? = nil,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Array<Self>?) -> Void
+        then callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) {
        
         typealias UP = UrlParameter
@@ -174,7 +175,7 @@ public struct InstalmentLink: Codable, Identifiable, Hashable {
 
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
     
         let supplier_id: Int
         let invoice_amount: String

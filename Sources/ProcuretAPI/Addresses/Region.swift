@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public struct Region: Codable, Identifiable, Hashable {
+public struct Region: Codable, Identifiable, Hashable, Sendable {
     
     public let indexId: Int
     public let name: String

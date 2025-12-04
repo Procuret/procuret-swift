@@ -19,7 +19,7 @@ public struct AustralianDriversLicense {
         licenseNumber: String,
         cardNumber: String,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?) -> Void
+        then callback: @Sendable @escaping (Error?) -> Void
     ) {
         
         Request.make(

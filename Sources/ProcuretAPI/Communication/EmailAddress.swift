@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EmailAddress: Codable, Equatable {
+public struct EmailAddress: Codable, Equatable, Sendable {
     
     public let created: String
     public let emailAddress: String

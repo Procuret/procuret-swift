@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct Colour: Codable {
+public struct Colour: Codable, Sendable  {
     
 }

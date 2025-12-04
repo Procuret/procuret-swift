@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum Customer {
+public enum Customer: Sendable {
     
     case human(Human)
     case entity(Entity)

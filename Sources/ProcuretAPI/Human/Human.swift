@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Human: Codable, Agent, Equatable {
+public struct Human: Codable, Agent, Equatable, Sendable {
     
     public static let maxNameLength: Int = 64
     public static let minNameLength: Int = 1
@@ -47,7 +47,7 @@ public struct Human: Codable, Agent, Equatable {
         return self.firstName + " " + self.lastName
     }
     
-    fileprivate struct CodeContainer: Codable {
+    fileprivate struct CodeContainer: Codable, Sendable {
         
         fileprivate let code: String
         
@@ -70,15 +70,19 @@ public struct Human: Codable, Agent, Equatable {
         hasAgentSecret: Bool? = nil,
         signupPerspective: Perspective = .business,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Human?, String?) -> Void
+        callback: @Sendable @escaping (Error?, Human?, String?) -> Void
     ) -> Void {
         
-        func extractCode(error: Error?, human: Human?, data: Data?) -> Void {
+        @Sendable func extractCode(
+            error: Error?,
+            human: Human?,
+            data: Data?
+        ) -> Void {
             
             guard error == nil else { return callback(error, nil, nil) }
             guard let data = data else {
                 return callback(
-                    ProcuretAPIError.init(.inconsistentState),
+                    ProcuretError.init(.inconsistentState),
                     nil,
                     nil
                 )
@@ -145,7 +149,7 @@ public struct Human: Codable, Agent, Equatable {
         hasAgentSecret: Bool? = nil,
         signupPerspective: Perspective = .business,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Human?) -> Void
+        callback: @Sendable @escaping (Error?, Human?) -> Void
     ) -> Void {
 
         Request.make(
@@ -177,7 +181,7 @@ public struct Human: Codable, Agent, Equatable {
         humanId: Int,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Human?) -> Void
+        callback: @Sendable @escaping (Error?, Human?) -> Void
     ) -> Void {
         Request.make(
             path: self.path,
@@ -194,7 +198,7 @@ public struct Human: Codable, Agent, Equatable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let firstName: String
         let lastName: String
         let emailAddress: String?

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Margin: Codable {
+public struct Margin: Codable, Sendable {
     
     internal static let path = "/margin"
 }

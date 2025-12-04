@@ -9,7 +9,7 @@
 import Foundation
 
 
-public struct HouseAccount: Decodable {
+public struct HouseAccount: Decodable, Sendable {
     
     internal static let path = "/house-account"
     
@@ -28,7 +28,7 @@ public struct HouseAccount: Decodable {
         accountName: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, HouseAccount?) -> Void
+        callback: @Sendable @escaping (Error?, HouseAccount?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -51,7 +51,7 @@ public struct HouseAccount: Decodable {
         currency: Currency,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, HouseAccount?) -> Void
+        callback: @Sendable @escaping (Error?, HouseAccount?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -65,7 +65,7 @@ public struct HouseAccount: Decodable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let currency: Currency
         let bsbCode: String
         let accountNumber: String
@@ -79,7 +79,7 @@ public struct HouseAccount: Decodable {
         }
     }
     
-    private struct RetrieveParameters: Codable {
+    private struct RetrieveParameters: Codable, Sendable {
         let currency: Currency
         
         private enum CodingKeys: String, CodingKey {

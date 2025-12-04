@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct HumanIdentity: Codable, Equatable {
+public struct HumanIdentity: Codable, Equatable, Sendable {
     
     internal static let path = "/human/identity"
     
@@ -33,7 +33,7 @@ public struct HumanIdentity: Codable, Equatable {
         dateOfBirth: String,
         address: Address.CreationData,
         at endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -52,7 +52,7 @@ public struct HumanIdentity: Codable, Equatable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let humanId: Int
         let dateOfBirth: String
         let address: Address.CreationData

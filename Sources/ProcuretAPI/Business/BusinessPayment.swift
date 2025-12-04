@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct BusinessPayment: Codable, Identifiable {
+public struct BusinessPayment: Codable, Identifiable, Sendable {
     
     internal static let path = "/business/payment"
     internal static let listPath = Self.path + "/list"
@@ -46,7 +46,7 @@ public struct BusinessPayment: Codable, Identifiable {
         methodId: String? = nil,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<Self>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) {
         
         typealias UP = UrlParameter

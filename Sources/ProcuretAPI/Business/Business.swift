@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Business: Codable, Equatable {
+public struct Business: Codable, Equatable, Sendable {
     
     internal static let path = "/business"
     internal static let listPath = Business.path + "/list"
@@ -30,7 +30,7 @@ public struct Business: Codable, Equatable {
         address: Address.CreationData,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Business?) -> Void
+        callback: @Sendable @escaping (Error?, Business?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -53,7 +53,7 @@ public struct Business: Codable, Equatable {
         entity: Entity,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Business?) -> Void
+        callback: @Sendable @escaping (Error?, Business?) -> Void
     ) {
 
         Request.make(
@@ -74,7 +74,7 @@ public struct Business: Codable, Equatable {
         authenticatedBy session: SessionRepresentative,
         for entity: Entity,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Self?) -> Void
+        then callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         
         return Self.retrieve(
@@ -90,7 +90,7 @@ public struct Business: Codable, Equatable {
         authenticatedBy session: SessionRepresentative,
         publicId: Int,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Self?) -> Void
+        then callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         
         Request.make(
@@ -118,7 +118,7 @@ public struct Business: Codable, Equatable {
         hasTransacted: Bool? = nil,
         hasTransactedWithSupplier: Supplier? = nil,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Array<Self>?) -> Void
+        then callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) {
         
         typealias UP = UrlParameter
@@ -154,7 +154,7 @@ public struct Business: Codable, Equatable {
 
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let identifier: String
         let idType: EntityIdentifierType
         let address: Address.CreationData
@@ -166,7 +166,7 @@ public struct Business: Codable, Equatable {
         }
     }
     
-    private struct CreateWithEntityPayload: Codable {
+    private struct CreateWithEntityPayload: Codable, Sendable {
         let entity_id: Int
     }
     

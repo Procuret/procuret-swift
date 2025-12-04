@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ExchangeCore: Codable {
+public struct ExchangeCore: Codable, Sendable {
     
     public let publicId: String
     public let created: Date

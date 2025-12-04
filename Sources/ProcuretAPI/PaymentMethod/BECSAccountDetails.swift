@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct BECSAccountDetails: Codable {
+public struct BECSAccountDetails: Codable, Sendable {
     
     public let last4: String
     public let bsb: String

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SeriesCondition: Codable {
+public struct SeriesCondition: Codable, Sendable {
     
     internal static let listPath = "/series/condition/list"
     
@@ -23,7 +23,7 @@ public struct SeriesCondition: Codable {
         commitmentId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.listPath,
@@ -36,7 +36,7 @@ public struct SeriesCondition: Codable {
             fatalError("Not implemented")
         }
     }
-    private struct RetrieveParameters: Codable {
+    private struct RetrieveParameters: Codable, Sendable {
         let commitmentId: String
         
         private enum CodingKeys: String, CodingKey {

@@ -86,7 +86,7 @@ public enum PaymentMethod: UnderpinnedByMethodKernel, IdentifiesPaymentMethod {
                 try kernelContainer.decode(BECSDirectDebit.self)
             )
         default:
-            throw ProcuretAPIError(
+            throw ProcuretError(
                 .badResponse,
                 message: "Unexpected PaymentMethodKernel custodian, instrument"
             )
@@ -105,7 +105,7 @@ public enum PaymentMethod: UnderpinnedByMethodKernel, IdentifiesPaymentMethod {
         instrument: Instrument? = nil,
         processor: Processor? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<PaymentMethod>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<PaymentMethod>?) -> Void
     ) {
         
         typealias UP = UrlParameter
@@ -139,7 +139,7 @@ public enum PaymentMethod: UnderpinnedByMethodKernel, IdentifiesPaymentMethod {
         publicId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: PaymentMethod.path,
@@ -156,7 +156,7 @@ public enum PaymentMethod: UnderpinnedByMethodKernel, IdentifiesPaymentMethod {
         }
     }
     
-    private struct DeletePayload: Codable {
+    private struct DeletePayload: Codable, Sendable {
         let publicId: String
         
         private enum CodingKeys: String, CodingKey {

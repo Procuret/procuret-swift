@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct HumanHeadline: Codable, Agent, Equatable {
+public struct HumanHeadline: Codable, Agent, Equatable, Sendable {
     
     public let agentId: Int
     public let fullName: String

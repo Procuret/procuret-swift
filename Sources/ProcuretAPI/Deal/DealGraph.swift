@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DealGraph: Codable {
+public struct DealGraph: Codable, Sendable {
     
     internal static let path = "/deal/graph"
     
@@ -29,10 +29,10 @@ public struct DealGraph: Codable {
 
 }
 
-public struct DealGraphAttribute: Codable {
+public struct DealGraphAttribute: Codable, Sendable {
     
 }
 
-public struct DealGraphGroupBy: Codable {
+public struct DealGraphGroupBy: Codable, Sendable {
     
 }

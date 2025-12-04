@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct BECSDirectDebit: UnderpinnedByMethodKernel {
+public struct BECSDirectDebit: UnderpinnedByMethodKernel, Sendable {
     
     internal static let path = "/payment/method/becs-direct-debit"
     
@@ -37,7 +37,7 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
         mandateAgent: String?,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, BECSDirectDebit?) -> Void
+        callback: @Sendable @escaping (Error?, BECSDirectDebit?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -61,7 +61,7 @@ public struct BECSDirectDebit: UnderpinnedByMethodKernel {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let bsbCode: String
         let accountNumber: String
         let accountName: String

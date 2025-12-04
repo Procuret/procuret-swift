@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Note: Codable {
+public struct Note: Codable, Sendable {
     
     let publicId: String
     let author: HumanHeadline

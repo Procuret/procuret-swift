@@ -8,7 +8,8 @@
 import Foundation
 
 
-public struct IdentityDocumentHeadline: Codable, Identifiable, Equatable {
+public struct IdentityDocumentHeadline: Codable, Identifiable, Equatable,
+                                        Sendable {
     
     public let publicId: String
     public let documentType: IdentityDocumentType

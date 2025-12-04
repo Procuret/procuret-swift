@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DefaultDescription: Codable {
+public struct DefaultDescription: Codable, Sendable {
     
     internal static let path = "/supplier/default-description"
     
@@ -15,7 +15,7 @@ public struct DefaultDescription: Codable {
         supplierId: Int,
         description: String,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Data?) -> Void
+        callback: @Sendable @escaping (Error?, Data?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -32,7 +32,7 @@ public struct DefaultDescription: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let supplierId: Int
         let description: String
         

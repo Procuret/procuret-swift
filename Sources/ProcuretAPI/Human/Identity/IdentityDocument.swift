@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct HumanIdentityDocument: Codable {
+public struct HumanIdentityDocument: Codable, Sendable {
     
     internal static let path = "/human/identity-document"
     
@@ -31,7 +31,7 @@ public struct HumanIdentityDocument: Codable {
         idDocumentIdentifier: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -50,7 +50,7 @@ public struct HumanIdentityDocument: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let humanId: Int
         let idDocumentType: IdentityDocumentType.RawValue
         let idDocumentIdentifier: String

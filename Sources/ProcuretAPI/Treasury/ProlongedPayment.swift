@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ProlongedPayment: Codable, Identifiable, Equatable {
+public struct ProlongedPayment: Codable, Identifiable, Equatable, Sendable {
     
     internal static let path = "/prolonged-payment"
     internal static let listPath = "/prolonged-payment/list"
@@ -54,7 +54,7 @@ public struct ProlongedPayment: Codable, Identifiable, Equatable {
         seriesId: String?,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<Self>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) {
         typealias UP = UrlParameter
         

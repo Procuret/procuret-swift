@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct AffiliatedProduct: Codable {
+public struct AffiliatedProduct: Codable, Sendable {
     
     internal static let listPath = "/product/affiliated/list"
     internal static let sellPath = "/product/affiliated/sell"

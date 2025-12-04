@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PayNowDivision: Codable {
+public struct PayNowDivision: Codable, Sendable {
     
     public let method: PaymentMethodHeadline
     public let magnitude: String

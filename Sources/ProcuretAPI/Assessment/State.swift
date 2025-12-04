@@ -9,7 +9,7 @@ import Foundation
 
 
 
-public enum Example: Int, Codable {
+public enum Example: Int, Codable, Sendable {
     
     case first = 1
     case second = 2

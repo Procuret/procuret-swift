@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct MagicInvoice: Codable {
+public struct MagicInvoice: Sendable {
     
     internal static let path = "/magic-invoice"
+
 }

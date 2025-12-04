@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PaymentAdvice: Codable {
+public struct PaymentAdvice: Codable, Sendable {
     
     internal static let path = Supplier.path + "/payment-advice"
     internal static let listPath = PaymentAdvice.path + "/list"
@@ -25,7 +25,7 @@ public struct PaymentAdvice: Codable {
         recipientEmail: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -46,7 +46,7 @@ public struct PaymentAdvice: Codable {
         seriesId: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<Self>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) {
         Request.make(
             path: self.listPath,
@@ -60,7 +60,7 @@ public struct PaymentAdvice: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let seriesId: String
         let recipientEmail: String
         
@@ -70,7 +70,7 @@ public struct PaymentAdvice: Codable {
         }
     }
     
-    private struct RetrieveManyParameters: Codable {
+    private struct RetrieveManyParameters: Codable, Sendable {
         let seriesId: String
         
         private enum CodingKeys: String, CodingKey {

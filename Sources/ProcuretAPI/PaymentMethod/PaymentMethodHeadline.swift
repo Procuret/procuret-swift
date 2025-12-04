@@ -8,7 +8,7 @@
 import Foundation
 
 public struct PaymentMethodHeadline: Codable, IdentifiesPaymentMethod,
-                                     Equatable {
+                                     Equatable, Sendable {
     
     public let publicId: String
     public let description: String

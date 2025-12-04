@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ProspectiveDivision: Codable {
+public struct ProspectiveDivision: Codable, Sendable {
     
     public let methodId: String
     public let magnitude: String

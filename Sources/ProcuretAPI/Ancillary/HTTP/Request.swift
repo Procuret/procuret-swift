@@ -8,6 +8,193 @@
 import Foundation
 
 
+/// New generation Request type to bring this library into the 21st century.
+/// For now this type is suffixed NG, at an appropriate time we will remove
+/// the original Request type and rename it.
+internal struct RequestNG {
+    
+    private static let agent: String = "procuret-swift"
+    
+    private static let jsonEncoder = JSONEncoder()
+    private static let jsonDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.nozomiTime)
+        return decoder
+    }()
+    
+    private static let signatureHeaderName = "X-Procuret-Signature"
+    private static let sessionIdHeaderName = "X-Procuret-Session-ID"
+    
+    private static let urlSession = URLSession(
+        configuration: URLSessionConfiguration.ephemeral
+    )
+    
+    internal static func make<D: Decodable, S: SessionRepresentative,
+                              E: Encodable>(
+        path: String,
+        method: HTTPMethod,
+        urlQueryItems: Array<URLQueryItem>?,
+        session: S?,
+        body: E?,
+        endpoint: ApiEndpoint
+    ) async throws(ProcuretError) -> D {
+        
+        guard let baseUrl = URL(string: endpoint.url + path) else {
+            throw ProcuretError(.inconsistentState, message: """
+Unable to form base URL for HTTP request                
+""")
+        }
+        
+        let url: URL
+
+        if let urlQueryItems = urlQueryItems {
+            
+            guard var components = URLComponents(
+                url: baseUrl,
+                resolvingAgainstBaseURL: false
+            ) else {
+                throw ProcuretError(.other, message: """
+Unable to intitialise `URLComponents`                    
+""")
+            }
+            
+            components.queryItems = urlQueryItems
+            
+            guard let urlWithQueryItems: URL = components.url else {
+                throw ProcuretError(.other, message: """
+Unable to intitialise `URL` with query items                    
+""")
+            }
+            
+            url = urlWithQueryItems
+            
+            
+        } else {
+         
+            url = baseUrl
+            
+        }
+
+
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringCacheData
+        request.setValue(
+            Self.agent,
+            forHTTPHeaderField: "User-Agent"
+        )
+        request.httpShouldHandleCookies = false
+        
+        if let body {
+            
+            let jsonData: Data
+            
+            do {
+                jsonData = try Self.jsonEncoder.encode(body)
+            } catch {
+                throw ProcuretError(
+                    .other,
+                    message: "Unable to encode request body to JSON"
+                )
+            }
+            
+            request.httpBody = jsonData
+            
+            request.setValue(
+                "application/json",
+                forHTTPHeaderField: "Content-Type"
+            )
+            
+            request.setValue(
+                "\(jsonData.count)",
+                forHTTPHeaderField: "Content-Length"
+            )
+            
+            
+        }
+
+        if let session = session {
+            
+            let signature = try Signature.make(
+                path: path,
+                apiKey: session.apiKey.data(using: .utf8)!
+            )
+            request.setValue(
+                signature,
+                forHTTPHeaderField: signatureHeaderName
+            )
+            request.setValue(
+                String(session.sessionId),
+                forHTTPHeaderField: sessionIdHeaderName
+            )
+
+        }
+        
+        let responseData: Data
+        let urlResponse: URLResponse
+        
+        do {
+            let (rd, ur) = try await urlSession.data(
+                for: request
+            )
+            responseData = rd
+            urlResponse = ur
+        } catch {
+            throw ProcuretError(.other, message: """
+URL session data request failed with error: \(error)
+""")
+        }
+        
+        guard let httpResponse = urlResponse as? HTTPURLResponse else {
+            throw ProcuretError(
+                .other,
+                message: """
+Unable to cast URLResponse to HTTPURLResponse             
+"""
+            )
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            
+            // try to parse out an error
+            
+            fatalError()
+            
+        }
+        
+        do {
+            
+            let decoded: D = try Self.jsonDecoder.decode(
+                D.self,
+                from: responseData
+            )
+            
+            return decoded
+            
+        } catch {
+            
+            let rawJson = String(
+                data: responseData,
+                encoding: .utf8
+            ) ?? "<Failed to read UTF-8 data>"
+            
+            throw ProcuretError(
+                .jsonParseFailed,
+                message: """
+Unable to decode an expected object from API response. The raw JSON returned \
+by the API was:
+\(rawJson)
+"""
+            )
+            
+        }
+        
+    }
+    
+}
+
+
+
 internal class Request {
     
     private static let debugDataPrintEnvironmentKey = "PROCURET_DEBUG_DATA"
@@ -30,7 +217,7 @@ internal class Request {
         query: QueryString?,
         method: HTTPMethod,
         endpoint: ApiEndpoint,
-        then callback: @escaping (Error?, Data?) -> Void
+        then callback: @Sendable  @escaping (Error?, Data?) -> Void
     ) {
         
         let data: RequestData
@@ -58,11 +245,11 @@ internal class Request {
         query: QueryString?,
         method: HTTPMethod,
         endpoint: ApiEndpoint,
-        then callback: @escaping (Error?, Data?) -> Void
+        then callback: @Sendable @escaping (Error?, Data?) -> Void
     ) {
         
         if method == .GET && data != nil {
-            callback(ProcuretAPIError(
+            callback(ProcuretError(
                 .inconsistentState,
                 message: "data parameter must be nil when making a GET request"
             ), nil)
@@ -108,7 +295,7 @@ internal class Request {
         _ data: Data?,
         _ response: URLResponse?,
         _ error: Error?,
-        _ callback: @escaping (Error?, Data?) -> Void
+        _ callback: @Sendable @escaping (Error?, Data?) -> Void
     ) {
     
         if error != nil {
@@ -117,14 +304,14 @@ internal class Request {
             return
         }
         guard let httpResponse = response as? HTTPURLResponse else {
-            callback(ProcuretAPIError(
+            callback(ProcuretError(
                 .inconsistentState,
                 message: "Could not cast HTTPURLResponse"
             ), nil)
             return
         }
         guard (200...299).contains(httpResponse.statusCode) else {
-            let error = ProcuretAPIError.fromResponse(
+            let error = ProcuretError.fromResponse(
                 data: data,
                 code: httpResponse.statusCode
             )
@@ -151,7 +338,7 @@ internal class Request {
             guard let parameters = query.paramString.addingPercentEncoding(
                 withAllowedCharacters: .urlQueryAllowed
             ) else {
-                throw ProcuretAPIError(
+                throw ProcuretError(
                     .inconsistentState,
                     message: "bad url encode"
                 )
@@ -162,7 +349,7 @@ internal class Request {
         }
         
         guard let targetURL = URL(string: fullURL) else {
-            throw ProcuretAPIError(
+            throw ProcuretError(
                 .inconsistentState,
                 message: "nil targetURL"
             )
@@ -215,13 +402,13 @@ internal class Request {
         }
         
         guard let data = data else {
-            if let apiError = error as? ProcuretAPIError {
+            if let apiError = error as? ProcuretError {
                 if apiError.kind == .notFound && coerce404toNil {
                     callback(nil, nil)
                     return
                 }
             }
-            callback(error ?? ProcuretAPIError(
+            callback(error ?? ProcuretError(
                 .inconsistentState,
                 message: "No data and no error available for decode"
             ), nil)
@@ -271,7 +458,7 @@ internal class Request {
         
         guard let error = error else { return }
         
-        if let apiError = error as? ProcuretAPIError {
+        if let apiError = error as? ProcuretError {
             
             print("-$- Procuret API Error -$- ")
             print(apiError.message)

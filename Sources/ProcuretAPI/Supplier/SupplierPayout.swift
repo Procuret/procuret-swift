@@ -53,7 +53,7 @@ public struct SupplierPayout: Codable, Hashable, Identifiable {
         publicId: String? = nil,
         supplier: Supplier? = nil,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Array<Self>?) -> Void
+        then callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) -> Void {
         
         typealias UP = UrlParameter

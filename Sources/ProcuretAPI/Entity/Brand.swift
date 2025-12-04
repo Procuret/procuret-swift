@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Brand: Codable, Equatable, Hashable {
+public struct Brand: Codable, Equatable, Hashable, Sendable {
     
     internal static let path = "/entity/brand"
     
@@ -33,7 +33,7 @@ public struct Brand: Codable, Equatable, Hashable {
         entityId: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Brand?) -> Void
+        callback: @Sendable @escaping (Error?, Brand?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -52,7 +52,7 @@ public struct Brand: Codable, Equatable, Hashable {
         }
     }
         
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let name: String
         let media: Array<BrandMedia>
         let saleMessage: String
@@ -67,7 +67,7 @@ public struct Brand: Codable, Equatable, Hashable {
         }
     }
 
-    public struct Colour {
+    public struct Colour: Sendable {
         
         public let hex: String
         
@@ -75,9 +75,10 @@ public struct Brand: Codable, Equatable, Hashable {
 
     }
     
-    public struct Media: Codable, Equatable, Hashable {
+    public struct Media: Codable, Equatable, Hashable, Sendable {
         
-        public enum Scheme: Int, Codable, CaseIterable, Identifiable {
+        public enum Scheme: Int, Codable, CaseIterable, Identifiable,
+                            Sendable {
             case dark = 2
             case light = 1
             

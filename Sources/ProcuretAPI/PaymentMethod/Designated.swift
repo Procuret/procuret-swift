@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DesignatedPaymentMethod {
+public struct DesignatedPaymentMethod: Sendable {
     
     internal static let path = PaymentSeries.path + "/designated-method"
     
@@ -17,7 +17,7 @@ public struct DesignatedPaymentMethod {
         series: PaymentSeries,
         method: GenericMethod,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -35,7 +35,7 @@ public struct DesignatedPaymentMethod {
         }
     }
         
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let seriesId: String
         let methodId: String
             

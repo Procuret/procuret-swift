@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SupplierAuthorisation: Codable {
+public struct SupplierAuthorisation: Codable, Sendable {
     
     internal static let path = "/supplier/authorisation"
     
@@ -16,7 +16,7 @@ public struct SupplierAuthorisation: Codable {
         authorise: Bool,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback:  @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -33,7 +33,7 @@ public struct SupplierAuthorisation: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let supplierId: Int
         let authorise: Bool
         

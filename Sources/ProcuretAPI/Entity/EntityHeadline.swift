@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EntityHeadline: Codable, Equatable {
+public struct EntityHeadline: Codable, Equatable, Sendable {
     
     public let entityId: Int
     public let legalEntityName: String

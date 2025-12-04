@@ -8,7 +8,8 @@
 import Foundation
 
 
-public enum Custodian: Int, Codable, CaseIterable, Identifiable {
+public enum Custodian: Int, Codable, CaseIterable, Identifiable,
+                       Sendable {
     
     case stripe = 1
     case procuret = 2

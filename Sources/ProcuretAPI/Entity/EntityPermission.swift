@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct EntityPermission: Codable {
+public struct EntityPermission: Codable, Sendable {
     
     internal static let path = "/entity/permission"
     internal static let listPath = EntityPermission.path + "/list"
@@ -33,7 +33,7 @@ public struct EntityPermission: Codable {
         privileges: Array<Privilege>,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -56,7 +56,7 @@ public struct EntityPermission: Codable {
         humanId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -73,7 +73,7 @@ public struct EntityPermission: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let humanId: String
         let entityId: String
         let privileges: Array<Privilege>
@@ -85,7 +85,7 @@ public struct EntityPermission: Codable {
         }
     }
     
-    private struct RetrieveParameters: Codable {
+    private struct RetrieveParameters: Codable, Sendable {
         let entityId: String
         let humanId: String
         

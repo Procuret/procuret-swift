@@ -8,7 +8,7 @@
 import Foundation
 
 public struct EntityIdentifierRecord: Codable, Identifiable, Equatable,
-                                        Hashable {
+                                        Hashable, Sendable {
     
     public static let path = "/"
     
@@ -34,7 +34,7 @@ public struct EntityIdentifierRecord: Codable, Identifiable, Equatable,
         idType: Int,
         identifier: String,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Data?) -> Void
+        callback: @Sendable @escaping (Error?, Data?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -52,7 +52,7 @@ public struct EntityIdentifierRecord: Codable, Identifiable, Equatable,
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let entityId: Int
         let idType: Int
         let identifier: String

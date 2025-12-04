@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Agreement: Codable {
+public struct Agreement: Codable, Sendable {
     
     let publicId: String
     let setupId: String

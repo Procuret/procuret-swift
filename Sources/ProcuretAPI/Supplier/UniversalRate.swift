@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct UniversalRate: Codable {
+public struct UniversalRate: Codable, Sendable {
     
     internal static let path = "/admin/supplier/universal-rate"
     
@@ -15,7 +15,7 @@ public struct UniversalRate: Codable {
         supplierId: Int,
         rate: Decimal,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Data?) -> Void
+        callback: @Sendable @escaping (Error?, Data?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -32,7 +32,7 @@ public struct UniversalRate: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let supplierId: Int
         let rate: Decimal
         

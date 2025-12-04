@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SecondFactorCode: Codable {
+public struct SecondFactorCode: Codable, Sendable {
     
     private static let path = "/second-factor-code"
     
@@ -17,7 +17,7 @@ public struct SecondFactorCode: Codable {
         secret: String,
         perspective: Perspective?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -41,7 +41,7 @@ public struct SecondFactorCode: Codable {
         secret: String,
         perspective: Perspective?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         return Self.create(
             email: email,
@@ -58,7 +58,7 @@ public struct SecondFactorCode: Codable {
         secret: String,
         perspective: Perspective?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         return Self.create(
             email: nil,
@@ -70,7 +70,7 @@ public struct SecondFactorCode: Codable {
         )
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let email: String?
         let agentId: String?
         let secret: String
@@ -89,11 +89,11 @@ public struct SecondFactorCode: Codable {
     ) throws -> String {
         
         guard let eSecret = getenv(secretVariableName) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         
         guard let secret = String(utf8String: eSecret) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         
         return secret

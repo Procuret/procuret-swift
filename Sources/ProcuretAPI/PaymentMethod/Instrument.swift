@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Instrument: Int, Codable, CaseIterable, Identifiable {
+public enum Instrument: Int, Codable, CaseIterable, Identifiable, Sendable {
     
     case card = 1
     case bankAccount = 2

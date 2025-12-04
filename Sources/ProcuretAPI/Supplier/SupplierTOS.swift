@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SupplierTOS: Codable {
+public struct SupplierTOS: Codable, Sendable {
     
     internal static let path = "/supplier/tos"
     
@@ -15,7 +15,7 @@ public struct SupplierTOS: Codable {
         supplierId: Int,
         markdown: String,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, SupplierTOS?) -> Void
+        callback: @Sendable @escaping (Error?, SupplierTOS?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -32,7 +32,7 @@ public struct SupplierTOS: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let supplierId: Int
         let markdown: String
         

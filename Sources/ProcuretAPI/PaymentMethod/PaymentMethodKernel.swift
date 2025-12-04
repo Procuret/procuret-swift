@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct PaymentMethodKernel: Codable {
+public struct PaymentMethodKernel: Codable, Sendable {
     
     let publicId: String
     let entityId: Int?

@@ -8,14 +8,14 @@
 import Foundation
 
 
-public struct SecretResetRequest {
+public struct SecretResetRequest: Sendable {
     
     internal static let path = "/human/secret/reset-request"
     
     public static func create(
         email: String,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         
         Request.make(

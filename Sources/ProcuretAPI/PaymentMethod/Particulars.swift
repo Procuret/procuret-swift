@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Particulars: Codable {
+public struct Particulars: Codable, Sendable {
     
     let endingIn: String
     let accountName: String

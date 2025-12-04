@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct StandaloneAgent: Agent, Codable, Equatable {
+public struct StandaloneAgent: Agent, Codable, Equatable, Sendable {
     
     public let agentId: Int
     

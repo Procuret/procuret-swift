@@ -29,7 +29,7 @@ public struct InstalmentSchedule: Codable, Equatable {
         seriesId: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: "/instalment-schedule",
@@ -51,7 +51,7 @@ public struct InstalmentSchedule: Codable, Equatable {
         seriesId: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, PDFDocument?) -> Void
+        callback: @Sendable @escaping (Error?, PDFDocument?) -> Void
     ) {
         
         Request.make(
@@ -67,7 +67,7 @@ public struct InstalmentSchedule: Codable, Equatable {
                 
                 guard let data = data else {
                     callback(
-                        error ?? ProcuretAPIError(.inconsistentState),
+                        error ?? ProcuretError(.inconsistentState),
                         nil
                     )
                     return
@@ -88,7 +88,7 @@ public struct InstalmentSchedule: Codable, Equatable {
         series: PaymentSeries,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, PDFDocument?) -> Void
+        callback: @Sendable @escaping (Error?, PDFDocument?) -> Void
     ) {
         
         return Self.retrievePDF(
@@ -104,7 +104,7 @@ public struct InstalmentSchedule: Codable, Equatable {
         schedule: InstalmentSchedule,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, PDFDocument?) -> Void
+        callback: @Sendable @escaping (Error?, PDFDocument?) -> Void
     ) {
         
         return Self.retrievePDF(

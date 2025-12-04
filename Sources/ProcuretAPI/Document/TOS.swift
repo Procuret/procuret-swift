@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TOS:  Document {
+public struct TOS: Document {
     
     public static let path = "/document/terms-of-service"
     

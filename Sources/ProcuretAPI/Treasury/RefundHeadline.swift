@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RefundHeadline: Codable, Identifiable {
+public struct RefundHeadline: Codable, Identifiable, Sendable {
     
     public let refundId: String
     public let magnitude: String

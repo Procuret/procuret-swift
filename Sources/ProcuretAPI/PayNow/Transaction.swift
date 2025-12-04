@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PayNowTransaction: Codable {
+public struct PayNowTransaction: Codable, Sendable {
     
     internal static let path = "/pay-now-transaction"
     
@@ -43,7 +43,7 @@ public struct PayNowTransaction: Codable {
         supplier: Supplier,
         method: IdentifiesPaymentMethod,
         at endpoint: ApiEndpoint = ApiEndpoint.live,
-        then callback: @escaping (Error?, PayNowTransaction?) -> Void
+        then callback: @Sendable @escaping (Error?, PayNowTransaction?) -> Void
     ) {
         Request.make(
             path: self.path,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct MaxTransactionValue: Codable {
+public struct MaxTransactionValue: Codable, Sendable {
     
     internal static let path = "/supplier/max-transaction-size"
     internal static let listPath = MaxTransactionValue.path + "/list"
@@ -36,7 +36,7 @@ public struct MaxTransactionValue: Codable {
         active: Bool,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -60,7 +60,7 @@ public struct MaxTransactionValue: Codable {
         supplierId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.listPath,
@@ -77,7 +77,7 @@ public struct MaxTransactionValue: Codable {
         }
     }
             
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let denomination: Currency
         let supplierId: String
         let magnitude: String
@@ -91,7 +91,7 @@ public struct MaxTransactionValue: Codable {
         }
     }
     
-    private struct RetrieveParameters: Codable {
+    private struct RetrieveParameters: Codable, Sendable {
         let denomination: Currency
         let supplierId: String
         

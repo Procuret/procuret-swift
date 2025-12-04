@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ExpressionOfInterest: Codable {
+public struct ExpressionOfInterest: Codable, Sendable {
     
     internal static let path = "/expression-of-interest"
 

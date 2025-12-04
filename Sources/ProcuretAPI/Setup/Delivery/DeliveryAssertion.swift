@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DeliveryAssertion: Codable {
+public struct DeliveryAssertion: Codable, Sendable {
     
     internal static let path = "/setup/delivery/assertion"
 }

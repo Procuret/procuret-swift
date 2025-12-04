@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct InstalmentPlanApplication {
+public struct InstalmentPlanApplication: Sendable {
     
     internal static let path = "/magic-invoice"
     
@@ -22,7 +22,7 @@ public struct InstalmentPlanApplication {
         method: PaymentMethod? = nil,
         linkId: String? = nil,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?) -> Void
+        then callback: @Sendable @escaping (Error?) -> Void
     ) -> Void {
         
         Request.make(

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SupplierPayNowFeeMode: Codable, Identifiable {
+public struct SupplierPayNowFeeMode: Codable, Identifiable, Sendable {
     
     internal static let path = "/supplier/pay-now-fee-mode"
     
@@ -25,7 +25,7 @@ public struct SupplierPayNowFeeMode: Codable, Identifiable {
         supplierId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void 
+        callback: @Sendable @escaping (Error?, Self?) -> Void 
     ) {
         
         Request.make(
@@ -47,7 +47,7 @@ public struct SupplierPayNowFeeMode: Codable, Identifiable {
         mode: PayNowFeeMode,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -64,7 +64,7 @@ public struct SupplierPayNowFeeMode: Codable, Identifiable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let supplierId: String
         let mode: PayNowFeeMode
         

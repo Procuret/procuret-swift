@@ -9,7 +9,7 @@ import Foundation
 
 
 public struct ApiEndpoint: Codable, Identifiable, Hashable,
-                           CustomStringConvertible {
+                           CustomStringConvertible, Sendable {
     
     private static let endpointEnvironmentKey = "PROCURET_ENDPOINT"
     

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Commitment: Codable {
+public struct Commitment: Codable, Sendable {
     
     internal static let path = "/commitment"
     

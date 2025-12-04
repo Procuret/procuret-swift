@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Entity: Codable, Identifiable, Equatable, Hashable {
+public struct Entity: Codable, Identifiable, Equatable, Hashable, Sendable {
     
     internal static let path = "/entity"
     internal static let listPath = "/entity/list"
@@ -65,7 +65,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         authenticatedBy session: SessionRepresentative,
         withPublicId publicId: Int,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Entity?) -> Void
+        then callback: @Sendable @escaping (Error?, Entity?) -> Void
     ) {
         
         Request.make(
@@ -87,7 +87,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         address: Address.CreationData,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Entity?) -> Void
+        callback: @Sendable @escaping (Error?, Entity?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -114,7 +114,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         write: Bool,
         manage: Bool,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Entity?) -> Void
+        callback: @Sendable @escaping (Error?, Entity?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -134,7 +134,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let identifier: String
         let identifierType: EntityIdentifierType
         let address: Address.CreationData
@@ -146,7 +146,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         }
     }
         
-    private struct SetPermissions: Codable {
+    private struct SetPermissions: Codable, Sendable {
         let entityId: Int
         let granteeAgentId: Int
         let read: Bool
@@ -171,7 +171,7 @@ public struct Entity: Codable, Identifiable, Equatable, Hashable {
         order: Order = Order.descending,
         orderBy: Self.OrderBy = Self.OrderBy.created,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<Entity>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<Entity>?) -> Void
     ) -> Void {
         
         typealias UP = UrlParameter

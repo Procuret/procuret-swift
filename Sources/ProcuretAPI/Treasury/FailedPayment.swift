@@ -53,7 +53,7 @@ public struct FailedPayment: Codable, Identifiable {
         failureMode: PaymentFailureMode?,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<Self>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) {
         
         typealias UP = UrlParameter

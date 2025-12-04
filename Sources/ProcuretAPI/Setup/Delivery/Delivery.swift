@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct Delivery: Codable {
+public struct Delivery: Codable, Sendable {
     
 }

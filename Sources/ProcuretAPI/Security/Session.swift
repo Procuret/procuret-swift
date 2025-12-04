@@ -8,7 +8,8 @@
 import Foundation
 
 
-public struct Session: Codable, Agent, SessionRepresentative, Equatable {
+public struct Session: Codable, Agent, SessionRepresentative, Equatable,
+                       Sendable {
     
     private static let path = "/session"
 
@@ -88,7 +89,7 @@ public struct Session: Codable, Agent, SessionRepresentative, Equatable {
         code: String,
         perspective: Perspective,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Session?) -> Void
+        callback: @Sendable @escaping (Error?, Session?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -112,7 +113,7 @@ public struct Session: Codable, Agent, SessionRepresentative, Equatable {
         sessionId: Int,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Session?) -> Void
+        callback: @Sendable @escaping (Error?, Session?) -> Void
     ) -> Void {
 
         Request.make(
@@ -135,7 +136,7 @@ public struct Session: Codable, Agent, SessionRepresentative, Equatable {
     
     public func refresh(
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Session?) -> Void
+        callback: @Sendable @escaping (Error?, Session?) -> Void
     ) -> Void {
         
         Self.retrieve(
@@ -152,10 +153,10 @@ public struct Session: Codable, Agent, SessionRepresentative, Equatable {
     public func changePerspective(
         newPerspective: Perspective,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Session?) -> Void
+        callback: @Sendable @escaping (Error?, Session?) -> Void
     ) -> Void {
         
-        struct ChangePayload: Codable {
+        struct ChangePayload: Codable, Sendable {
             let perspective_id: Int
         }
         
@@ -224,40 +225,40 @@ public struct Session: Codable, Agent, SessionRepresentative, Equatable {
     ) throws -> Session {
         
         guard let ePerspective = getenv(perspectiveVariableName) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let stringPerspective = String(utf8String: ePerspective) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let intPerspective = Int(stringPerspective) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let perspective = Perspective(rawValue: intPerspective) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let eApiKey = getenv(apiKeyVariableName) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let apiKey = String(utf8String: eApiKey) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let eSessionId = getenv(idVariableName) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let stringSessionId = String(utf8String: eSessionId) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let sessionId = Int(stringSessionId) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let eAgent = getenv(agentName) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let agentIdString = String(utf8String: eAgent) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         guard let agentId = Int(agentIdString) else {
-            throw ProcuretAPIError(.badConfiguration)
+            throw ProcuretError(.badConfiguration)
         }
         
         return Self(
@@ -268,7 +269,7 @@ public struct Session: Codable, Agent, SessionRepresentative, Equatable {
         )
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let secret: String
         let email: String
         let code: String

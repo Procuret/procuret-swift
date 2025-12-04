@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Country: Codable, Identifiable, Hashable {
+public struct Country: Codable, Identifiable, Hashable, Sendable {
 
     public let countryId: Self.Id
     public let name: String
@@ -42,7 +42,7 @@ public struct Country: Codable, Identifiable, Hashable {
     }
     
     
-    public enum Id: Int, Codable {
+    public enum Id: Int, Codable, Sendable, Hashable {
     
         case australia = 1
         case newZealand = 2

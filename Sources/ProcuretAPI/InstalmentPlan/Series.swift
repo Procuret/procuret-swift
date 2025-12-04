@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PaymentSeries: Codable, Identifiable, Equatable {
+public struct PaymentSeries: Codable, Identifiable, Equatable, Sendable {
     
     internal static let path = "/payment/series"
     internal static let listPath = PaymentSeries.path + "/list"
@@ -65,7 +65,7 @@ public struct PaymentSeries: Codable, Identifiable, Equatable {
         session: SessionRepresentative,
         publicId: String,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         
         typealias UP = UrlParameter
@@ -106,7 +106,7 @@ public struct PaymentSeries: Codable, Identifiable, Equatable {
         collectionsUpToDate: Bool? = nil,
         withModifiedInvoice: Bool? = nil,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Array<Self>?) -> Void
+        callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) {
         
         typealias UP = UrlParameter

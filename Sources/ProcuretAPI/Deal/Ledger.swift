@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DealLedger: Codable {
+public struct DealLedger: Codable, Sendable {
     
     internal static let path = Deal.path + "/ledger"
     
@@ -25,7 +25,7 @@ public struct DealLedger: Codable {
         commitmentId: String,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Self?) -> Void
+        callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -39,7 +39,7 @@ public struct DealLedger: Codable {
         }
     }
     
-    private struct RetrieveParameters: Codable {
+    private struct RetrieveParameters: Codable, Sendable {
         let commitmentId: String
         
         private enum CodingKeys: String, CodingKey {

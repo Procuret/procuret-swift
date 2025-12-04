@@ -9,21 +9,27 @@ import Foundation
 import CryptoKit
 
 
-internal struct Signature {
+internal struct Signature: Sendable {
     
     private static let timestampResolution = 900
     
     internal static func make(
         path: String,
         apiKey: Data
-    ) throws -> String {
+    ) throws(ProcuretError) -> String {
         
         let timestamp = Int(Date().timeIntervalSince1970)
         let timekey = timestamp - (timestamp % Self.timestampResolution)
         let stringToHash = String(describing: timekey) + path
 
+        guard let dataToHash = stringToHash.data(using: .utf8) else {
+            throw ProcuretError(.other, message: """
+Unable to generate bytes Data from string to hash                
+""")
+        }
+        
         let hmac = HMAC<SHA256>.authenticationCode(
-            for: stringToHash.data(using: .utf8)!,
+            for: dataToHash,
             using: SymmetricKey(data: apiKey)
         )
 

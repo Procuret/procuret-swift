@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ErrorReport: Codable {
+public struct ErrorReport: Codable, Sendable {
     
     internal static let path = "/error-report"
     internal static let listPath = ErrorReport.path + "/list"
@@ -15,7 +15,7 @@ public struct ErrorReport: Codable {
     let indexid: Int
     let created: String //DateTime
     let applicationName: String
-    let attributes: Array<ErrorInstanceLog>
+    let attributes: Array<ErrorAttribute>
     let disposition: Disposition
     
     private enum CodingKeys: String, CodingKey {
@@ -44,7 +44,7 @@ public struct ErrorReport: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let attributes: Array<ErrorAttribute>
         
         private enum CodingKeys: String, CodingKey {

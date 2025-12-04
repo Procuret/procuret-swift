@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PhoneConfirmation: Codable {
+public struct PhoneConfirmation: Codable, Sendable {
     
     internal static let path = "/phone-number/confirm"
     
@@ -16,7 +16,7 @@ public struct PhoneConfirmation: Codable {
         code: String,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?) -> Void
+        callback: @Sendable @escaping (Error?) -> Void
     ) {
         Request.make(
             path: "/phone-number/confirm",
@@ -35,7 +35,7 @@ public struct PhoneConfirmation: Codable {
         }
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let phoneId: Int
         let code: String
         

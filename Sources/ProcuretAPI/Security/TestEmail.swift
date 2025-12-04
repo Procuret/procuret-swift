@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TestEmail: Codable {
+public struct TestEmail: Codable, Sendable {
     
     static func generateEmail() -> String {
         

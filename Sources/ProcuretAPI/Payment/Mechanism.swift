@@ -8,7 +8,7 @@
 import Foundation
 
 public enum PaymentMechanism: Int, Codable, CaseIterable, Identifiable,
-                              Equatable {
+                              Equatable, Sendable {
     
     case onPlatform = 1
     case offPlatform = 2

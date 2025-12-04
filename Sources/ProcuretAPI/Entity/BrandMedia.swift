@@ -7,9 +7,10 @@
 
 import Foundation
 
-public struct BrandMedia: Codable {
+public struct BrandMedia: Codable, Sendable  {
     
     let scheme: ColourScheme
     let primaryColour: Colour
     let logoUrl: String
+
 }

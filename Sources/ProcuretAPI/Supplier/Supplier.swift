@@ -52,7 +52,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         address: Address.CreationData,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Supplier?) -> Void
+        callback: @Sendable @escaping (Error?, Supplier?) -> Void
     ) {
         Request.make(
             path: "/supplier/raw",
@@ -75,7 +75,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         authenticatedBy session: SessionRepresentative,
         entity: Entity,
         at endpoint: ApiEndpoint,
-        callback: @escaping (Error?, Supplier?) -> Void
+        callback: @Sendable @escaping (Error?, Supplier?) -> Void
     ) {
         
         Request.make(
@@ -103,7 +103,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         forEntity entity: Entity,
         authenticatedBy session: SessionRepresentative? = nil,
         at endpoint: ApiEndpoint = ApiEndpoint.live,
-        then callback: @escaping (Error?, Self?) -> Void
+        then callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         
         return Self.retrieve(
@@ -119,7 +119,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         supplierId: Int,
         authenticatedBy session: SessionRepresentative? = nil,
         at endpoint: ApiEndpoint = ApiEndpoint.live,
-        then callback: @escaping (Error?, Self?) -> Void
+        then callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -140,7 +140,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         shortPublicId: String,
         authenticatedBy session: SessionRepresentative? = nil,
         at endpoint: ApiEndpoint = ApiEndpoint.live,
-        then callback: @escaping (Error?, Self?) -> Void
+        then callback: @Sendable @escaping (Error?, Self?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -185,7 +185,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         active: Bool? = nil,
         searchable: Bool? = nil,
         at endpoint: ApiEndpoint = .live,
-        then callback: @escaping (Error?, Array<Self>?) -> Void
+        then callback: @Sendable @escaping (Error?, Array<Self>?) -> Void
     ) {
         
         typealias UP = UrlParameter
@@ -224,7 +224,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
         
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let legalName: String
         let tradingName: String?
         let phoneNumber: String
@@ -273,7 +273,7 @@ public struct Supplier: Codable, Identifiable, Equatable {
                 forKey: .defaultDenomination
             )
             guard let candidate = Currency.with(indexid: denominationId) else {
-                throw ProcuretAPIError.init(.inconsistentState)
+                throw ProcuretError.init(.inconsistentState)
             }
             denomination = candidate
         } catch {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Cycle: Int, Codable {
+public enum Cycle: Int, Codable, Sendable {
     
     case inAdvance = 1
     case inArrears = 2

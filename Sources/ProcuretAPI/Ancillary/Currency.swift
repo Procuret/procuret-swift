@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct Currency: Codable, Identifiable, Hashable, CaseIterable {
+public struct Currency: Codable, Identifiable, Hashable, CaseIterable,
+                        Sendable {
     
     public let indexid: Int
     public let name: String

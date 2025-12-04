@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct InstalmentPaymentAttempt: Codable {
+public struct InstalmentPaymentAttempt: Codable, Sendable {
     
     internal static let path = PaymentSeries.path + "/payment-attempt"
     
@@ -19,7 +19,7 @@ public struct InstalmentPaymentAttempt: Codable {
         due24hrsStarting: Date,
         session: SessionRepresentative,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Outcome?) -> Void
+        callback: @Sendable @escaping (Error?, Outcome?) -> Void
     ) {
         
         Request.make(
@@ -43,7 +43,7 @@ public struct InstalmentPaymentAttempt: Codable {
 
     }
     
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         
         let methodId: String
         let seriesId: String

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PresentedInvoice: Codable {
+public struct PresentedInvoice: Codable, Sendable {
     
     internal static let path = "/human/presented-invoice"
     
@@ -24,7 +24,7 @@ public struct PresentedInvoice: Codable {
         preferredPeriods: Int,
         session: SessionRepresentative?,
         endpoint: ApiEndpoint = ApiEndpoint.live,
-        callback: @escaping (Error?, Human?) -> Void
+        callback: @Sendable @escaping (Error?, Human?) -> Void
     ) {
         Request.make(
             path: self.path,
@@ -42,7 +42,7 @@ public struct PresentedInvoice: Codable {
             fatalError("Not implemented")
         }
     }
-    private struct CreatePayload: Codable {
+    private struct CreatePayload: Codable, Sendable {
         let amount: Decimal
         let supplierId: Int
         let invoiceIdentifier: String

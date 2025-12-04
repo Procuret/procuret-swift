@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ColourScheme: Codable {
+public struct ColourScheme: Codable, Sendable  {
     
     let indexid: Int
     let name: String

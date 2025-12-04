@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Setup: Codable {
+public struct Setup: Codable, Sendable {
     
     internal static let path = "/setup"
     
