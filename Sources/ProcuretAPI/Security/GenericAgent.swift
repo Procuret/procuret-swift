@@ -36,13 +36,8 @@ public enum GenericAgent: Codable, Equatable, Sendable {
     public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: Self.CodingKeys.self)
-        
-        let humanFlag = try container.decode(
-            String?.self,
-            forKey: .humanFlag
-        )
-        
-        if humanFlag != nil {
+
+        if container.contains(.humanFlag) {
             self = Self.human(try Human.init(from: decoder))
         } else {
             self = Self.standaloneAgent(
